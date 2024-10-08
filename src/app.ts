@@ -1,11 +1,9 @@
+require('dotenv').config();
+
 import "reflect-metadata";
 import { AppDataSource } from "./config/ormconfig";
 import express from "express";
 import session from "express-session";
-import dotenv from "dotenv";
-
-// Load environment variables from .env file
-dotenv.config();
 
 const app = express();
 const PORT = process.env.APP_PORT || 3000;
