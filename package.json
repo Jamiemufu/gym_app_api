@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:generate": "typeorm migration:generate",
+    "migration:run": "typeorm migration:run"
   },
   "keywords": [],
   "author": "",
