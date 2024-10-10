@@ -12,9 +12,9 @@ export class InitMigration1728471166704 implements MigrationInterface {
 
     // Create Mesocycle
     const mesocycle1 = await this.createMesocycle(queryRunner, "Beginner Mesocycle", 4, false, true);
-		const mesocycle2 = await this.createMesocycle(queryRunner, "Intermediate Mesocycle", 4, true, false);
+    const mesocycle2 = await this.createMesocycle(queryRunner, "Intermediate Mesocycle", 4, true, false);
 
-		// Link Users to Mesocycles
+    // Link Users to Mesocycles
     await this.linkUserToMesocycle(queryRunner, user1, mesocycle1);
     await this.linkUserToMesocycle(queryRunner, user1, mesocycle2);
 
@@ -40,28 +40,28 @@ export class InitMigration1728471166704 implements MigrationInterface {
     );
   }
 
-	// Create Mesocycle
+  // Create Mesocycle
   private async createMesocycle(queryRunner: QueryRunner, name: string, length: number, completed: boolean, active: boolean) {
     return queryRunner.manager.save(
       queryRunner.manager.create(Mesocycle, {
         name,
         length,
-				completed,
-				active,
+        completed,
+        active,
         created_at: new Date(),
       })
     );
   }
 
-	// Link User to Mesocycle
-	private async linkUserToMesocycle(queryRunner: QueryRunner, user: User, mesocycle: Mesocycle) {
+  // Link User to Mesocycle
+  private async linkUserToMesocycle(queryRunner: QueryRunner, user: User, mesocycle: Mesocycle) {
     user.mesocycles = user.mesocycles || [];
     user.mesocycles.push(mesocycle);
 
     await queryRunner.manager.save(user);
   }
 
-	// Create Exercise
+  // Create Exercise
   private async createExercise(queryRunner: QueryRunner, name: string, muscleGroup: string, equipment: string) {
     return queryRunner.manager.create(Exercise, {
       name,
@@ -70,7 +70,7 @@ export class InitMigration1728471166704 implements MigrationInterface {
     });
   }
 
-	// Create Workout
+  // Create Workout
   private async createWorkout(queryRunner: QueryRunner, name: string, mesocycle: Mesocycle, exercises: Exercise[]) {
     return queryRunner.manager.save(
       queryRunner.manager.create(Workout, {
@@ -87,8 +87,8 @@ export class InitMigration1728471166704 implements MigrationInterface {
     await queryRunner.manager.delete(Workout, {});
     // Remove Exercises
     await queryRunner.manager.delete(Exercise, {});
-		// Remove Users
-		await queryRunner.manager.delete(User, {});
+    // Remove Users
+    await queryRunner.manager.delete(User, {});
     // Remove Mesocycles
     await queryRunner.manager.delete(Mesocycle, {});
   }
