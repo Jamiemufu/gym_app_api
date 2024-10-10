@@ -29,7 +29,7 @@ Welcome to the Gym App API! This API allows users to manage their gym activities
     ```
 
 3. Set up environment variables:
-    Copy `.env.example` file in the root directory and add your variables:
+    Copy `.env.example` file to `.env` in the root directory and add your variables:
     ```env
     DATABASE_HOST=localhost
     DATABASE_PORT=5432
