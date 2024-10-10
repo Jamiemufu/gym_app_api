@@ -13,12 +13,12 @@ import { Exercise } from "./Exercise";
 export class Workout {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
+  
+  @Column()
+  name!: string;
 
   @CreateDateColumn()
   created_at!: Date;
-
-  @Column()
-  name!: string;
 
   @ManyToOne(() => Mesocycle, (mesocycle: Mesocycle) => mesocycle.workouts)
   mesocycle!: Mesocycle;

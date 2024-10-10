@@ -1,13 +1,3 @@
-// Table mesocycles {
-//     id UUID [pk, unique]
-//     name varchar
-//     length varchar
-//     phase varchar
-//     intensity varchar
-//     workouts varchar
-//     user varchar
-//   }
-
 import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User";
 import { Workout } from "./Workout";

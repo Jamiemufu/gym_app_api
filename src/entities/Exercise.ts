@@ -1,5 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from "typeorm";
-import { Workout } from "./Workout";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinTable } from "typeorm";
 import { UserExercise } from "./UserExercise";
 
 @Entity()

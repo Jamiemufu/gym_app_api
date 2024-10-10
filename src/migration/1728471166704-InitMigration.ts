@@ -3,6 +3,7 @@ import { User } from "../entities/User";
 import { Mesocycle } from "../entities/Mesocycle";
 import { Exercise } from "../entities/Exercise";
 import { Workout } from "../entities/Workout";
+import { UserExercise } from "../entities/UserExercise";
 
 export class InitMigration1728471166704 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -13,6 +14,7 @@ export class InitMigration1728471166704 implements MigrationInterface {
     // Create Mesocycle
     const mesocycle1 = await this.createMesocycle(queryRunner, "Beginner Mesocycle", 4, false, true);
     const mesocycle2 = await this.createMesocycle(queryRunner, "Intermediate Mesocycle", 4, true, false);
+
 
     // Link Users to Mesocycles
     await this.linkUserToMesocycle(queryRunner, user1, mesocycle1);
@@ -26,8 +28,18 @@ export class InitMigration1728471166704 implements MigrationInterface {
       this.createExercise(queryRunner, "Incline DB Press", "Chest", "Dumbbells"),
     ]);
 
+    // Create User Exercises
+    const userExercises = await Promise.all([
+      this.createUserExercise(queryRunner, user1, exercises[0], 3, 10, 100),
+      this.createUserExercise(queryRunner, user1, exercises[1], 3, 10, 100),
+      this.createUserExercise(queryRunner, user1, exercises[2], 3, 10, 100),
+      this.createUserExercise(queryRunner, user1, exercises[3], 3, 10, 100),
+    ]);
+
+
     // Create Workouts and Link Exercises
     const workout = await this.createWorkout(queryRunner, "Upper Body Workout", mesocycle1, exercises);
+    
   }
 
   private async createUser(queryRunner: QueryRunner, email: string, password_hash: string) {
@@ -70,6 +82,19 @@ export class InitMigration1728471166704 implements MigrationInterface {
     });
   }
 
+  // Create User Exercise
+  private async createUserExercise(queryRunner: QueryRunner, user: User, exercise: Exercise, sets: number, reps: number, weight: number) {
+    return queryRunner.manager.save(
+      queryRunner.manager.create(UserExercise, {
+        user,
+        exercise,
+        sets,
+        reps,
+        weight,
+        created_at: new Date(),
+      })
+    );
+  }
   // Create Workout
   private async createWorkout(queryRunner: QueryRunner, name: string, mesocycle: Mesocycle, exercises: Exercise[]) {
     return queryRunner.manager.save(
@@ -83,6 +108,8 @@ export class InitMigration1728471166704 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    // Remove UserExercises
+    await queryRunner.manager.delete(UserExercise, {});
     // Remove Workouts
     await queryRunner.manager.delete(Workout, {});
     // Remove Exercises

@@ -1,22 +1,4 @@
-// Table userExercises {
-//   id UUID [pk, unique]
-//   user varchar
-//   exercise varchar
-//   sets varchar
-//   reps varchar
-//   weight varchar
-//   create_at timestamp
-// }
-
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  Timestamp,
-  ManyToMany
-} from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, OneToOne, ManyToOne, JoinTable } from "typeorm";
 import { Exercise } from "./Exercise";
 import { User } from "./User";
 
@@ -37,6 +19,9 @@ export class UserExercise {
   @CreateDateColumn()
   createdAt!: Date;
 
-  @ManyToOne(() => Exercise, (exercise) => exercise.userExercises)
+  @ManyToOne(() => User, (user) => user.userExercises)
+  user!: User;
+
+  @OneToOne(() => Exercise, (exercise) => exercise.userExercises)
   exercise!: Exercise;
 }
