@@ -1,6 +1,7 @@
-import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User";
 import { Workout } from "./Workout";
+import { join } from "path";
 
 @Entity()
 export class Mesocycle {
@@ -27,7 +28,7 @@ export class Mesocycle {
   createdAt!: Date;
 
   // Workout Link
-  @OneToMany(() => Workout, (workout: Workout) => workout.mesocycle)
+  @ManyToMany(() => Workout, (workout: Workout) => workout.mesocycle)
   workouts!: Workout[];
 
   // User Link

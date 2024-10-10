@@ -15,7 +15,6 @@ export class InitMigration1728471166704 implements MigrationInterface {
     const mesocycle1 = await this.createMesocycle(queryRunner, "Beginner Mesocycle", 4, false, true);
     const mesocycle2 = await this.createMesocycle(queryRunner, "Intermediate Mesocycle", 4, true, false);
 
-
     // Link Users to Mesocycles
     await this.linkUserToMesocycle(queryRunner, user1, mesocycle1);
     await this.linkUserToMesocycle(queryRunner, user1, mesocycle2);
@@ -36,10 +35,15 @@ export class InitMigration1728471166704 implements MigrationInterface {
       this.createUserExercise(queryRunner, user1, exercises[3], 3, 10, 100),
     ]);
 
+    //TODO: Link UserExercises to Workouts
 
     // Create Workouts and Link Exercises
     const workout = await this.createWorkout(queryRunner, "Upper Body Workout", mesocycle1, exercises);
-    
+
+    // link mesocycle to workout
+    // JoinTable is on workouts - so workouts is the owner side
+    mesocycle1.workouts = [workout];
+    await queryRunner.manager.save(mesocycle1);
   }
 
   private async createUser(queryRunner: QueryRunner, email: string, password_hash: string) {
@@ -95,12 +99,12 @@ export class InitMigration1728471166704 implements MigrationInterface {
       })
     );
   }
+
   // Create Workout
   private async createWorkout(queryRunner: QueryRunner, name: string, mesocycle: Mesocycle, exercises: Exercise[]) {
     return queryRunner.manager.save(
       queryRunner.manager.create(Workout, {
         name,
-        mesocycle,
         exercises,
         created_at: new Date(),
       })

@@ -1,11 +1,4 @@
-// Table workouts {
-//     id UUID [pk, unique]
-//     exercises varchar
-//     created_at timestamp
-//     name varchar
-//   }
-
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany, ManyToMany } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable } from "typeorm";
 import { Mesocycle } from "./Mesocycle";
 import { Exercise } from "./Exercise";
 
@@ -20,8 +13,9 @@ export class Workout {
   @CreateDateColumn()
   created_at!: Date;
 
-  @ManyToOne(() => Mesocycle, (mesocycle: Mesocycle) => mesocycle.workouts)
-  mesocycle!: Mesocycle;
+  @ManyToMany(() => Mesocycle, (mesocycle: Mesocycle) => mesocycle.workouts)
+  @JoinTable()
+  mesocycle!: Mesocycle[];
 
   @OneToMany(() => Exercise, (exercise: Exercise) => exercise.id, { cascade: ["insert", "update"] })
   exercises!: Exercise[];
