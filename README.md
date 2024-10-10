@@ -6,7 +6,7 @@ Welcome to the Gym App API! This API allows users to manage their gym activities
 
 ### Prerequisites
 
-- Node.js (>=14.x)
+- Node.js (>=20.x)
 - npm (>=6.x) or yarn (>=1.x)
 - PostgreSQL (I installed via brew)
     ```sh
