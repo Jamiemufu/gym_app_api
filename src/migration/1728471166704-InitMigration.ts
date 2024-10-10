@@ -33,19 +33,23 @@ export class InitMigration1728471166704 implements MigrationInterface {
       this.createUserExercise(queryRunner, user1, exercises[1], 3, 10, 100),
       this.createUserExercise(queryRunner, user1, exercises[2], 3, 10, 100),
       this.createUserExercise(queryRunner, user1, exercises[3], 3, 10, 100),
+      this.createUserExercise(queryRunner, user2, exercises[0], 2, 10, 100),
+      this.createUserExercise(queryRunner, user2, exercises[1], 1, 10, 100),
+      this.createUserExercise(queryRunner, user2, exercises[2], 2, 10, 100),
+      this.createUserExercise(queryRunner, user2, exercises[3], 3, 10, 100),
     ]);
 
-    //TODO: Link UserExercises to Workouts
+    // Create Workout
+    const workout = await this.createWorkout(queryRunner, "Workout 1");
 
-    // Create Workouts and Link Exercises
-    const workout = await this.createWorkout(queryRunner, "Upper Body Workout", mesocycle1, exercises);
+    // Link User Exercises to Workout
+    await this.linkUserExercisesToWorkout(queryRunner, workout, userExercises, mesocycle1);
 
-    // link mesocycle to workout
-    // JoinTable is on workouts - so workouts is the owner side
-    mesocycle1.workouts = [workout];
-    await queryRunner.manager.save(mesocycle1);
+    // Link Workout to Mesocycle
+    await this.linkWorkoutToMesocycle(queryRunner, workout, mesocycle1);
   }
-
+  
+  // Create User
   private async createUser(queryRunner: QueryRunner, email: string, password_hash: string) {
     return queryRunner.manager.save(
       queryRunner.manager.create(User, {
@@ -101,21 +105,36 @@ export class InitMigration1728471166704 implements MigrationInterface {
   }
 
   // Create Workout
-  private async createWorkout(queryRunner: QueryRunner, name: string, mesocycle: Mesocycle, exercises: Exercise[]) {
+  private async createWorkout(queryRunner: QueryRunner, name: string) {
     return queryRunner.manager.save(
       queryRunner.manager.create(Workout, {
         name,
-        exercises,
         created_at: new Date(),
       })
     );
   }
 
+  // Link User Exercises to Workout
+  private async linkUserExercisesToWorkout(queryRunner: QueryRunner, workout: Workout, userExercises: UserExercise[], mesocycle: Mesocycle) {
+    workout.userExercises = workout.userExercises || [];
+    workout.userExercises.push(...userExercises);
+
+    await queryRunner.manager.save(workout);
+  }
+
+  // Link Workout to Mesocycle
+  private async linkWorkoutToMesocycle(queryRunner: QueryRunner, workout: Workout, mesocycle: Mesocycle) {
+    mesocycle.workouts = mesocycle.workouts || [];
+    mesocycle.workouts.push(workout);
+
+    await queryRunner.manager.save(mesocycle);
+  }
+
   public async down(queryRunner: QueryRunner): Promise<void> {
-    // Remove UserExercises
-    await queryRunner.manager.delete(UserExercise, {});
     // Remove Workouts
     await queryRunner.manager.delete(Workout, {});
+    // Remove UserExercises
+    await queryRunner.manager.delete(UserExercise, {});
     // Remove Exercises
     await queryRunner.manager.delete(Exercise, {});
     // Remove Users
