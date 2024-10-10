@@ -24,8 +24,6 @@ Welcome to the Gym App API! This API allows users to manage their gym activities
 2. Install dependencies:
     ```sh
     npm install
-    # or
-    yarn install
     ```
 
 3. Set up environment variables:
