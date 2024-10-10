@@ -93,7 +93,3 @@ export class InitMigration1728471166704 implements MigrationInterface {
     await queryRunner.manager.delete(Mesocycle, {});
   }
 }
-
-// npx typeorm-ts-node-commonjs schema:sync -d ./src/config/ormconfig.ts
-// npx typeorm-ts-node-commonjs migration:run -d ./src/config/ormconfig.ts
-// npx typeorm-ts-node-commonjs migration:revert -d ./src/config/ormconfig.ts
