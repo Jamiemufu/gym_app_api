@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, OneToOne, ManyToOne, JoinTable, ManyToMany } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, OneToOne, ManyToOne, JoinTable, ManyToMany, OneToMany } from "typeorm";
 import { Exercise } from "./Exercise";
 import { User } from "./User";
 import { Workout } from "./Workout";
@@ -23,7 +23,7 @@ export class UserExercise {
   @ManyToOne(() => User, (user) => user.userExercises)
   user!: User;
 
-  @OneToOne(() => Exercise, (exercise) => exercise.userExercises)
+  @ManyToOne(() => Exercise, (exercise) => exercise.userExercises)
   exercise!: Exercise;
 
   @ManyToMany(() => Workout, (workout) => workout.userExercises)

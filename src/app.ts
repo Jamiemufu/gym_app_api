@@ -1,8 +1,10 @@
-require('dotenv').config();
+require("dotenv").config();
 
 import "reflect-metadata";
 import { AppDataSource } from "./config/ormconfig";
+import { UserRepository } from "./repositories/UserRepository";
 import express from "express";
+import { Request, Response } from "express";
 import session from "express-session";
 
 const app = express();
@@ -23,10 +25,17 @@ app.use(
 AppDataSource.initialize()
   .then(() => {
     console.log("Data Source has been initialized!");
+
+    const userRepo = new UserRepository(AppDataSource);
+
+    // Get all Users
+    app.get("/users", async (req: Request, res: Response) => {
+      const users = await userRepo.getAllUsers();
+      res.json(users);
+    });
+
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
     });
   })
-  .catch((error) =>
-    console.error("Error during Data Source initialization:", error)
-  );
+  .catch((error) => console.error("Error during Data Source initialization:", error));

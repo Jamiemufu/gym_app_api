@@ -1,10 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinTable } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { UserExercise } from "./UserExercise";
 
 @Entity()
 export class Exercise {
-  @PrimaryGeneratedColumn("uuid")
-  id!: string;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
   @Column()
   name!: string;
@@ -15,6 +15,6 @@ export class Exercise {
   @Column()
   equipment!: string;
 
-  @OneToMany(() => UserExercise, (userExercise: UserExercise) => userExercise.exercise)
+  @OneToMany(() => UserExercise, userExercise => userExercise.exercise)
   userExercises!: UserExercise[];
 }

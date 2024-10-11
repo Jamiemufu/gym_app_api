@@ -18,9 +18,6 @@ export class Workout {
   @JoinTable()
   mesocycle!: Mesocycle[];
 
-  @OneToMany(() => Exercise, (exercise: Exercise) => exercise.id, { cascade: ["insert", "update"] })
-  exercises!: Exercise[];
-
   // Many workouts can have many userExercises
   @ManyToMany(() => UserExercise, (userExercise: UserExercise) => userExercise.workouts)
   @JoinTable()
