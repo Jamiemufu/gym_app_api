@@ -2,10 +2,9 @@ require("dotenv").config();
 
 import "reflect-metadata";
 import { AppDataSource } from "./config/ormconfig";
-import { UserRepository } from "./repositories/UserRepository";
 import express from "express";
-import { Request, Response } from "express";
 import session from "express-session";
+import userRoutes from "./routes/UserRoutes";
 
 const app = express();
 const PORT = process.env.APP_PORT || 3000;
@@ -26,13 +25,8 @@ AppDataSource.initialize()
   .then(() => {
     console.log("Data Source has been initialized!");
 
-    const userRepo = new UserRepository(AppDataSource);
-
-    // Get all Users
-    app.get("/users", async (req: Request, res: Response) => {
-      const users = await userRepo.getAllUsers();
-      res.json(users);
-    });
+    // Use user routes with a base path
+    app.use("/users", userRoutes);
 
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
