@@ -28,7 +28,7 @@ AppDataSource.initialize()
 
     // Use user routes with a base path
     app.use("/users", userRoutes);
-
+    // Use workout routes with a base path
     app.use("/workouts", workoutRoutes);
 
     app.listen(PORT, () => {
