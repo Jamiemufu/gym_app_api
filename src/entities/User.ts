@@ -38,7 +38,7 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeor
 @Entity()
 export class User {
 
-@PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn("uuid")
   id!: string;
   
   @Column({ nullable: false, unique: true })

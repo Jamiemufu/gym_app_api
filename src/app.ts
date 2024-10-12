@@ -33,6 +33,7 @@ AppDataSource.initialize()
 
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
+      console.log('Database name:', AppDataSource.options.database);
     });
   })
   .catch((error) => console.error("Error during Data Source initialization:", error));
