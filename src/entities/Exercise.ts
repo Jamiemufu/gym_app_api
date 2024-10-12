@@ -18,3 +18,11 @@
 //   @OneToMany(() => UserExercise, userExercise => userExercise.exercise)
 //   userExercises!: UserExercise[];
 // }
+
+// ### Exercises Table
+// | Column         | Type         | Constraints                   |
+// |----------------|--------------|-------------------------------|
+// | id             | UUID         | Primary Key, Unique           |
+// | name           | varchar      | Not Null                      |
+// | muscle_group   | varchar      |                               |
+// | equipment      | varchar      |                               |

@@ -16,7 +16,7 @@
 //   @CreateDateColumn()
 //   created_at!: Date;
 
-//   // Mesocycle Link
+  // Mesocycle Link
 //   @ManyToMany(() => Mesocycle, (mesocycle: Mesocycle) => mesocycle.users, { cascade: true })
 //   @JoinTable()
 //   mesocycles!: Mesocycle[];
@@ -24,6 +24,15 @@
 //   @OneToMany(() => UserExercise, (userExercise: UserExercise) => userExercise.user)
 //   userExercises!: UserExercise[];
 // }
+
+// ### Users Table
+// | Column          | Type         | Constraints                   |
+// |-----------------|--------------|-------------------------------|
+// | id              | UUID         | Primary Key, Unique           |
+// | username        | varchar      | Not Null, Unique              |
+// | email           | varchar(255) | Not Null, Unique              |
+// | password_hash   | varchar(255) | Not Null                      |
+// | created_at      | timestamp    | Default: `now()`              |
 
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 @Entity()
