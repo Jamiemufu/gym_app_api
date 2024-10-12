@@ -1,20 +1,20 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { UserExercise } from "./UserExercise";
+// import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+// import { UserExercise } from "./UserExercise";
 
-@Entity()
-export class Exercise {
-  @PrimaryGeneratedColumn()
-  id!: number;
+// @Entity()
+// export class Exercise {
+//   @PrimaryGeneratedColumn()
+//   id!: number;
 
-  @Column()
-  name!: string;
+//   @Column()
+//   name!: string;
 
-  @Column()
-  muscleGroup!: string;
+//   @Column()
+//   muscleGroup!: string;
 
-  @Column()
-  equipment!: string;
+//   @Column()
+//   equipment!: string;
 
-  @OneToMany(() => UserExercise, userExercise => userExercise.exercise)
-  userExercises!: UserExercise[];
-}
+//   @OneToMany(() => UserExercise, userExercise => userExercise.exercise)
+//   userExercises!: UserExercise[];
+// }

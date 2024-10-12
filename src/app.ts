@@ -26,10 +26,10 @@ AppDataSource.initialize()
   .then(() => {
     console.log("Data Source has been initialized!");
 
-    // Use user routes with a base path
-    app.use("/users", userRoutes);
-    // Use workout routes with a base path
-    app.use("/workouts", workoutRoutes);
+    // // Use user routes with a base path
+    // app.use("/users", userRoutes);
+    // // Use workout routes with a base path
+    // app.use("/workouts", workoutRoutes);
 
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
