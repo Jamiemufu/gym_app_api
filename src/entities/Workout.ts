@@ -42,6 +42,11 @@ export class Workout {
     @PrimaryGeneratedColumn("uuid")
     id!: string;
 
+    // Many workouts can have many exercises
+    @Column("simple-array")
+    @ManyToMany(() => Exercise, exercise => exercise.id)
+    exercises!: Exercise[];
+    
     @Column({ nullable: false })
     name!: string;
 
@@ -52,7 +57,5 @@ export class Workout {
     @ManyToOne(() => User, user => user.id)
     created_by!: User;
 
-    // Many workouts can have many exercises
-    @ManyToMany(() => Exercise, exercise => exercise.id)
-    exercises!: Exercise[];
+    
 }
