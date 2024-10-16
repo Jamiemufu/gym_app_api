@@ -1,36 +1,30 @@
-// import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-// import { User } from "./User";
-// import { Workout } from "./Workout";
+// | Column        | Type         | Constraints                   |
+// |---------------|--------------|-------------------------------|
+// | id            | UUID         | Primary Key, Unique           |
+// | name          | varchar      |                               |
+// | length        | integer      |                               |
+// | workouts      | array        | References: public_workouts.id|
+// | created_by    | UUID         | References: users.id          |
 
-// @Entity()
-// export class Mesocycle {
-//   @PrimaryGeneratedColumn("uuid")
-//   id!: string;
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Workout } from "./Workout";
+import { User } from "./User";
 
-//   // Name of the mesocycle
-//   @Column()
-//   name!: string;
+@Entity()
+export class Mesocycle {
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
 
-//   // Length of the mesocycle in weeks
-//   @Column()
-//   length!: number;
+  @Column({ nullable: false })
+  name!: string;
 
-//   // Completed or not
-//   @Column()
-//   completed!: boolean;
+  @Column({ nullable: false })
+  length!: number;
 
-//   // Active or not !! We can have only one active mesocycle at a time
-//   @Column()
-//   active!: boolean;
+  @JoinTable()
+  @ManyToMany(() => Workout, workout => workout.id)
+  workouts!: Workout[];
 
-//   @CreateDateColumn()
-//   createdAt!: Date;
-
-//   // Workout Link
-//   @ManyToMany(() => Workout, (workout: Workout) => workout.mesocycle)
-//   workouts!: Workout[];
-
-//   // User Link
-//   @ManyToMany(() => User, (user: User) => user.mesocycles)
-//   users!: User[];
-// }
+  @ManyToOne(() => User, user => user.id)
+  created_by!: User;
+}

@@ -1,25 +1,3 @@
-// import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-// import { UserExercise } from "./UserExercise";
-
-// @Entity()
-// export class Exercise {
-//   @PrimaryGeneratedColumn()
-//   id!: number;
-
-//   @Column()
-//   name!: string;
-
-//   @Column()
-//   muscleGroup!: string;
-
-//   @Column()
-//   equipment!: string;
-
-//   @OneToMany(() => UserExercise, userExercise => userExercise.exercise)
-//   userExercises!: UserExercise[];
-// }
-
-// ### Exercises Table
 // | Column         | Type         | Constraints                   |
 // |----------------|--------------|-------------------------------|
 // | id             | UUID         | Primary Key, Unique           |
@@ -27,7 +5,8 @@
 // | muscle_group   | varchar      |                               |
 // | equipment      | varchar      |                               |
 
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToMany } from "typeorm";
+import { UserWorkoutSet } from "./UserWorkoutSet";
 @Entity()
 export class Exercise {
 

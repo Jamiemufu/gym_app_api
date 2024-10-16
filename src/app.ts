@@ -5,7 +5,6 @@ import { AppDataSource } from "./config/ormconfig";
 import express from "express";
 import session from "express-session";
 import userRoutes from "./routes/UserRoutes";
-import workoutRoutes from "./routes/WorkoutRoutes";
 
 const app = express();
 const PORT = process.env.APP_PORT || 3000;
@@ -27,7 +26,7 @@ AppDataSource.initialize()
     console.log("Data Source has been initialized!");
 
     // // Use user routes with a base path
-    // app.use("/users", userRoutes);
+    app.use("/users", userRoutes);
     // // Use workout routes with a base path
     // app.use("/workouts", workoutRoutes);
 
