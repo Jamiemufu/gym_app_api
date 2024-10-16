@@ -27,4 +27,6 @@ export class Mesocycle {
 
   @ManyToOne(() => User, user => user.id)
   created_by!: User;
+
+  // TODO: Add users to mesocycles and join and add to Init migration
 }
