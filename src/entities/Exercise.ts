@@ -5,8 +5,7 @@
 // | muscle_group   | varchar      |                               |
 // | equipment      | varchar      |                               |
 
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToMany } from "typeorm";
-import { UserWorkoutSet } from "./UserWorkoutSet";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 @Entity()
 export class Exercise {
 

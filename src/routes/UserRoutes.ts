@@ -25,11 +25,10 @@ router.get('/:uuid:', async (req: Request, res: Response) => {
 /**
  * Get all users
  * GET /users
- * @param req Request
  * @param res Response
  * @returns Promise<void>
  */
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', async (res: Response) => {
     const users = await userRepository.getAllUsers();
     res.json(users);
 });

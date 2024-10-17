@@ -7,7 +7,7 @@
 // | reps               | integer      |                               |
 // | weight             | integer      |                               |
 
-import { Column, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { UserWorkout } from "./UserWorkout";
 import { Exercise } from "./Exercise";
 

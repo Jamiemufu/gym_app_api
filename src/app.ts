@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-import "reflect-metadata";
+import "reflect-metadata"; //required for TypeORM
 import { AppDataSource } from "./config/ormconfig";
 import express from "express";
 import session from "express-session";

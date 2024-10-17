@@ -6,7 +6,7 @@
 // | workouts      | array        | References: public_workouts.id|
 // | created_by    | UUID         | References: users.id          |
 
-import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Workout } from "./Workout";
 import { User } from "./User";
 
@@ -21,6 +21,7 @@ export class Mesocycle {
   @Column({ nullable: false })
   length!: number;
 
+  // mesocycles owns join table with workouts
   @JoinTable()
   @ManyToMany(() => Workout, workout => workout.id)
   workouts!: Workout[];
@@ -28,6 +29,7 @@ export class Mesocycle {
   @ManyToOne(() => User, user => user.id)
   created_by!: User;
 
+  // mesocycle owns join table with users
   @ManyToMany(() => User, user => user.id)
   @JoinTable()
   users!: User[];

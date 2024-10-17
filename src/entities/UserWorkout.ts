@@ -5,7 +5,7 @@
 // | workout_id    | UUID         | References: public_workouts.id |
 // | date          | timestamp    |                               |
 
-import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User";
 import { Workout } from "./Workout";
 

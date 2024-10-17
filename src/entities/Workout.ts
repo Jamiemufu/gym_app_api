@@ -6,7 +6,7 @@
 // | created_by    | UUID         | References: users.id          |
 // | created_at    | timestamp    | Default: `now()`              |
 
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, ManyToMany, JoinTable, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, ManyToMany, JoinTable } from "typeorm";
 import { User } from "./User";
 import { Exercise } from "./Exercise";
 @Entity()

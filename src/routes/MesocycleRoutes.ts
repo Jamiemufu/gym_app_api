@@ -9,11 +9,10 @@ const mesoRepo = new MesocycleRepository(AppDataSource);
 /**
  * Get all mesocycles
  * GET /mesocycles
- * @param req Request
  * @param res Response
  * @returns Promise<void>
  */
-router.get("/", async (req: Request, res: Response) => {
+router.get("/", async (res: Response) => {
   const mesocycles = await mesoRepo.getAllMesocycles();
   res.json(mesocycles);
 });
@@ -48,11 +47,10 @@ router.get("/:uuid/users", async (req: Request, res: Response) => {
 /**
  * Get all users
  * GET /users
- * @param req Request
  * @param res Response
  * @returns Promise<void>
  */
-router.get("/users/", async (req: Request, res: Response) => {
+router.get("/users/", async (res: Response) => {
   const users = await mesoRepo.getAllMesocycleUsers();
   res.json(users);
 });
