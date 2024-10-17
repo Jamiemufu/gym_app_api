@@ -15,7 +15,7 @@ export class MesocycleRepository extends Repository<Mesocycle> {
   }
   /**
    * Get Mesocycle by ID
-   * @param mesocycleId 
+   * @param mesocycleId
    * @returns Mesocycle | null
    */
   async getMesocycleById(mesocycleId: string): Promise<Mesocycle | null> {
@@ -25,9 +25,29 @@ export class MesocycleRepository extends Repository<Mesocycle> {
   /**
    * get all Mesocycles with users
    * @returns Mesocycle[]
-   * 
+   *
    */
-  async getMesocycleUsers(): Promise<Mesocycle[]> {
-    return await this.find({ relations: ['users']});
+  async getAllMesocycleUsers(): Promise<Mesocycle[]> {
+    return await this.find({ relations: ["users"] });
+  }
+
+  /**
+   * Get Users by Mesocycle ID
+   * @param mesocycleId
+   * @returns User[] | null
+   */
+  async getUsersByMesocycleId(mesocycleId: string): Promise<{ id: string; name: string; email: string; created_at: Date }[] | null> {
+    const mesocycle = await this.findOne({ where: { id: mesocycleId }, relations: ["users"] });
+
+    return mesocycle?.users.map((user) => ({ id: user.id, name: user.username, email: user.email, created_at: user.created_at })) || null;
+  }
+
+  /**
+   * Get Mesocycle by UserID
+   * @param userId
+   * @returns User | null
+   */
+  async getMesocycleByUser(userId: string): Promise<Mesocycle[]> {
+    return await this.find({ relations: ["users"], where: { users: { id: userId } } });
   }
 }
