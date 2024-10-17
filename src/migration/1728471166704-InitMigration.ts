@@ -26,8 +26,8 @@ export class InitMigration1728471166704 implements MigrationInterface {
     const workout2 = await this.createWorkout(queryRunner, "Upper Body Workout", [exercises[0], exercises[2]], user2);
 
     // Create Mesocycles
-    const mesocycle1 = await this.createMesocycle(queryRunner, "Beginner Mesocycle", 4, user1, [workout1, workout2]);
-    const mesocycle2 = await this.createMesocycle(queryRunner, "Advanced Mesocycle", 6, user2, [workout1]);
+    const mesocycle1 = await this.createMesocycle(queryRunner, "Beginner Mesocycle", 4, user1, [workout1, workout2], [user1]);
+    const mesocycle2 = await this.createMesocycle(queryRunner, "Advanced Mesocycle", 6, user2, [workout1], [user1, user2]);
 
     // Create Mesocycle Days with rest and workout days
     await this.createMesocycleDays(queryRunner, mesocycle1, workout1, workout2);
@@ -78,12 +78,13 @@ export class InitMigration1728471166704 implements MigrationInterface {
   }
 
   // Create Mesocycle and associate Workouts
-  private async createMesocycle(queryRunner: QueryRunner, name: string, length: number, created_by: User, workouts: Workout[]) {
+  private async createMesocycle(queryRunner: QueryRunner, name: string, length: number, created_by: User, workouts: Workout[], users: User[]) {
     const mesocycle = queryRunner.manager.create(Mesocycle, {
       name,
       length,
       created_by,
       workouts,
+      users,
     });
     return queryRunner.manager.save(mesocycle);
   }
