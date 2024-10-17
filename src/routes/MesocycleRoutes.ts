@@ -7,6 +7,19 @@ const router = Router();
 const mesoRepo = new MesocycleRepository(AppDataSource);
 
 /**
+ * NEEDS TO BE FIRST DUE TO ROUTE SPECIFICITY
+ * Get mesocycle by user
+ * GET /users/:id
+ * @param req Request
+ * @param res Response
+ * @returns Promise<void>
+ */
+router.get("/users/:uuid", async (req: Request, res: Response) => {
+  const users = await mesoRepo.getMesocycleByUserId(req.params.uuid);
+  users ? res.status(200).json(users) : res.status(404).json({ message: "Mesocycle not found" });
+});
+
+/**
  * Get all mesocycles
  * GET /mesocycles
  * @param res Response
@@ -30,6 +43,18 @@ router.get("/:uuid", async (req: Request, res: Response) => {
 });
 
 /**
+ * Get workouts by mesocycle id
+ * GET /workouts/:id
+ * @param req Request
+ * @param res Response
+ * @returns Promise<void>
+ */
+router.get("/:uuid/workouts", async (req: Request, res: Response) => {
+  const workouts = await mesoRepo.getWorkoutsByMesocycleId(req.params.uuid);
+  workouts ? res.status(200).json(workouts) : res.status(404).json({ message: "Workouts not found" });
+});
+
+/**
  * Get users by mesocycle id
  * GET /mesocycles/:id/users
  * @param req Request
@@ -38,52 +63,6 @@ router.get("/:uuid", async (req: Request, res: Response) => {
 router.get("/:uuid/users", async (req: Request, res: Response) => {
   const users = await mesoRepo.getUsersByMesocycleId(req.params.uuid);
   users ? res.status(200).json(users) : res.status(404).json({ message: "Users not found" });
-});
-
-/**
- * Get all users
- * GET /users
- * @param res Response
- * @returns Promise<void>
- */
-router.get("/users/", async (req: Request, res: Response) => {
-  const users = await mesoRepo.getAllMesocycleUsers();
-  users ? res.status(200).json(users) : res.status(404).json({ message: "Users not found" });
-});
-
-/**
- * Get mesocycle by user
- * GET /users/:id
- * @param req Request
- * @param res Response
- * @returns Promise<void>
- */
-router.get("/user/:uuid", async (req: Request, res: Response) => {
-  const users = await mesoRepo.getMesocycleByUser(req.params.uuid);
-  users ? res.status(200).json(users) : res.status(404).json({ message: "Mesocycle not found" });
-});
-
-/**
- * Get workouts by mesocycle
- * GET /workouts
- * @param res Response
- * @returns Promise<void>
- */
-router.get("/workouts", async (req: Request, res: Response) => {
-  const workouts = await mesoRepo.getAllWorkoutsByMesocycles();
-  workouts ? res.status(200).json(workouts) : res.status(404).json({ message: "Workouts not found" });
-});
-
-/**
- * Get workouts by mesocycle id
- * GET /workouts/:id
- * @param req Request
- * @param res Response
- * @returns Promise<void>
- */
-router.get("/workouts/:uuid", async (req: Request, res: Response) => {
-  const workouts = await mesoRepo.getWorkoutsByMesocycleId(req.params.uuid);
-  workouts ? res.status(200).json(workouts) : res.status(404).json({ message: "Workouts not found" });
 });
 
 export default router;

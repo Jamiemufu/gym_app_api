@@ -12,7 +12,7 @@ export class MesocycleRepository extends Repository<Mesocycle> {
    * @returns Mesocycle[]
    */
   async getAllMesocycles(): Promise<Mesocycle[]> {
-    return await this.find();
+    return await this.find({ relations: ["workouts", "users"] });
   }
   /**
    * Get Mesocycle by ID
@@ -48,7 +48,7 @@ export class MesocycleRepository extends Repository<Mesocycle> {
    * @param userId
    * @returns User | null
    */
-  async getMesocycleByUser(userId: string): Promise<Mesocycle[]> {
+  async getMesocycleByUserId(userId: string): Promise<Mesocycle[]> {
     return await this.find({ relations: ["users"], where: { users: { id: userId } } });
   }
 
