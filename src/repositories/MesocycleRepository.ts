@@ -1,5 +1,6 @@
 import { Repository, DataSource } from "typeorm";
 import { Mesocycle } from "../entities/Mesocycle";
+import { Workout } from "../entities/Workout";
 
 export class MesocycleRepository extends Repository<Mesocycle> {
   constructor(dataSource: DataSource) {
@@ -49,5 +50,22 @@ export class MesocycleRepository extends Repository<Mesocycle> {
    */
   async getMesocycleByUser(userId: string): Promise<Mesocycle[]> {
     return await this.find({ relations: ["users"], where: { users: { id: userId } } });
+  }
+
+  /**
+   * Get Workouts by Mesocycle
+   * @returns Mesocycle[]
+   */
+  async getAllWorkoutsByMesocycles(): Promise<Mesocycle[]> {
+    return await this.find({ relations: ["workouts"] });
+  }
+
+  /**
+   * Get Workouts by Mesocycle ID
+   * @param mesocycleId
+   * @returns Workout[] | null
+   */
+  async getWorkoutsByMesocycleId(mesocycleId: string): Promise<Mesocycle | null> {
+    return await this.findOne({ where: { id: mesocycleId }, relations: ["workouts"] });
   }
 }

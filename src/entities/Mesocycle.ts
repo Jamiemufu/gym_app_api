@@ -22,8 +22,8 @@ export class Mesocycle {
   length!: number;
 
   // mesocycles owns join table with workouts
-  @JoinTable()
   @ManyToMany(() => Workout, workout => workout.id)
+  @JoinTable()
   workouts!: Workout[];
 
   @ManyToOne(() => User, user => user.id)

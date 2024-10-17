@@ -12,7 +12,7 @@ const mesoRepo = new MesocycleRepository(AppDataSource);
  * @param res Response
  * @returns Promise<void>
  */
-router.get("/", async (res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
   const mesocycles = await mesoRepo.getAllMesocycles();
   res.json(mesocycles);
 });
@@ -50,7 +50,7 @@ router.get("/:uuid/users", async (req: Request, res: Response) => {
  * @param res Response
  * @returns Promise<void>
  */
-router.get("/users/", async (res: Response) => {
+router.get("/users/", async (req: Request, res: Response) => {
   const users = await mesoRepo.getAllMesocycleUsers();
   res.json(users);
 });
@@ -64,8 +64,30 @@ router.get("/users/", async (res: Response) => {
  */
 router.get("/user/:uuid", async (req: Request, res: Response) => {
   const users = await mesoRepo.getMesocycleByUser(req.params.uuid);
-  console.log(req.params.uuid);
   res.json(users);
+});
+
+/**
+ * Get workouts by mesocycle
+ * GET /workouts
+ * @param res Response
+ * @returns Promise<void>
+ */
+router.get("/workouts", async (req: Request, res: Response) => {
+  const workouts = await mesoRepo.getAllWorkoutsByMesocycles();
+  res.json(workouts);
+});
+
+/**
+ * Get workouts by mesocycle id
+ * GET /workouts/:id
+ * @param req Request
+ * @param res Response
+ * @returns Promise<void>
+ */
+router.get("/workouts/:uuid", async (req: Request, res: Response) => {
+  const workouts = await mesoRepo.getWorkoutsByMesocycleId(req.params.uuid);
+  res.json(workouts);
 });
 
 export default router;
