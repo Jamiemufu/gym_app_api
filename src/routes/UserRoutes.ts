@@ -7,18 +7,6 @@ const router = Router();
 const userRepository = new UserRepository(AppDataSource);
 
 /**
- * Get user by id
- * GET /users/:id
- * @param req Request
- * @param res Response
- * @returns Promise<User>
- */
-router.get("/:uuid:", async (req: Request, res: Response) => {
-  const user = await userRepository.getUserById(req.params.uuid);
-  user ? res.status(200).json(user) : res.status(404).json({ message: "User not found" });
-});
-
-/**
  * Get all users
  * GET /users
  * @param res Response
@@ -27,6 +15,18 @@ router.get("/:uuid:", async (req: Request, res: Response) => {
 router.get("/", async (req: Request, res: Response) => {
   const users = await userRepository.getAllUsers();
   res.status(200).json(users);
+});
+
+/**
+ * Get user by id
+ * GET /users/:id
+ * @param req Request
+ * @param res Response
+ * @returns Promise<User>
+ */
+router.get("/:uuid", async (req: Request, res: Response) => {
+  const user = await userRepository.getUserById(req.params.uuid);
+  user ? res.status(200).json(user) : res.status(404).json({ message: "User not found" });
 });
 
 /**

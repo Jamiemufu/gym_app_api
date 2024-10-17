@@ -43,6 +43,18 @@ router.get("/:uuid", async (req: Request, res: Response) => {
 });
 
 /**
+ * Get mesocycle by name
+ * GET /mesocycles/name/:name
+ * @param req Request
+ * @param res Response
+ * @returns Promise<Mesocycle>
+ */
+router.get("/name/:name", async (req: Request, res: Response) => {
+  const mesocycle = await mesoRepo.getMesocycleByName(req.params.name);
+  mesocycle ? res.status(200).json(mesocycle) : res.status(404).json({ message: "Mesocycle not found" });
+});
+
+/**
  * Get workouts by mesocycle id
  * GET /workouts/:id
  * @param req Request

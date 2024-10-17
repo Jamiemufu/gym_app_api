@@ -44,6 +44,15 @@ export class MesocycleRepository extends Repository<Mesocycle> {
   }
 
   /**
+   * Get Mesocycle by Name
+   * @param name
+   * @returns Mesocycle | null
+   */
+  async getMesocycleByName(name: string): Promise<Mesocycle | null> {
+    return await this.findOneBy({ name });
+  }
+  
+  /**
    * Get Mesocycle by UserID
    * @param userId
    * @returns User | null
