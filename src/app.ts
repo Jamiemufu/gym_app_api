@@ -6,6 +6,7 @@ import express from "express";
 import session from "express-session";
 import userRoutes from "./routes/UserRoutes";
 import mesocycleRoutes from "./routes/MesocycleRoutes";
+import exerciseRoutes from "./routes/ExerciseRoutes";
 
 const app = express();
 const PORT = process.env.APP_PORT || 3000;
@@ -29,6 +30,7 @@ AppDataSource.initialize()
     // // Use user routes with a base path
     app.use("/users", userRoutes);
     app.use("/mesocycle", mesocycleRoutes);
+    app.use("/exercise", exerciseRoutes);
     // // Use workout routes with a base path
     // app.use("/workouts", workoutRoutes);
 
