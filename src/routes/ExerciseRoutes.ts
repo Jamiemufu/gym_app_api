@@ -130,4 +130,93 @@ router.get("/id/:uuid", async (req: Request, res: Response, next: NextFunction) 
   }
 });
 
+/**
+ * Update exercise by id
+ * PUT /exercise/update/:uuid
+ * @param req Request
+ * @param res Response
+ * @returns Promise<Exercise>
+ * @throws Error
+ */
+router.put("/update/:uuid", async (req: Request, res: Response, next: NextFunction) => {
+  /**
+   * #swagger.tags = ["Exercise"]
+   * #swagger.description = "Updates an exercise by its ID."
+   * #swagger.parameters['uuid'] = { description: "Exercise ID" }
+   * #swagger.parameters['name'] = { description: "Exercise name" }
+   * #swagger.parameters['muscle_group'] = { description: "Muscle group" }
+   * #swagger.parameters['equipment'] = { description: "Equipment" }
+   * #swagger.path = '/exercise/update/{uuid}'
+   * #swagger.responses[200] = { description: "Exercise updated." }
+   * #swagger.responses[404] = { description: "Exercise not found." }
+   * #swagger.responses[500] = { description: "Internal server error." }
+   */
+  try {
+    const exercise = await exerciseRepository.updateExercise(
+      req.params.uuid,
+      req.query.name as string,
+      req.query.muscle_group as string,
+      req.query.equipment as string
+    );
+    resourceValidator(exercise, errorMessage, req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * Create a new exercise
+ * POST /exercise/create
+ * @param req Request
+ * @param res Response
+ * @returns Promise<Exercise>
+ */
+router.post("/create", async (req: Request, res: Response, next: NextFunction) => {
+  /**
+   * #swagger.tags = ["Exercise"]
+   * #swagger.description = "Creates a new exercise."
+   * #swagger.parameters['name'] = { description: "Exercise name", required: true }
+   * #swagger.parameters['muscle_group'] = { description: "Muscle group", required: true }
+   * #swagger.parameters['equipment'] = { description: "Equipment", required: true }
+   * #swagger.path = '/exercise/create'
+   * #swagger.responses[201] = { description: "Exercise created." }
+   * #swagger.responses[500] = { description: "Internal server error." }
+   */
+  try {
+    const exercise = await exerciseRepository.createExercise(
+      req.query.name as string,
+      req.query.muscle_group as string,
+      req.query.equipment as string
+    );
+    resourceValidator(exercise, errorMessage, req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * Delete exercise by id
+ * DELETE /exercise/delete/:uuid
+ * @param req Request
+ * @param res Response
+ * @returns Promise<void>
+ */
+router.delete("/delete/:uuid", async (req: Request, res: Response, next: NextFunction) => {
+  /**
+   * #swagger.tags = ["Exercise"]
+   * #swagger.description = "Deletes an exercise by its ID."
+   * #swagger.parameters['uuid'] = { description: "Exercise ID" }
+   * #swagger.path = '/exercise/delete/{uuid}'
+   * #swagger.responses[204] = { description: "Exercise deleted." }
+   * #swagger.responses[404] = { description: "Exercise not found." }
+   * #swagger.responses[500] = { description: "Internal server error." }
+   */
+  try {
+    const exercise = await exerciseRepository.deleteExercise(req.params.uuid);
+    resourceValidator(exercise, errorMessage, req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;
