@@ -1,4 +1,3 @@
-
 import { Request, Response } from "express";
 
 /**
@@ -10,6 +9,17 @@ export const resourceValidator = (resource: any, message: string, req: Request, 
   if (!resource || resource === "" || resource.length === 0 || resource === null) {
     throw new Error(message);
   } else {
-    return res.status(200).json(resource);
+    switch (req.method) {
+      case "DELETE":
+        return res.status(204).json({ message: "Resource deleted" });
+      case "GET":
+        return res.status(200).json(resource);
+      case "POST":
+        return res.status(201).json(resource);
+      case "PUT":
+        return res.status(200).json(resource);
+      default:
+        return res.status(200).json(resource);
+    }
   }
-}
+};

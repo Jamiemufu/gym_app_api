@@ -307,6 +307,106 @@
         }
       }
     },
+    "/mesocycle/update/{uuid}/{name}": {
+      "patch": {
+        "tags": [
+          "Mesocycle"
+        ],
+        "description": "Updates a mesocycle name.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Mesocycle ID"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "New Mesocycle name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mesocycle updated."
+          },
+          "404": {
+            "description": "Mesocycle not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/mesocycle/create/{uuid}": {
+      "post": {
+        "tags": [
+          "Mesocycle"
+        ],
+        "description": "Creates a new mesocycle.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User ID"
+          },
+          {
+            "name": "name",
+            "description": "Mesocycle name",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "description": "Mesocycle length",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Mesocycle created."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/mesocycle/delete/{uuid}": {
+      "delete": {
+        "tags": [
+          "Mesocycle"
+        ],
+        "description": "Deletes a mesocycle.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Mesocycle ID"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Mesocycle deleted."
+          },
+          "404": {
+            "description": "Mesocycle not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
     "/users/all": {
       "get": {
         "tags": [

@@ -156,4 +156,84 @@ router.get("/id/:uuid/users", async (req: Request, res: Response, next: NextFunc
   }
 });
 
+/**
+ * Update mesocycle name
+ * PUT /mesocycle/update/:uuid
+ * @param req Request
+ * @param res Response
+ * @returns Promise<void>
+ */
+router.patch("/update/:uuid/:name", async (req: Request, res: Response, next: NextFunction) => {
+  /**
+   * #swagger.tags = ["Mesocycle"]
+   * #swagger.description = "Updates a mesocycle name."
+   * #swagger.parameters['uuid'] = { description: "Mesocycle ID" }
+   * #swagger.parameters['name'] = { description: "New Mesocycle name" }
+   * #swagger.path = '/mesocycle/update/{uuid}/{name}'
+   * #swagger.responses[200] = { description: "Mesocycle updated." }
+   * #swagger.responses[404] = { description: "Mesocycle not found." }
+   * #swagger.responses[500] = { description: "Internal server error." }
+   */
+  try {
+    const mesocycle = await mesoRepo.updateMesocycleName(req.params.uuid, req.params.name);
+    resourceValidator(mesocycle, errorMessage, req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * Create mesocycle
+ * POST /mesocycle/create/:uuid
+ * @param req Request
+ * @param res Response
+ * @returns Promise<void>
+ */
+router.post("/create/:uuid", async (req: Request, res: Response, next: NextFunction) => {
+  /**
+   * #swagger.tags = ["Mesocycle"]
+   * #swagger.description = "Creates a new mesocycle."
+   * #swagger.parameters['uuid'] = { description: "User ID" }
+   * #swagger.parameters['name'] = { description: "Mesocycle name" }
+   * #swagger.parameters['length'] = { description: "Mesocycle length" }
+   * #swagger.path = '/mesocycle/create/{uuid}'
+   * #swagger.responses[201] = { description: "Mesocycle created." }
+   * #swagger.responses[500] = { description: "Internal server error." }
+   */
+  try {
+    const userId = req.params.uuid;
+    const name = req.query.name as string;
+    const length = parseInt(req.query.length as string);
+    const mesocycle = await mesoRepo.createMesocycle(userId, name, length);
+    resourceValidator(mesocycle, errorMessage, req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * Delete mesocycle
+ * DELETE /mesocycle/delete/:uuid
+ * @param req Request
+ * @param res Response
+ * @returns Promise<void>
+ */
+router.delete("/delete/:uuid", async (req: Request, res: Response, next: NextFunction) => {
+  /**
+   * #swagger.tags = ["Mesocycle"]
+   * #swagger.description = "Deletes a mesocycle."
+   * #swagger.parameters['uuid'] = { description: "Mesocycle ID" }
+   * #swagger.path = '/mesocycle/delete/{uuid}'
+   * #swagger.responses[204] = { description: "Mesocycle deleted." }
+   * #swagger.responses[404] = { description: "Mesocycle not found." }
+   * #swagger.responses[500] = { description: "Internal server error." }
+   */
+  try {
+    const mesocycle = await mesoRepo.deleteMesocycle(req.params.uuid);
+    resourceValidator(mesocycle, errorMessage, req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;

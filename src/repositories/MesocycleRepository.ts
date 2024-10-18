@@ -1,5 +1,7 @@
 import { Repository, DataSource, ILike } from "typeorm";
 import { Mesocycle } from "../entities/Mesocycle";
+import { UserRepository } from "./UserRepository";
+import { AppDataSource } from "../config/ormconfig";
 
 export class MesocycleRepository extends Repository<Mesocycle> {
   constructor(dataSource: DataSource) {
@@ -50,7 +52,7 @@ export class MesocycleRepository extends Repository<Mesocycle> {
   async getMesocycleByName(name: string): Promise<Mesocycle | null> {
     return await this.findOneBy({ name: ILike(name) });
   }
-  
+
   /**
    * Get Mesocycle by UserID
    * @param userId
@@ -75,5 +77,62 @@ export class MesocycleRepository extends Repository<Mesocycle> {
    */
   async getWorkoutsByMesocycleId(mesocycleId: string): Promise<Mesocycle | null> {
     return await this.findOne({ where: { id: mesocycleId }, relations: ["workouts"] });
+  }
+
+  /**
+   * Update Mesocycle Name
+   * @param mesocycleId
+   * @param name
+   * @returns
+   */
+  async updateMesocycleName(mesocycleId: string, name: string): Promise<Mesocycle | null> {
+    const mesocycle = await this.findOneBy({ id: mesocycleId });
+
+    if (!mesocycle) {
+      throw new Error("Mesocycle not found");
+    }
+
+    mesocycle.name = name;
+    return await this.save(mesocycle);
+  }
+
+  /**
+   * create Mesocycle
+   * @param name
+   * @param length
+   * @param created_by
+   * @param workouts
+   * @param users
+   * @returns Mesocycle
+   */
+  async createMesocycle(userId: string, name: string, length: number): Promise<Mesocycle> {
+    const mesocycle = new Mesocycle();
+    mesocycle.name = name;
+    mesocycle.length = length;
+
+    const user = await new UserRepository(AppDataSource).getUserById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+    mesocycle.users = [user];
+    await this.save(mesocycle);
+
+    return mesocycle;
+  }
+
+  /**
+   * Delete Mesocycle by ID
+   * @param mesocycleId 
+   * @returns 
+   */
+  async deleteMesocycle(mesocycleId: string): Promise<Mesocycle | null> {
+    const mesocycle = await this.findOneBy({ id: mesocycleId });
+
+    if (!mesocycle) {
+      throw new Error("Mesocycle not found");
+    }
+
+    return await this.remove(mesocycle);
   }
 }
