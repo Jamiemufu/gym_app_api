@@ -1,4 +1,3 @@
-// src/routes/UserRoutes.ts
 import { Router, Request, Response, NextFunction } from "express";
 import { AppDataSource } from "../config/ormconfig";
 import { UserRepository } from "../repositories/UserRepository";
@@ -14,7 +13,15 @@ const errorMessage = "User not found";
  * @param res Response
  * @returns Promise<User>
  */
-router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/all", async (req: Request, res: Response, next: NextFunction) => {
+  /**
+   * #swagger.tags = ["User"]
+   * #swagger.description = "Retrieves all users."
+   * #swagger.path = '/users/all'
+   * #swagger.responses[200] = { description: "Users found." }
+   * #swagger.responses[404] = { description: "Users not found." }
+   * #swagger.responses[500] = { description: "Internal server error." }
+   */
   try {
     const users = await userRepository.getAllUsers();
     resourceValidator(users, errorMessage, req, res);
@@ -24,13 +31,22 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
 });
 
 /**
- * Get user by id
- * GET /users/:id
+ * Get user by ID
+ * GET /users/id/:uuid
  * @param req Request
  * @param res Response
  * @returns Promise<User>
  */
-router.get("/:uuid", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/id/:uuid", async (req: Request, res: Response, next: NextFunction) => {
+  /**
+   * #swagger.tags = ["User"]
+   * #swagger.description = "Retrieves a user by their ID."
+   * #swagger.parameters['uuid'] = { description: "User ID" }
+   * #swagger.path = '/users/id/{uuid}'
+   * #swagger.responses[200] = { description: "User found." }
+   * #swagger.responses[404] = { description: "User not found." }
+   * #swagger.responses[500] = { description: "Internal server error." }
+   */
   try {
     const user = await userRepository.getUserById(req.params.uuid);
     resourceValidator(user, errorMessage, req, res);
@@ -47,6 +63,15 @@ router.get("/:uuid", async (req: Request, res: Response, next: NextFunction) => 
  * @returns Promise<User>
  */
 router.get("/email/:email", async (req: Request, res: Response, next: NextFunction) => {
+  /**
+   * #swagger.tags = ["User"]
+   * #swagger.description = "Retrieves a user by their email."
+   * #swagger.parameters['email'] = { description: "User email" }
+   * #swagger.path = '/users/email/{email}'
+   * #swagger.responses[200] = { description: "User found." }
+   * #swagger.responses[404] = { description: "User not found." }
+   * #swagger.responses[500] = { description: "Internal server error." }
+   */
   try {
     const user = await userRepository.getUserByEmail(req.params.email);
     resourceValidator(user, errorMessage, req, res);
@@ -63,6 +88,15 @@ router.get("/email/:email", async (req: Request, res: Response, next: NextFuncti
  * @returns Promise<User>
  */
 router.get("/username/:username", async (req: Request, res: Response, next: NextFunction) => {
+  /**
+   * #swagger.tags = ["User"]
+   * #swagger.description = "Retrieves a user by their username."
+   * #swagger.parameters['username'] = { description: "User username" }
+   * #swagger.path = '/users/username/{username}'
+   * #swagger.responses[200] = { description: "User found." }
+   * #swagger.responses[404] = { description: "User not found." }
+   * #swagger.responses[500] = { description: "Internal server error." }
+   */
   try {
     const user = await userRepository.getUserByUsername(req.params.username);
     resourceValidator(user, errorMessage, req, res);

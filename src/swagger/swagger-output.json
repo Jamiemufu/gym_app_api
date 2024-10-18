@@ -1,0 +1,414 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Gym App API",
+    "version": "1.0.0",
+    "description": "API for Gym App"
+  },
+  "host": "localhost:3000",
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "basePath": "/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/exercise/all": {
+      "get": {
+        "tags": [
+          "Exercise"
+        ],
+        "description": "Retrieves all exercises.",
+        "responses": {
+          "200": {
+            "description": "Exercises found."
+          },
+          "404": {
+            "description": "Exercises not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/exercise/name/{name}": {
+      "get": {
+        "tags": [
+          "Exercise"
+        ],
+        "description": "Retrieves an exercise by its name.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Exercise name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exercise found."
+          },
+          "404": {
+            "description": "Exercise not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/exercise/muscle_group/{muscle_group}": {
+      "get": {
+        "tags": [
+          "Exercise"
+        ],
+        "description": "Retrieves exercises by its muscle group.",
+        "parameters": [
+          {
+            "name": "muscle_group",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Muscle group"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exercise found."
+          },
+          "404": {
+            "description": "Exercise not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/exercise/equipment/{equipment}": {
+      "get": {
+        "tags": [
+          "Exercise"
+        ],
+        "description": "Retrieves exercises by its equipment.",
+        "parameters": [
+          {
+            "name": "equipment",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Equipment"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exercise found."
+          },
+          "404": {
+            "description": "Exercise not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/exercise/id/{uuid}": {
+      "get": {
+        "tags": [
+          "Exercise"
+        ],
+        "description": "Retrieves an exercise by its ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Exercise ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exercise found."
+          },
+          "404": {
+            "description": "Exercise not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/mesocycles/users/id/{uuid}": {
+      "get": {
+        "tags": [
+          "Mesocycle"
+        ],
+        "description": "Retrieves a mesocycle by user ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mesocycles found."
+          },
+          "404": {
+            "description": "Mesocycles not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/mesocycle/all": {
+      "get": {
+        "tags": [
+          "Mesocycle"
+        ],
+        "description": "Retrieves all mesocycles.",
+        "responses": {
+          "200": {
+            "description": "Mesocycles found."
+          },
+          "404": {
+            "description": "Mesocycles not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/mesocycle/id/{uuid}": {
+      "get": {
+        "tags": [
+          "Mesocycle"
+        ],
+        "description": "Retrieves a mesocycle by its ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Mesocycle ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mesocycle found."
+          },
+          "404": {
+            "description": "Mesocycle not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/mesocycle/name/{name}": {
+      "get": {
+        "tags": [
+          "Mesocycle"
+        ],
+        "description": "Retrieves a mesocycle by its name.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Mesocycle name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mesocycle found."
+          },
+          "404": {
+            "description": "Mesocycle not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/mesocycle/workouts/{uuid}": {
+      "get": {
+        "tags": [
+          "Mesocycle"
+        ],
+        "description": "Retrieves workouts by mesocycle ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Mesocycle ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workouts found."
+          },
+          "404": {
+            "description": "Workouts not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/mesocycle/id/{uuid}/users": {
+      "get": {
+        "tags": [
+          "Mesocycle"
+        ],
+        "description": "Retrieves users by mesocycle ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Mesocycle ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Users found."
+          },
+          "404": {
+            "description": "Users not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/users/all": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "Retrieves all users.",
+        "responses": {
+          "200": {
+            "description": "Users found."
+          },
+          "404": {
+            "description": "Users not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/users/id/{uuid}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "Retrieves a user by their ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/users/email/{email}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "Retrieves a user by their email.",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User email"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/users/username/{username}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "Retrieves a user by their username.",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User username"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    }
+  }
+}

@@ -9,8 +9,10 @@ import mesocycleRoutes from "./routes/MesocycleRoutes";
 import exerciseRoutes from "./routes/ExerciseRoutes";
 import { errorHandler } from "./middleware/errorHandler";
 
+const swaggerUi = require('swagger-ui-express');
 const app = express();
 const PORT = process.env.APP_PORT || 3000;
+
 
 // Middleware
 app.use(express.json());
@@ -27,15 +29,12 @@ app.use(
 AppDataSource.initialize()
   .then(() => {
     console.log("Data Source has been initialized!");
-
-    // // Use user routes with a base path
     app.use("/users", userRoutes);
     app.use("/mesocycle", mesocycleRoutes);
     app.use("/exercise", exerciseRoutes);
-    // // Use workout routes with a base path
-    // app.use("/workouts", workoutRoutes);
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(require('./swagger/swagger-output.json')));
     app.use(errorHandler)
-
+    
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
       console.log('Database name:', AppDataSource.options.database);

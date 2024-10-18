@@ -10,6 +10,6 @@
         "emitDecoratorMetadata": true,
         "outDir": "./dist"
     },
-    "include": ["src/**/*"],
+    "include": ["src/**/*", "src/swagger.js"],
     "exclude": ["node_modules"]
 }
