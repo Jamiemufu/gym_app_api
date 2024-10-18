@@ -12,7 +12,7 @@ import { NextFunction, Request, Response } from "express";
       } else {
         res.status(500).json({
           success: false,
-          message: "Internal Server Error",
+          message: err.message,
           data: null,
         });
       }

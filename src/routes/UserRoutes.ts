@@ -1,10 +1,11 @@
 // src/routes/UserRoutes.ts
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import { AppDataSource } from "../config/ormconfig";
 import { UserRepository } from "../repositories/UserRepository";
-
+import { resourceValidator } from "../middleware/resourceValidator";
 const router = Router();
 const userRepository = new UserRepository(AppDataSource);
+const errorMessage = "User not found";
 
 /**
  * Get all users
@@ -12,9 +13,14 @@ const userRepository = new UserRepository(AppDataSource);
  * @param res Response
  * @returns Promise<User>
  */
-router.get("/", async (req: Request, res: Response) => {
-  const users = await userRepository.getAllUsers();
-  res.status(200).json(users);
+router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const users = await userRepository.getAllUsers();
+    resourceValidator(users, errorMessage);
+    res.status(200).json(users);
+  } catch (error) {
+    next(error);
+  }
 });
 
 /**
@@ -24,9 +30,14 @@ router.get("/", async (req: Request, res: Response) => {
  * @param res Response
  * @returns Promise<User>
  */
-router.get("/:uuid", async (req: Request, res: Response) => {
-  const user = await userRepository.getUserById(req.params.uuid);
-  user ? res.status(200).json(user) : res.status(404).json({ message: "User not found" });
+router.get("/:uuid", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const user = await userRepository.getUserById(req.params.uuid);
+    resourceValidator(user, errorMessage);
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
 });
 
 /**
@@ -36,9 +47,14 @@ router.get("/:uuid", async (req: Request, res: Response) => {
  * @param res Response
  * @returns Promise<User>
  */
-router.get("/email/:email", async (req: Request, res: Response) => {
-  const user = await userRepository.getUserByEmail(req.params.email);
-  user ? res.status(200).json(user) : res.status(404).json({ message: "User not found" });
+router.get("/email/:email", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const user = await userRepository.getUserByEmail(req.params.email);
+    resourceValidator(user, errorMessage);
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
 });
 
 /**
@@ -48,9 +64,14 @@ router.get("/email/:email", async (req: Request, res: Response) => {
  * @param res Response
  * @returns Promise<User>
  */
-router.get("/username/:username", async (req: Request, res: Response) => {
-  const user = await userRepository.getUserByUsername(req.params.username);
-  user ? res.status(200).json(user) : res.status(404).json({ message: "User not found" });
+router.get("/username/:username", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const user = await userRepository.getUserByUsername(req.params.username);
+    resourceValidator(user, errorMessage);
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
 });
 
 export default router;
