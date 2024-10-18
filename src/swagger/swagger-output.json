@@ -509,6 +509,42 @@
           }
         }
       }
+    },
+    "/users/create": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "Creates a new user.",
+        "parameters": [
+          {
+            "name": "username",
+            "description": "User username",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "User email",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "description": "User password",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User created."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
     }
   }
 }

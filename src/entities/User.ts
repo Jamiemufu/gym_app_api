@@ -7,15 +7,21 @@
 // | created_at      | timestamp    | Default: `now()`              |
 
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  IsEmail,
+  IsString,
+} from "class-validator";
 @Entity()
 export class User {
 
   @PrimaryGeneratedColumn("uuid")
   id!: string;
   
+  @IsString()
   @Column({ nullable: false, unique: true })
   username!: string;
   
+  @IsEmail()
   @Column({ nullable: false, unique: true })
   email!: string;
 

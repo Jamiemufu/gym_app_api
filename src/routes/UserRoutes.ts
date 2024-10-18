@@ -2,6 +2,7 @@ import { Router, Request, Response, NextFunction } from "express";
 import { AppDataSource } from "../config/ormconfig";
 import { UserRepository } from "../repositories/UserRepository";
 import { resourceValidator } from "../middleware/resourceValidator";
+import bcrypt from "bcrypt";
 
 const router = Router();
 const userRepository = new UserRepository(AppDataSource);
@@ -104,5 +105,42 @@ router.get("/username/:username", async (req: Request, res: Response, next: Next
     next(error);
   }
 });
+
+/**
+ * Create a new user
+ * POST /users/create
+ * @param req Request
+ * @param res Response
+ * @returns Promise<User>
+ */
+router.post("/create", async (req: Request, res: Response, next: NextFunction) => {
+  /**
+   * #swagger.tags = ["User"]
+   * #swagger.description = "Creates a new user."
+   * #swagger.path = '/users/create'
+   * #swagger.parameters['username'] = { description: "User username" }
+   * #swagger.parameters['email'] = { description: "User email" }
+   * #swagger.parameters['password'] = { description: "User password" }
+   * #swagger.responses[201] = { description: "User created." }
+   * #swagger.responses[500] = { description: "Internal server error." }
+   */
+  try {
+    const username = req.query.username as string;
+    const email = req.query.email as string;
+    const password = req.query.password as string;
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const user = await userRepository.createUser(username, hashedPassword, email);
+    resourceValidator(user, errorMessage, req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//TODO: Implement delete user route
+
+//TODO: Implement update user route
 
 export default router;
