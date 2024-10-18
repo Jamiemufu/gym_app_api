@@ -16,8 +16,7 @@ const errorMessage = "Exercise not found";
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const exercises = await exerciseRepository.getAllExercises();
-    resourceValidator(exercises, errorMessage);
-    res.status(200).json(exercises);
+    resourceValidator(exercises, errorMessage, req, res);
   } catch (err) {
     next(err);
   }
@@ -33,8 +32,7 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
 router.get("/name/:name", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const exercise = await exerciseRepository.getExerciseByName(req.params.name);
-    resourceValidator(exercise, errorMessage);
-    res.status(200).json(exercise);
+    resourceValidator(exercise, errorMessage, req, res);
   } catch (error) {
     next(error);
   }
@@ -50,8 +48,7 @@ router.get("/name/:name", async (req: Request, res: Response, next: NextFunction
 router.get("/muscle_group/:muscle_group", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const exercise = await exerciseRepository.getExerciseByType(req.params.muscle_group);
-    resourceValidator(exercise, errorMessage);
-    res.status(200).json(exercise);
+    resourceValidator(exercise, errorMessage, req, res);
   } catch (error) {
     next(error);
   }
@@ -67,8 +64,7 @@ router.get("/muscle_group/:muscle_group", async (req: Request, res: Response, ne
 router.get("/equipment/:equipment", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const exercise = await exerciseRepository.getExerciseByEquipment(req.params.equipment);
-    resourceValidator(exercise, errorMessage);
-    res.status(200).json(exercise);
+    resourceValidator(exercise, errorMessage, req, res);
   } catch (error) {
     next(error);
   }
@@ -84,8 +80,7 @@ router.get("/equipment/:equipment", async (req: Request, res: Response, next: Ne
 router.get("/:uuid", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const exercise = await exerciseRepository.getExerciseById(req.params.uuid);
-    resourceValidator(exercise, errorMessage);
-    res.status(200).json(exercise);
+    resourceValidator(exercise, errorMessage, req, res);
   } catch (error) {
     next(error);
   }

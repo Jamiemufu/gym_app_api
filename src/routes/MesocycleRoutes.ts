@@ -19,8 +19,7 @@ const errorMessage = "Mesocycle not found";
 router.get("/users/:uuid", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const users = await mesoRepo.getMesocycleByUserId(req.params.uuid);
-    resourceValidator(users, errorMessage);
-    res.status(200).json(users);
+    resourceValidator(users, errorMessage, req, res);
   } catch (error) {
     next(error);
   }
@@ -35,7 +34,7 @@ router.get("/users/:uuid", async (req: Request, res: Response, next: NextFunctio
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const mesocycles = await mesoRepo.getAllMesocycles();
-    resourceValidator(mesocycles, errorMessage);
+    resourceValidator(mesocycles, errorMessage, req, res);
   } catch (error) {
     next(error);
   }
@@ -51,7 +50,7 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
 router.get("/:uuid", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const mesocycle = await mesoRepo.getMesocycleById(req.params.uuid);
-    resourceValidator(mesocycle, errorMessage);
+    resourceValidator(mesocycle, errorMessage, req, res);
   } catch (error) {
     next(error);
   }
@@ -67,7 +66,7 @@ router.get("/:uuid", async (req: Request, res: Response, next: NextFunction) => 
 router.get("/name/:name", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const mesocycle = await mesoRepo.getMesocycleByName(req.params.name);
-    resourceValidator(mesocycle, errorMessage);
+    resourceValidator(mesocycle, errorMessage, req, res);
   } catch (error) {
     next(error);
   }
@@ -83,7 +82,7 @@ router.get("/name/:name", async (req: Request, res: Response, next: NextFunction
 router.get("/:uuid/workouts", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const workouts = await mesoRepo.getWorkoutsByMesocycleId(req.params.uuid);
-    resourceValidator(workouts, errorMessage);
+    resourceValidator(workouts, errorMessage, req, res);
   } catch (error) {
     next(error);
   }
@@ -98,7 +97,7 @@ router.get("/:uuid/workouts", async (req: Request, res: Response, next: NextFunc
 router.get("/:uuid/users", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const users = await mesoRepo.getUsersByMesocycleId(req.params.uuid);
-    resourceValidator(users, errorMessage);
+    resourceValidator(users, errorMessage, req, res);
   } catch (error) {
     next(error);
   }

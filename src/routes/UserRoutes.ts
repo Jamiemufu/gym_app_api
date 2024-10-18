@@ -3,6 +3,7 @@ import { Router, Request, Response, NextFunction } from "express";
 import { AppDataSource } from "../config/ormconfig";
 import { UserRepository } from "../repositories/UserRepository";
 import { resourceValidator } from "../middleware/resourceValidator";
+
 const router = Router();
 const userRepository = new UserRepository(AppDataSource);
 const errorMessage = "User not found";
@@ -16,8 +17,7 @@ const errorMessage = "User not found";
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const users = await userRepository.getAllUsers();
-    resourceValidator(users, errorMessage);
-    res.status(200).json(users);
+    resourceValidator(users, errorMessage, req, res);
   } catch (error) {
     next(error);
   }
@@ -33,8 +33,7 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
 router.get("/:uuid", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = await userRepository.getUserById(req.params.uuid);
-    resourceValidator(user, errorMessage);
-    res.status(200).json(user);
+    resourceValidator(user, errorMessage, req, res);
   } catch (error) {
     next(error);
   }
@@ -50,8 +49,7 @@ router.get("/:uuid", async (req: Request, res: Response, next: NextFunction) => 
 router.get("/email/:email", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = await userRepository.getUserByEmail(req.params.email);
-    resourceValidator(user, errorMessage);
-    res.status(200).json(user);
+    resourceValidator(user, errorMessage, req, res);
   } catch (error) {
     next(error);
   }
@@ -67,8 +65,7 @@ router.get("/email/:email", async (req: Request, res: Response, next: NextFuncti
 router.get("/username/:username", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = await userRepository.getUserByUsername(req.params.username);
-    resourceValidator(user, errorMessage);
-    res.status(200).json(user);
+    resourceValidator(user, errorMessage, req, res);
   } catch (error) {
     next(error);
   }
