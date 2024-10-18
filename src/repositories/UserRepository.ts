@@ -2,8 +2,7 @@
 
 import { Repository, DataSource } from "typeorm";
 import { User } from "../entities/User";
-import { validate } from "class-validator";
-import { error } from "console";
+import { validateRequest } from "../middleware/resourceValidator";
 
 export class UserRepository extends Repository<User> {
   constructor(dataSource: DataSource) {
@@ -56,13 +55,7 @@ export class UserRepository extends Repository<User> {
     user.username = username;
     user.password_hash = password;
     user.email = email;
-
-    const errors = await validate(user);
-
-    if (errors.length > 0) {
-      throw new Error(errors.toString());
-    }
-    
+    await validateRequest(user);
     return await this.save(user);
   }
 
@@ -78,6 +71,7 @@ export class UserRepository extends Repository<User> {
     if (!user) {
       throw new Error("User not found");
     }
+    
     return await this.remove(user);
   }
 }

@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { validate } from "class-validator";
 
 /**
  * Throw an error if the resource is empty or not found
@@ -23,3 +24,15 @@ export const resourceValidator = (resource: any, message: string, req: Request, 
     }
   }
 };
+
+/**
+ * Validate the request data
+ * @param data 
+ */
+export const validateRequest = async (data: any) => {
+  const errors = await validate(data);
+
+  if (errors.length > 0) {
+    throw new Error(errors.toString());
+  }
+}

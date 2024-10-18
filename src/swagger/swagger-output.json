@@ -148,6 +148,119 @@
         }
       }
     },
+    "/exercise/update/{uuid}": {
+      "put": {
+        "tags": [
+          "Exercise"
+        ],
+        "description": "Updates an exercise by its ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Exercise ID"
+          },
+          {
+            "name": "name",
+            "description": "Exercise name",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "muscle_group",
+            "description": "Muscle group",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "equipment",
+            "description": "Equipment",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exercise updated."
+          },
+          "404": {
+            "description": "Exercise not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/exercise/create": {
+      "post": {
+        "tags": [
+          "Exercise"
+        ],
+        "description": "Creates a new exercise.",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Exercise name",
+            "required": true,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "muscle_group",
+            "description": "Muscle group",
+            "required": true,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "equipment",
+            "description": "Equipment",
+            "required": true,
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Exercise created."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/exercise/delete/{uuid}": {
+      "delete": {
+        "tags": [
+          "Exercise"
+        ],
+        "description": "Deletes an exercise by its ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Exercise ID"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Exercise deleted."
+          },
+          "404": {
+            "description": "Exercise not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
     "/mesocycles/users/id/{uuid}": {
       "get": {
         "tags": [
