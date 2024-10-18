@@ -1,6 +1,5 @@
-import { Repository, DataSource } from "typeorm";
+import { Repository, DataSource, ILike } from "typeorm";
 import { Mesocycle } from "../entities/Mesocycle";
-import { Workout } from "../entities/Workout";
 
 export class MesocycleRepository extends Repository<Mesocycle> {
   constructor(dataSource: DataSource) {
@@ -49,7 +48,7 @@ export class MesocycleRepository extends Repository<Mesocycle> {
    * @returns Mesocycle | null
    */
   async getMesocycleByName(name: string): Promise<Mesocycle | null> {
-    return await this.findOneBy({ name });
+    return await this.findOneBy({ name: ILike(name) });
   }
   
   /**
