@@ -2,6 +2,7 @@ import { Repository, DataSource, ILike } from "typeorm";
 import { Mesocycle } from "../entities/Mesocycle";
 import { UserRepository } from "./UserRepository";
 import { AppDataSource } from "../config/ormconfig";
+import { validateRequest } from "../middleware/resourceValidator";
 
 export class MesocycleRepository extends Repository<Mesocycle> {
   constructor(dataSource: DataSource) {
@@ -40,7 +41,6 @@ export class MesocycleRepository extends Repository<Mesocycle> {
    */
   async getUsersByMesocycleId(mesocycleId: string): Promise<{ id: string; name: string; email: string; created_at: Date }[] | null> {
     const mesocycle = await this.findOne({ where: { id: mesocycleId }, relations: ["users"] });
-
     return mesocycle?.users.map((user) => ({ id: user.id, name: user.username, email: user.email, created_at: user.created_at })) || null;
   }
 
@@ -92,7 +92,8 @@ export class MesocycleRepository extends Repository<Mesocycle> {
       throw new Error("Mesocycle not found");
     }
 
-    mesocycle.name = name;
+    mesocycle.name = name;  
+    await validateRequest(mesocycle);
     return await this.save(mesocycle);
   }
 
@@ -117,8 +118,8 @@ export class MesocycleRepository extends Repository<Mesocycle> {
     }
     
     mesocycle.users = [user];
+    await validateRequest(mesocycle);
     await this.save(mesocycle);
-
     return mesocycle;
   }
 

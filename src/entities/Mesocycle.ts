@@ -7,6 +7,7 @@
 // | created_by    | UUID         | References: users.id          |
 
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { IsString, IsNumber } from "class-validator";
 import { Workout } from "./Workout";
 import { User } from "./User";
 
@@ -15,9 +16,11 @@ export class Mesocycle {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
+  @IsString()
   @Column({ nullable: false })
   name!: string;
-
+  
+  @IsNumber()
   @Column({ nullable: false })
   length!: number;
 
