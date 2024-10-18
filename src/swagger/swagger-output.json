@@ -545,6 +545,34 @@
           }
         }
       }
+    },
+    "/users/delete/{uuid}": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "description": "Deletes a user.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User deleted."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
     }
   }
 }

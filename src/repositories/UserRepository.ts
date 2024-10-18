@@ -56,10 +56,28 @@ export class UserRepository extends Repository<User> {
     user.username = username;
     user.password_hash = password;
     user.email = email;
+
     const errors = await validate(user);
-    if (errors) {
+
+    if (errors.length > 0) {
       throw new Error(errors.toString());
     }
+    
     return await this.save(user);
+  }
+
+  /**
+   * Delete user
+   * @param userId
+   * @returns void
+   * @throws Error
+   */
+  async deleteUser(userId: string): Promise<User | null> {
+    const user = await this.findOneBy({ id: userId });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+    return await this.remove(user);
   }
 }

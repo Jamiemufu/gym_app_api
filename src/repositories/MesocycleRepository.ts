@@ -115,6 +115,7 @@ export class MesocycleRepository extends Repository<Mesocycle> {
     if (!user) {
       throw new Error("User not found");
     }
+    
     mesocycle.users = [user];
     await this.save(mesocycle);
 
