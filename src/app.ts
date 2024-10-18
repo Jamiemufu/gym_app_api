@@ -7,6 +7,7 @@ import session from "express-session";
 import userRoutes from "./routes/UserRoutes";
 import mesocycleRoutes from "./routes/MesocycleRoutes";
 import exerciseRoutes from "./routes/ExerciseRoutes";
+import { errorHandler } from "./middleware/errorHandler";
 
 const app = express();
 const PORT = process.env.APP_PORT || 3000;
@@ -33,6 +34,7 @@ AppDataSource.initialize()
     app.use("/exercise", exerciseRoutes);
     // // Use workout routes with a base path
     // app.use("/workouts", workoutRoutes);
+    app.use(errorHandler)
 
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);

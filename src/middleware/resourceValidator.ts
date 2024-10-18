@@ -4,8 +4,8 @@
  * @param resource any
  * @returns Error
  */
-export const resourceValidator = (resource: any) => {
+export const resourceValidator = (resource: any, message: string) => {
   if (!resource || resource === "" || resource.length === 0 || resource === null) {
-    throw new Error("Resource not found");
+    throw new Error(message);
   }
 }

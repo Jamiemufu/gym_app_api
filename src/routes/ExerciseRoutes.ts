@@ -1,10 +1,11 @@
-import e, { Router, Request, Response, NextFunction } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import { AppDataSource } from "../config/ormconfig";
 import { ExerciseRepository } from "../repositories/ExerciseRepository";
 import { resourceValidator } from "../middleware/resourceValidator";
 
 const router = Router();
 const exerciseRepository = new ExerciseRepository(AppDataSource);
+const errorMessage = "Exercise not found";
 
 /**
  * Get all exercises
@@ -15,10 +16,10 @@ const exerciseRepository = new ExerciseRepository(AppDataSource);
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const exercises = await exerciseRepository.getAllExercises();
-    resourceValidator(exercises);
+    resourceValidator(exercises, errorMessage);
     res.status(200).json(exercises);
-  } catch (error) {
-    res.status(404).json({ message: "Exercises not found" });
+  } catch (err) {
+    next(err);
   }
 });
 
@@ -29,13 +30,13 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
  * @param res Response
  * @returns Promise<Exercise>
  */
-router.get("/name/:name", async (req: Request, res: Response) => {
+router.get("/name/:name", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const exercise = await exerciseRepository.getExerciseByName(req.params.name);
-    resourceValidator(exercise);
+    resourceValidator(exercise, errorMessage);
     res.status(200).json(exercise);
   } catch (error) {
-    res.status(404).json({ message: "Exercise not found" });
+    next(error);
   }
 });
 
@@ -46,13 +47,13 @@ router.get("/name/:name", async (req: Request, res: Response) => {
  * @param res Response
  * @returns Promise<Exercise[]>
  */
-router.get("/muscle_group/:muscle_group", async (req: Request, res: Response) => {
+router.get("/muscle_group/:muscle_group", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const exercise = await exerciseRepository.getExerciseByType(req.params.muscle_group);
-    resourceValidator(exercise);
+    resourceValidator(exercise, errorMessage);
     res.status(200).json(exercise);
   } catch (error) {
-    res.status(404).json({ message: "Exercise not found" });
+    next(error);
   }
 });
 
@@ -63,13 +64,13 @@ router.get("/muscle_group/:muscle_group", async (req: Request, res: Response) =>
  * @param res Response
  * @returns Promise<Exercise[]>
  */
-router.get("/equipment/:equipment", async (req: Request, res: Response) => {
+router.get("/equipment/:equipment", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const exercise = await exerciseRepository.getExerciseByEquipment(req.params.equipment);
-    resourceValidator(exercise);
+    resourceValidator(exercise, errorMessage);
     res.status(200).json(exercise);
   } catch (error) {
-    res.status(404).json({ message: "Exercise not found" });
+    next(error);
   }
 });
 
@@ -80,13 +81,13 @@ router.get("/equipment/:equipment", async (req: Request, res: Response) => {
  * @param res Response
  * @returns Promise<Exercise>
  */
-router.get("/:uuid", async (req: Request, res: Response) => {
+router.get("/:uuid", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const exercise = await exerciseRepository.getExerciseById(req.params.uuid);
-    resourceValidator(exercise);
+    resourceValidator(exercise, errorMessage);
     res.status(200).json(exercise);
   } catch (error) {
-    res.status(404).json({ message: "Exercise not found" });
+    next(error);
   }
 });
 
