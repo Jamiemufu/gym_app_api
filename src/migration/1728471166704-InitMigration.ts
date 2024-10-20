@@ -12,22 +12,29 @@ export class InitMigration1728471166704 implements MigrationInterface {
     // Create Users
     const user1 = await this.createUser(queryRunner, "user1", "user1@example.com", "hashed_password_user1");
     const user2 = await this.createUser(queryRunner, "user2", "user2@example.com", "hashed_password_user2");
-
+    const user3 = await this.createUser(queryRunner, "Jamiemufu", "test@email.com", "hashed_password_jamie");
     // Create Exercises
     const exercises = await Promise.all([
       this.createExercise(queryRunner, "Bench Press", "Chest", "Barbell"),
       this.createExercise(queryRunner, "Back Squat", "Legs", "Barbell"),
       this.createExercise(queryRunner, "Lateral Raise", "Shoulders", "Dumbbells"),
       this.createExercise(queryRunner, "Incline DB Press", "Chest", "Dumbbells"),
+      this.createExercise(queryRunner, "Deadlift", "Back", "Barbell"),
+      this.createExercise(queryRunner, "Smith Machine Incline Press", "Chest", "Smith Machine"),
+      this.createExercise(queryRunner, "Cable Flyes", "Chest", "Cables"),
+      this.createExercise(queryRunner, "Low to High Flyes", "Chest", "Cables"),
+      this.createExercise(queryRunner, "High Cable Crossover", "Chest", "Cables"),
     ]);
 
     // Create Workouts
     const workout1 = await this.createWorkout(queryRunner, "Full Body Workout", exercises, user1);
     const workout2 = await this.createWorkout(queryRunner, "Upper Body Workout", [exercises[0], exercises[2]], user2);
+    const workout3 = await this.createWorkout(queryRunner, "Chest Day", [exercises[0], exercises[5], exercises[6], exercises[7], exercises[8]], user3);
 
     // Create Mesocycles
-    const mesocycle1 = await this.createMesocycle(queryRunner, "Beginner Mesocycle", 4, user1, [workout1, workout2], [user1]);
-    const mesocycle2 = await this.createMesocycle(queryRunner, "Advanced Mesocycle", 6, user2, [workout1], [user1, user2]);
+    const mesocycle1 = await this.createMesocycle(queryRunner, "Beginner Mesocycle", 4, "cut", true, user1, [workout1, workout2], [user1]);
+    const mesocycle2 = await this.createMesocycle(queryRunner, "Advanced Mesocycle", 6, "bulk", false, user2, [workout1], [user1, user2]);
+    const mesocycle3 = await this.createMesocycle(queryRunner, "Op Massive", 3, "bulk", false, user3, [workout3], [user3]);
 
     // Create Mesocycle Days with rest and workout days
     await this.createMesocycleDays(queryRunner, mesocycle1, workout1, workout2);
@@ -36,11 +43,15 @@ export class InitMigration1728471166704 implements MigrationInterface {
     // Create UserWorkout Instances
     const userWorkout1 = await this.createUserWorkout(queryRunner, user1, workout1);
     const userWorkout2 = await this.createUserWorkout(queryRunner, user2, workout2);
+    const userWorkout3 = await this.createUserWorkout(queryRunner, user3, workout3);
 
     // Create Sets for UserWorkouts
     await this.createUserWorkoutSet(queryRunner, userWorkout1, exercises[0], 1, 10, 100);
     await this.createUserWorkoutSet(queryRunner, userWorkout1, exercises[1], 2, 8, 150);
     await this.createUserWorkoutSet(queryRunner, userWorkout2, exercises[2], 1, 12, 40);
+    await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[0], 1, 10, 70);
+    await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[0], 2, 8, 70);
+    await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[0], 3, 10, 60);
   }
 
   // Helper Functions to create entities and populate relationships
@@ -78,11 +89,13 @@ export class InitMigration1728471166704 implements MigrationInterface {
   }
 
   // Create Mesocycle and associate Workouts
-  private async createMesocycle(queryRunner: QueryRunner, name: string, length: number, created_by: User, workouts: Workout[], users: User[]) {
+  private async createMesocycle(queryRunner: QueryRunner, name: string, length: number, phase: string, periodization: boolean, created_by: User, workouts: Workout[], users: User[]) {
     const mesocycle = queryRunner.manager.create(Mesocycle, {
       name,
       length,
       created_by,
+      phase,
+      periodization,
       workouts,
       users,
     });

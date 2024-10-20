@@ -261,7 +261,7 @@
         }
       }
     },
-    "/mesocycles/users/id/{uuid}": {
+    "/mesocycle/users/id/{uuid}": {
       "get": {
         "tags": [
           "Mesocycle"
@@ -478,6 +478,18 @@
           {
             "name": "length",
             "description": "Mesocycle length",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "phase",
+            "description": "Mesocycle phase",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "periodization",
+            "description": "Mesocycle periodization",
             "in": "query",
             "type": "string"
           }

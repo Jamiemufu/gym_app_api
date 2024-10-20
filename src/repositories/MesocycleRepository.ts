@@ -106,10 +106,12 @@ export class MesocycleRepository extends Repository<Mesocycle> {
    * @param users
    * @returns Mesocycle
    */
-  async createMesocycle(userId: string, name: string, length: number): Promise<Mesocycle> {
+  async createMesocycle(userId: string, name: string, length: number, phase: string, periodization: string): Promise<Mesocycle> {
     const mesocycle = new Mesocycle();
     mesocycle.name = name;
     mesocycle.length = length;
+    mesocycle.phase = phase;
+    mesocycle.periodization = periodization === "true" ? true : false;
 
     const user = await new UserRepository(AppDataSource).getUserById(userId);
 

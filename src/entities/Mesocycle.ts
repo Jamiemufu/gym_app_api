@@ -7,7 +7,7 @@
 // | created_by    | UUID         | References: users.id          |
 
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { IsString, IsNumber } from "class-validator";
+import { IsString, IsNumber, IsBoolean } from "class-validator";
 import { Workout } from "./Workout";
 import { User } from "./User";
 
@@ -23,6 +23,14 @@ export class Mesocycle {
   @IsNumber()
   @Column({ nullable: false })
   length!: number;
+
+  @IsString()
+  @Column({ nullable: true })
+  phase!: string;
+
+  @IsBoolean()
+  @Column({ default : false })
+  periodization!: boolean;
 
   // mesocycles owns join table with workouts
   @ManyToMany(() => Workout, workout => workout.id)

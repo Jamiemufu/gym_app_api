@@ -16,12 +16,12 @@ const errorMessage = "Mesocycle not found";
  * @param res Response
  * @returns Promise<void>
  */
-router.get("/users/:uuid", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/users/id/:uuid", async (req: Request, res: Response, next: NextFunction) => {
   /**
    * #swagger.tags = ["Mesocycle"]
    * #swagger.description = "Retrieves a mesocycle by user ID."
    * #swagger.parameters['uuid'] = { description: "User ID" }
-   * #swagger.path = '/mesocycles/users/id/{uuid}'
+   * #swagger.path = '/mesocycle/users/id/{uuid}'
    * #swagger.responses[200] = { description: "Mesocycles found." }
    * #swagger.responses[404] = { description: "Mesocycles not found." }
    * #swagger.responses[500] = { description: "Internal server error." }
@@ -196,6 +196,8 @@ router.post("/create/:uuid", async (req: Request, res: Response, next: NextFunct
    * #swagger.parameters['uuid'] = { description: "User ID" }
    * #swagger.parameters['name'] = { description: "Mesocycle name" }
    * #swagger.parameters['length'] = { description: "Mesocycle length" }
+   * #swagger.parameters['phase'] = { description: "Mesocycle phase" }
+   * #swagger.parameters['periodization'] = { description: "Mesocycle periodization" }
    * #swagger.path = '/mesocycle/create/{uuid}'
    * #swagger.responses[201] = { description: "Mesocycle created." }
    * #swagger.responses[500] = { description: "Internal server error." }
@@ -204,7 +206,9 @@ router.post("/create/:uuid", async (req: Request, res: Response, next: NextFunct
     const userId = req.params.uuid;
     const name = req.query.name as string;
     const length = parseInt(req.query.length as string);
-    const mesocycle = await mesoRepo.createMesocycle(userId, name, length);
+    const phase = req.query.phase as string;
+    const periodization = req.query.periodization as string;
+    const mesocycle = await mesoRepo.createMesocycle(userId, name, length, phase, periodization);
     resourceValidator(mesocycle, errorMessage, req, res);
   } catch (error) {
     next(error);
