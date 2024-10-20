@@ -420,7 +420,7 @@
         }
       }
     },
-    "/mesocycle/update/{uuid}/{name}": {
+    "/mesocycle/update/name/{uuid}/{name}": {
       "patch": {
         "tags": [
           "Mesocycle"
@@ -440,6 +440,58 @@
             "required": true,
             "type": "string",
             "description": "New Mesocycle name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mesocycle updated."
+          },
+          "404": {
+            "description": "Mesocycle not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/mesocycle/update/{uuid}": {
+      "patch": {
+        "tags": [
+          "Mesocycle"
+        ],
+        "description": "Updates a mesocycle.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Mesocycle ID"
+          },
+          {
+            "name": "name",
+            "description": "Mesocycle name",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "description": "Mesocycle length",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "phase",
+            "description": "Mesocycle phase",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "periodization",
+            "description": "Mesocycle periodization",
+            "in": "query",
+            "type": "string"
           }
         ],
         "responses": {

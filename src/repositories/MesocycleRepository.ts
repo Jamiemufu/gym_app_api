@@ -98,6 +98,31 @@ export class MesocycleRepository extends Repository<Mesocycle> {
   }
 
   /**
+   * Update Mesocycle
+   * @param mesocycleId
+   * @param name
+   * @param length
+   * @param phase
+   * @param periodization
+   * @returns Mesocycle
+   * @throws Error
+   */
+  async updateMesocycle(mesocycleId: string, name: string, length: number, phase: string, periodization: string): Promise<Mesocycle> {
+    const mesocycle = await this.findOneBy({ id: mesocycleId });
+
+    if (!mesocycle) {
+      throw new Error("Mesocycle not found");
+    }
+
+    mesocycle.name = name;
+    mesocycle.length = length;
+    mesocycle.phase = phase;
+    mesocycle.periodization = periodization === "true" ? true : false;
+
+    await validateRequest(mesocycle);
+    return await this.save(mesocycle);
+  }
+  /**
    * create Mesocycle
    * @param name
    * @param length
@@ -111,7 +136,7 @@ export class MesocycleRepository extends Repository<Mesocycle> {
     mesocycle.name = name;
     mesocycle.length = length;
     mesocycle.phase = phase;
-    mesocycle.periodization = periodization === "true" ? true : false;
+    mesocycle.periodization = periodization.toLowerCase() === "true" ? true : false;
 
     const user = await new UserRepository(AppDataSource).getUserById(userId);
 

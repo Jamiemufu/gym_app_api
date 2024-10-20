@@ -158,7 +158,7 @@ router.get("/id/:uuid/users", async (req: Request, res: Response, next: NextFunc
 
 /**
  * Update mesocycle name
- * PUT /mesocycle/update/:uuid
+ * PUT /mesocycle/update/name/:uuid
  * @param req Request
  * @param res Response
  * @returns Promise<void>
@@ -169,13 +169,49 @@ router.patch("/update/:uuid/:name", async (req: Request, res: Response, next: Ne
    * #swagger.description = "Updates a mesocycle name."
    * #swagger.parameters['uuid'] = { description: "Mesocycle ID" }
    * #swagger.parameters['name'] = { description: "New Mesocycle name" }
-   * #swagger.path = '/mesocycle/update/{uuid}/{name}'
+   * #swagger.path = '/mesocycle/update/name/{uuid}/{name}'
    * #swagger.responses[200] = { description: "Mesocycle updated." }
    * #swagger.responses[404] = { description: "Mesocycle not found." }
    * #swagger.responses[500] = { description: "Internal server error." }
    */
   try {
     const mesocycle = await mesoRepo.updateMesocycleName(req.params.uuid, req.params.name);
+    resourceValidator(mesocycle, errorMessage, req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * Update MesoCycle
+ * PUT /mesocycle/update/:uuid
+ * @param req Request
+ * @param res Response
+ * @returns Promise<void>
+ * @throws Error
+ */
+router.patch("/update/:uuid", async (req: Request, res: Response, next: NextFunction) => {
+  /**
+   * #swagger.tags = ["Mesocycle"]
+   * #swagger.description = "Updates a mesocycle."
+   * #swagger.parameters['uuid'] = { description: "Mesocycle ID" }
+   * #swagger.parameters['name'] = { description: "Mesocycle name" }
+   * #swagger.parameters['length'] = { description: "Mesocycle length" }
+   * #swagger.parameters['phase'] = { description: "Mesocycle phase" }
+   * #swagger.parameters['periodization'] = { description: "Mesocycle periodization" }
+   * #swagger.path = '/mesocycle/update/{uuid}'
+   * #swagger.responses[200] = { description: "Mesocycle updated." }
+   * #swagger.responses[404] = { description: "Mesocycle not found." }
+   * #swagger.responses[500] = { description: "Internal server error." }
+   */
+  try {
+    const mesocycle = await mesoRepo.updateMesocycle(
+      req.params.uuid,
+      req.query.name as string,
+      parseInt(req.query.length as string),
+      req.query.phase as string,
+      req.query.periodization as string
+    );
     resourceValidator(mesocycle, errorMessage, req, res);
   } catch (error) {
     next(error);
