@@ -19,7 +19,7 @@ const doc = {
 const outputFile = './swagger-output.json';
 
 // Use glob pattern to match all route files
-const routes = ['src/routes/*.ts'];
+const routes = ['src/routes/*/*.ts'];
 
 // Generate Swagger documentation
 swaggerAutogenInstance(outputFile, routes, doc).then(() => {

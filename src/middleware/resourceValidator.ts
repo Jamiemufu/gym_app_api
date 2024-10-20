@@ -11,13 +11,15 @@ export const resourceValidator = (resource: any, message: string, req: Request, 
     throw new Error(message);
   } else {
     switch (req.method) {
-      case "DELETE":
-        return res.status(204).json({ message: "Resource deleted" });
       case "GET":
         return res.status(200).json(resource);
+      case "DELETE":
+        return res.status(204).json("resource deleted");
       case "POST":
         return res.status(201).json(resource);
       case "PUT":
+        return res.status(204).json(resource);
+      case "PATCH":
         return res.status(204).json(resource);
       default:
         return res.status(200).json(resource);

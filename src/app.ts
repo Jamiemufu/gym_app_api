@@ -4,11 +4,25 @@ import "reflect-metadata"; //required for TypeORM
 import { AppDataSource } from "./config/ormconfig";
 import express from "express";
 import session from "express-session";
-import userRoutes from "./routes/UserRoutes";
-import mesocycleRoutes from "./routes/MesocycleRoutes";
-import exerciseRoutes from "./routes/ExerciseRoutes";
-import workoutRoutes from "./routes/WorkoutRoutes";
+import getUserRoutes from "./routes/userRoutes/getUserRoutes";
+import postUserRoutes from "./routes/userRoutes/postUserRoutes";
+import deleteUserRoutes from "./routes/userRoutes/deleteUserRoutes";
+import getMesocycleRoutes from "./routes/mesocycleRoutes/getMesocycleRoutes";
+import postMesocycleRoutes from "./routes/mesocycleRoutes/postMesocycleRoutes";
+import deleteMesocycleRoutes from "./routes/mesocycleRoutes/deleteMesocycleRoutes";
+import putMesocycleRoutes from "./routes/mesocycleRoutes/putMesocycleRoutes";
+import patchMesocycleRoutes from "./routes/mesocycleRoutes/patchMesocycleRoutes";
+import getExerciseRoutes from "./routes/exerciseRoutes/getExerciseRoutes";
+import postExerciseRoutes from "./routes/exerciseRoutes/postExerciseRoutes";
+import putExerciseRoutes from "./routes/exerciseRoutes/putExerciseRoutes";
+import deleteExerciseRoutes from "./routes/exerciseRoutes/deleteExerciseRoutes";
+import getWorkoutRoutes from "./routes/workoutRoutes/getWorkoutRoutes";
+import postWorkoutRoutes from "./routes/workoutRoutes/postWorkoutRoutes";
+import putWorkoutRoutes from "./routes/workoutRoutes/putWorkoutRoutes";
+import deleteWorkoutRoutes from "./routes/workoutRoutes/deleteWorkoutRoutes";
+
 import { errorHandler } from "./middleware/errorHandler";
+import { get } from "http";
 
 const swaggerUi = require('swagger-ui-express');
 const app = express();
@@ -30,10 +44,27 @@ app.use(
 AppDataSource.initialize()
   .then(() => {
     console.log("Data Source has been initialized!");
-    app.use("/users", userRoutes);
-    app.use("/mesocycle", mesocycleRoutes);
-    app.use("/exercise", exerciseRoutes);
-    app.use("/workout", workoutRoutes);
+    // user routes
+    app.use("/users", getUserRoutes);
+    app.use("/users", postUserRoutes);
+    app.use("/users", deleteUserRoutes);
+    // mesocycle routes
+    app.use("/mesocycle", getMesocycleRoutes);
+    app.use("/mesocycle", postMesocycleRoutes);
+    app.use("/mesocycle", deleteMesocycleRoutes);
+    app.use("/mesocycle", putMesocycleRoutes);
+    app.use("/mesocycle", patchMesocycleRoutes);
+    // exercise routes
+    app.use("/exercise", getExerciseRoutes);
+    app.use("/exercise", postExerciseRoutes);
+    app.use("/exercise", putExerciseRoutes);
+    app.use("/exercise", deleteExerciseRoutes);
+    // workout routes
+    app.use("/workout", getWorkoutRoutes);
+    app.use("/workout", postWorkoutRoutes);
+    app.use("/workout", putWorkoutRoutes);
+    app.use("/workout", deleteWorkoutRoutes);
+    // Swagger
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(require('./swagger/swagger-output.json')));
     app.use(errorHandler)
     

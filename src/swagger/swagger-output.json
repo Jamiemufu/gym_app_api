@@ -17,11 +17,41 @@
     "https"
   ],
   "paths": {
+    "/exercise/delete/{uuid}": {
+      "delete": {
+        "tags": [
+          "Exercise"
+        ],
+        "summary": "Delete an exercise by ID",
+        "description": "Deletes an exercise by its ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Exercise ID"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Exercise deleted."
+          },
+          "404": {
+            "description": "Exercise not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
     "/exercise/all": {
       "get": {
         "tags": [
           "Exercise"
         ],
+        "summary": "Get all exercises",
         "description": "Retrieves all exercises.",
         "responses": {
           "200": {
@@ -36,11 +66,41 @@
         }
       }
     },
+    "/exercise/{uuid}": {
+      "get": {
+        "tags": [
+          "Exercise"
+        ],
+        "summary": "Get an exercise by ID",
+        "description": "Retrieves an exercise by its ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Exercise ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exercise found."
+          },
+          "404": {
+            "description": "Exercise not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
     "/exercise/name/{name}": {
       "get": {
         "tags": [
           "Exercise"
         ],
+        "summary": "Get an exercise by name",
         "description": "Retrieves an exercise by its name.",
         "parameters": [
           {
@@ -69,6 +129,7 @@
         "tags": [
           "Exercise"
         ],
+        "summary": "Get exercises by muscle group",
         "description": "Retrieves exercises by its muscle group.",
         "parameters": [
           {
@@ -97,6 +158,7 @@
         "tags": [
           "Exercise"
         ],
+        "summary": "Get exercises by equipment",
         "description": "Retrieves exercises by its equipment.",
         "parameters": [
           {
@@ -120,27 +182,39 @@
         }
       }
     },
-    "/exercise/id/{uuid}": {
-      "get": {
+    "/exercise/create": {
+      "post": {
         "tags": [
           "Exercise"
         ],
-        "description": "Retrieves an exercise by its ID.",
+        "summary": "Create a new exercise",
+        "description": "Creates a new exercise.",
         "parameters": [
           {
-            "name": "uuid",
-            "in": "path",
+            "name": "name",
+            "description": "Exercise name",
             "required": true,
-            "type": "string",
-            "description": "Exercise ID"
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "muscle_group",
+            "description": "Muscle group",
+            "required": true,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "equipment",
+            "description": "Equipment",
+            "required": true,
+            "in": "query",
+            "type": "string"
           }
         ],
         "responses": {
-          "200": {
-            "description": "Exercise found."
-          },
-          "404": {
-            "description": "Exercise not found."
+          "201": {
+            "description": "Exercise created."
           },
           "500": {
             "description": "Internal server error."
@@ -153,6 +227,7 @@
         "tags": [
           "Exercise"
         ],
+        "summary": "Update an exercise by ID",
         "description": "Updates an exercise by its ID.",
         "parameters": [
           {
@@ -194,66 +269,28 @@
         }
       }
     },
-    "/exercise/create": {
-      "post": {
-        "tags": [
-          "Exercise"
-        ],
-        "description": "Creates a new exercise.",
-        "parameters": [
-          {
-            "name": "name",
-            "description": "Exercise name",
-            "required": true,
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "muscle_group",
-            "description": "Muscle group",
-            "required": true,
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "equipment",
-            "description": "Equipment",
-            "required": true,
-            "in": "query",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Exercise created."
-          },
-          "500": {
-            "description": "Internal server error."
-          }
-        }
-      }
-    },
-    "/exercise/delete/{uuid}": {
+    "/mesocycle/delete/{uuid}": {
       "delete": {
         "tags": [
-          "Exercise"
+          "Mesocycle"
         ],
-        "description": "Deletes an exercise by its ID.",
+        "summary": "Delete a mesocycle by ID",
+        "description": "Deletes a mesocycle.",
         "parameters": [
           {
             "name": "uuid",
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Exercise ID"
+            "description": "Mesocycle ID"
           }
         ],
         "responses": {
           "204": {
-            "description": "Exercise deleted."
+            "description": "Mesocycle deleted."
           },
           "404": {
-            "description": "Exercise not found."
+            "description": "Mesocycle not found."
           },
           "500": {
             "description": "Internal server error."
@@ -261,11 +298,12 @@
         }
       }
     },
-    "/mesocycle/users/id/{uuid}": {
+    "/mesocycle/users/{uuid}": {
       "get": {
         "tags": [
           "Mesocycle"
         ],
+        "summary": "Get a mesocycle by user ID",
         "description": "Retrieves a mesocycle by user ID.",
         "parameters": [
           {
@@ -294,6 +332,7 @@
         "tags": [
           "Mesocycle"
         ],
+        "summary": "Get all mesocycles",
         "description": "Retrieves all mesocycles.",
         "responses": {
           "200": {
@@ -308,11 +347,12 @@
         }
       }
     },
-    "/mesocycle/id/{uuid}": {
+    "/mesocycle/{uuid}": {
       "get": {
         "tags": [
           "Mesocycle"
         ],
+        "summary": "Get a mesocycle by ID",
         "description": "Retrieves a mesocycle by its ID.",
         "parameters": [
           {
@@ -341,6 +381,7 @@
         "tags": [
           "Mesocycle"
         ],
+        "summary": "Get a mesocycle by name",
         "description": "Retrieves a mesocycle by its name.",
         "parameters": [
           {
@@ -364,11 +405,12 @@
         }
       }
     },
-    "/mesocycle/workouts/{uuid}": {
+    "/mesocycle/{uuid}/workout": {
       "get": {
         "tags": [
           "Mesocycle"
         ],
+        "summary": "Get workouts by mesocycle ID",
         "description": "Retrieves workouts by mesocycle ID.",
         "parameters": [
           {
@@ -392,11 +434,12 @@
         }
       }
     },
-    "/mesocycle/id/{uuid}/users": {
+    "/mesocycle/{uuid}/users": {
       "get": {
         "tags": [
           "Mesocycle"
         ],
+        "summary": "Get users by mesocycle ID",
         "description": "Retrieves users by mesocycle ID.",
         "parameters": [
           {
@@ -420,11 +463,12 @@
         }
       }
     },
-    "/mesocycle/update/name/{uuid}/{name}": {
+    "/mesocycle/update/{uuid}/name": {
       "patch": {
         "tags": [
           "Mesocycle"
         ],
+        "summary": "Update a mesocycle name by ID",
         "description": "Updates a mesocycle name.",
         "parameters": [
           {
@@ -436,10 +480,9 @@
           },
           {
             "name": "name",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "New Mesocycle name"
+            "description": "New Mesocycle name",
+            "in": "query",
+            "type": "string"
           }
         ],
         "responses": {
@@ -455,11 +498,62 @@
         }
       }
     },
+    "/mesocycle/create/{uuid}": {
+      "post": {
+        "tags": [
+          "Mesocycle"
+        ],
+        "summary": "Create a new mesocycle",
+        "description": "Creates a new mesocycle.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User ID"
+          },
+          {
+            "name": "name",
+            "description": "Mesocycle name",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "description": "Mesocycle length",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "phase",
+            "description": "Mesocycle phase",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "periodization",
+            "description": "Mesocycle periodization",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Mesocycle created."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
     "/mesocycle/update/{uuid}": {
       "put": {
         "tags": [
           "Mesocycle"
         ],
+        "summary": "Update a mesocycle by ID",
         "description": "Updates a mesocycle.",
         "parameters": [
           {
@@ -507,12 +601,13 @@
         }
       }
     },
-    "/mesocycle/create/{uuid}": {
-      "post": {
+    "/users/delete/{uuid}": {
+      "delete": {
         "tags": [
-          "Mesocycle"
+          "User"
         ],
-        "description": "Creates a new mesocycle.",
+        "summary": "Delete a user by ID",
+        "description": "Deletes a user.",
         "parameters": [
           {
             "name": "uuid",
@@ -520,63 +615,14 @@
             "required": true,
             "type": "string",
             "description": "User ID"
-          },
-          {
-            "name": "name",
-            "description": "Mesocycle name",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "length",
-            "description": "Mesocycle length",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "phase",
-            "description": "Mesocycle phase",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "periodization",
-            "description": "Mesocycle periodization",
-            "in": "query",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Mesocycle created."
-          },
-          "500": {
-            "description": "Internal server error."
-          }
-        }
-      }
-    },
-    "/mesocycle/delete/{uuid}": {
-      "delete": {
-        "tags": [
-          "Mesocycle"
-        ],
-        "description": "Deletes a mesocycle.",
-        "parameters": [
-          {
-            "name": "uuid",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Mesocycle ID"
           }
         ],
         "responses": {
           "204": {
-            "description": "Mesocycle deleted."
+            "description": "User deleted."
           },
           "404": {
-            "description": "Mesocycle not found."
+            "description": "User not found."
           },
           "500": {
             "description": "Internal server error."
@@ -589,6 +635,7 @@
         "tags": [
           "User"
         ],
+        "summary": "Get all users",
         "description": "Retrieves all users.",
         "responses": {
           "200": {
@@ -603,11 +650,12 @@
         }
       }
     },
-    "/users/id/{uuid}": {
+    "/users/{uuid}": {
       "get": {
         "tags": [
           "User"
         ],
+        "summary": "Get a user by ID",
         "description": "Retrieves a user by their ID.",
         "parameters": [
           {
@@ -636,6 +684,7 @@
         "tags": [
           "User"
         ],
+        "summary": "Get a user by email",
         "description": "Retrieves a user by their email.",
         "parameters": [
           {
@@ -664,6 +713,7 @@
         "tags": [
           "User"
         ],
+        "summary": "Get a user by username",
         "description": "Retrieves a user by their username.",
         "parameters": [
           {
@@ -692,6 +742,7 @@
         "tags": [
           "User"
         ],
+        "summary": "Create a new user",
         "description": "Creates a new user.",
         "parameters": [
           {
@@ -723,27 +774,91 @@
         }
       }
     },
-    "/users/delete/{uuid}": {
+    "/workout/delete/{uuid}": {
       "delete": {
         "tags": [
-          "User"
+          "Workout"
         ],
-        "description": "Deletes a user.",
+        "summary": "Remove workout by workout ID",
+        "description": "Removes a workout by its ID.",
         "parameters": [
           {
             "name": "uuid",
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "User ID"
+            "description": "Workout ID"
           }
         ],
         "responses": {
           "204": {
-            "description": "User deleted."
+            "description": "Workout removed."
           },
           "404": {
-            "description": "User not found."
+            "description": "Workout not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/workout/delete/{uuid}/exercise": {
+      "delete": {
+        "tags": [
+          "Workout"
+        ],
+        "summary": "Remove exercises from workout by workout ID and exercise ID",
+        "description": "Removes exercises from a workout by its ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Workout ID"
+          },
+          {
+            "name": "exercises",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Exercises removed."
+          },
+          "404": {
+            "description": "Workout not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/workout/delete/{uuid}/exercise/all": {
+      "delete": {
+        "tags": [
+          "Workout"
+        ],
+        "summary": "Remove all exercises from workout by workout ID",
+        "description": "Removes all exercises from a workout by its ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Workout ID"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Exercises removed."
+          },
+          "404": {
+            "description": "Workout not found."
           },
           "500": {
             "description": "Internal server error."
@@ -791,7 +906,7 @@
         }
       }
     },
-    "/workout/id/{uuid}": {
+    "/workout/{uuid}": {
       "get": {
         "tags": [
           "Workout"
@@ -818,36 +933,9 @@
             "description": "Internal server error."
           }
         }
-      },
-      "delete": {
-        "tags": [
-          "Workout"
-        ],
-        "summary": "Remove workout by workout ID",
-        "description": "Removes a workout by its ID.",
-        "parameters": [
-          {
-            "name": "uuid",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Workout ID"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Workout removed."
-          },
-          "404": {
-            "description": "Workout not found."
-          },
-          "500": {
-            "description": "Internal server error."
-          }
-        }
       }
     },
-    "/workout/id/{uuid}/exercises": {
+    "/workout/{uuid}/exercises": {
       "get": {
         "tags": [
           "Workout"
@@ -956,40 +1044,6 @@
           },
           "404": {
             "description": "Workouts not found."
-          },
-          "500": {
-            "description": "Internal server error."
-          }
-        }
-      }
-    },
-    "/workout/delete/{uuid}/exercise": {
-      "delete": {
-        "tags": [
-          "Workout"
-        ],
-        "summary": "Remove exercises from workout by workout ID",
-        "description": "Removes exercises from a workout by its ID.",
-        "parameters": [
-          {
-            "name": "uuid",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Workout ID"
-          },
-          {
-            "name": "exercises",
-            "in": "query",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Exercises removed."
-          },
-          "404": {
-            "description": "Workout not found."
           },
           "500": {
             "description": "Internal server error."
