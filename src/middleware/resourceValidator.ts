@@ -18,7 +18,7 @@ export const resourceValidator = (resource: any, message: string, req: Request, 
       case "POST":
         return res.status(201).json(resource);
       case "PUT":
-        return res.status(200).json(resource);
+        return res.status(204).json(resource);
       default:
         return res.status(200).json(resource);
     }

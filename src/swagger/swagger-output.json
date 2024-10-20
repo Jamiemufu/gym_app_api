@@ -456,7 +456,7 @@
       }
     },
     "/mesocycle/update/{uuid}": {
-      "patch": {
+      "put": {
         "tags": [
           "Mesocycle"
         ],
@@ -744,6 +744,293 @@
           },
           "404": {
             "description": "User not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/workout/all": {
+      "get": {
+        "tags": [
+          "Workout"
+        ],
+        "summary": "Get all workouts",
+        "description": "Retrieves all workouts.",
+        "responses": {
+          "200": {
+            "description": "Workouts found."
+          },
+          "404": {
+            "description": "Workouts not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/workout/all/exercises": {
+      "get": {
+        "tags": [
+          "Workout"
+        ],
+        "summary": "Get workouts and exercises",
+        "description": "Retrieves workouts and exercises.",
+        "responses": {
+          "200": {
+            "description": "Workouts found."
+          },
+          "404": {
+            "description": "Workouts not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/workout/id/{uuid}": {
+      "get": {
+        "tags": [
+          "Workout"
+        ],
+        "summary": "Get workout by workout ID",
+        "description": "Retrieves a workout by its ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Workout ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workout found."
+          },
+          "404": {
+            "description": "Workout not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Workout"
+        ],
+        "summary": "Remove workout by workout ID",
+        "description": "Removes a workout by its ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Workout ID"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Workout removed."
+          },
+          "404": {
+            "description": "Workout not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/workout/id/{uuid}/exercises": {
+      "get": {
+        "tags": [
+          "Workout"
+        ],
+        "summary": "Get workout exercises by workout ID",
+        "description": "Retrieves a workout's exercises by its ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Workout ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workout found."
+          },
+          "404": {
+            "description": "Workout not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/workout/name/{name}": {
+      "get": {
+        "tags": [
+          "Workout"
+        ],
+        "summary": "Get workout by name",
+        "description": "Retrieves a workout by its name.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Workout name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workout found."
+          },
+          "404": {
+            "description": "Workout not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/workout/exercise/{uuid}": {
+      "get": {
+        "tags": [
+          "Workout"
+        ],
+        "summary": "Get workouts by exercise ID",
+        "description": "Retrieves workouts by exercise ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Exercise ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workouts found."
+          },
+          "404": {
+            "description": "Workouts not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/workout/exercise/name/{name}": {
+      "get": {
+        "tags": [
+          "Workout"
+        ],
+        "summary": "Get workouts by exercise name",
+        "description": "Retrieves workouts by exercise name.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Exercise name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workouts found."
+          },
+          "404": {
+            "description": "Workouts not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/workout/delete/{uuid}/exercise": {
+      "delete": {
+        "tags": [
+          "Workout"
+        ],
+        "summary": "Remove exercises from workout by workout ID",
+        "description": "Removes exercises from a workout by its ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Workout ID"
+          },
+          {
+            "name": "exercises",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Exercises removed."
+          },
+          "404": {
+            "description": "Workout not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/workout/update/{uuid}": {
+      "put": {
+        "tags": [
+          "Workout"
+        ],
+        "summary": "Update workout by workout ID",
+        "description": "Updates a workout by its ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Workout ID"
+          },
+          {
+            "name": "name",
+            "description": "Workout name",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "exercises",
+            "description": "Workout exercises",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workout updated."
+          },
+          "404": {
+            "description": "Workout not found."
           },
           "500": {
             "description": "Internal server error."

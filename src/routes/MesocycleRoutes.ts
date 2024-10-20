@@ -1,4 +1,3 @@
-// src/routes/UserRoutes.ts
 import { Router, Request, Response, NextFunction } from "express";
 import { AppDataSource } from "../config/ormconfig";
 import { MesocycleRepository } from "../repositories/MesocycleRepository";
@@ -158,7 +157,7 @@ router.get("/id/:uuid/users", async (req: Request, res: Response, next: NextFunc
 
 /**
  * Update mesocycle name
- * PUT /mesocycle/update/name/:uuid
+ * PUT /mesocycle/update/:uuid/:name
  * @param req Request
  * @param res Response
  * @returns Promise<void>
@@ -190,7 +189,7 @@ router.patch("/update/:uuid/:name", async (req: Request, res: Response, next: Ne
  * @returns Promise<void>
  * @throws Error
  */
-router.patch("/update/:uuid", async (req: Request, res: Response, next: NextFunction) => {
+router.put("/update/:uuid", async (req: Request, res: Response, next: NextFunction) => {
   /**
    * #swagger.tags = ["Mesocycle"]
    * #swagger.description = "Updates a mesocycle."

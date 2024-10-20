@@ -7,6 +7,7 @@ import session from "express-session";
 import userRoutes from "./routes/UserRoutes";
 import mesocycleRoutes from "./routes/MesocycleRoutes";
 import exerciseRoutes from "./routes/ExerciseRoutes";
+import workoutRoutes from "./routes/WorkoutRoutes";
 import { errorHandler } from "./middleware/errorHandler";
 
 const swaggerUi = require('swagger-ui-express');
@@ -32,6 +33,7 @@ AppDataSource.initialize()
     app.use("/users", userRoutes);
     app.use("/mesocycle", mesocycleRoutes);
     app.use("/exercise", exerciseRoutes);
+    app.use("/workout", workoutRoutes);
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(require('./swagger/swagger-output.json')));
     app.use(errorHandler)
     

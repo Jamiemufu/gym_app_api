@@ -9,11 +9,13 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, ManyToMany, JoinTable } from "typeorm";
 import { User } from "./User";
 import { Exercise } from "./Exercise";
+import { IsString } from 'class-validator';
 @Entity()
 export class Workout {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
+  @IsString()
   @Column({ nullable: false })
   name!: string;
 
