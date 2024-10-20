@@ -19,7 +19,7 @@ export class Mesocycle {
   @IsString()
   @Column({ nullable: false })
   name!: string;
-  
+
   @IsNumber()
   @Column({ nullable: false })
   length!: number;
@@ -29,19 +29,19 @@ export class Mesocycle {
   phase!: string;
 
   @IsBoolean()
-  @Column({ default : false })
+  @Column({ default: false })
   periodization!: boolean;
 
   // mesocycles owns join table with workouts
-  @ManyToMany(() => Workout, workout => workout.id)
+  @ManyToMany(() => Workout, (workout) => workout.id)
   @JoinTable()
   workouts!: Workout[];
 
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, (user) => user.id)
   created_by!: User;
 
   // mesocycle owns join table with users
-  @ManyToMany(() => User, user => user.id)
+  @ManyToMany(() => User, (user) => user.id)
   @JoinTable()
   users!: User[];
 }

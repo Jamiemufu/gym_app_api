@@ -24,10 +24,9 @@ import deleteWorkoutRoutes from "./routes/workoutRoutes/deleteWorkoutRoutes";
 import { errorHandler } from "./middleware/errorHandler";
 import { get } from "http";
 
-const swaggerUi = require('swagger-ui-express');
+const swaggerUi = require("swagger-ui-express");
 const app = express();
 const PORT = process.env.APP_PORT || 3000;
-
 
 // Middleware
 app.use(express.json());
@@ -65,12 +64,12 @@ AppDataSource.initialize()
     app.use("/workout", putWorkoutRoutes);
     app.use("/workout", deleteWorkoutRoutes);
     // Swagger
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(require('./swagger/swagger-output.json')));
-    app.use(errorHandler)
-    
+    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(require("./swagger/swagger-output.json")));
+    app.use(errorHandler);
+
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
-      console.log('Database name:', AppDataSource.options.database);
+      console.log("Database name:", AppDataSource.options.database);
     });
   })
   .catch((error) => console.error("Error during Data Source initialization:", error));

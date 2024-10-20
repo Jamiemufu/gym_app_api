@@ -5,7 +5,7 @@
 // | workout_id    | UUID         | References: public_workouts.id |
 // | date          | timestamp    |                               |
 
-import { Column, CreateDateColumn, Entity, ManyToOne,OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User";
 import { Workout } from "./Workout";
 
@@ -14,10 +14,10 @@ export class UserWorkout {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, (user) => user.id)
   user!: string;
 
-  @ManyToOne(() => Workout, workout => workout.id)
+  @ManyToOne(() => Workout, (workout) => workout.id)
   workout!: string;
 
   @CreateDateColumn()

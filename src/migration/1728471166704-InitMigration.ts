@@ -94,11 +94,10 @@ export class InitMigration1728471166704 implements MigrationInterface {
     const userWorkoutSet14 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[7], 3, 12, 0);
     const userWorkoutSet15 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[8], 1, 15, 10);
     const userWorkoutSet16 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[8], 2, 15, 10);
-    const userWorkoutSet17 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[8], 3, 15, 10); 
-    
+    const userWorkoutSet17 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[8], 3, 15, 10);
+
     // create UserWorkoutHistory
     const userWorkoutHistory = await this.createUserWorkoutHistory(queryRunner, user3, workout3, [userWorkoutSet2, userWorkoutSet3, userWorkoutSet4]);
-
   }
 
   // Helper Functions to create entities and populate relationships
@@ -169,7 +168,7 @@ export class InitMigration1728471166704 implements MigrationInterface {
     return queryRunner.manager.save(userWorkout);
   }
 
- // Create UserWorkoutSet records
+  // Create UserWorkoutSet records
   private async createUserWorkoutSet(queryRunner: QueryRunner, userWorkout: UserWorkout, exercise: Exercise, setNumber: number, reps: number, weight: number) {
     const userWorkoutSet = queryRunner.manager.create(UserWorkoutSet, {
       user_workout: userWorkout.id,

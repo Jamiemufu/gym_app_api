@@ -29,7 +29,7 @@ export const resourceValidator = (resource: any, message: string, req: Request, 
 
 /**
  * Validate the request data
- * @param data 
+ * @param data
  */
 export const validateRequest = async (data: any) => {
   const errors = await validate(data);
@@ -37,4 +37,4 @@ export const validateRequest = async (data: any) => {
   if (errors.length > 0) {
     throw new Error(errors.toString());
   }
-}
+};
