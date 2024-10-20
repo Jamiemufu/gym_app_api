@@ -11,21 +11,21 @@ import { Workout } from "./Workout";
 import { UserWorkoutSet } from "./UserWorkoutSet";
 
 @Entity()
-export class UserWorkout {
+export class UserWorkoutHistory {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Column({ nullable: false })
   @ManyToOne(() => User, (user) => user.id)
-  user_id!: string;
-
-  @Column({ nullable: false })
+  user!: string;
+  
   @ManyToOne(() => Workout, (workout) => workout.id)
-  workout_id!: string;
+  workout!: string;
 
   @CreateDateColumn()
   date!: Date;
 
-  @OneToMany(() => UserWorkoutSet, (userWorkoutSet) => userWorkoutSet.user_workout_id)
+  @OneToMany(() => UserWorkoutSet, (userWorkoutSet) => userWorkoutSet.id, {
+    cascade: true,
+  })
   sets!: UserWorkoutSet[];
 }

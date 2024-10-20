@@ -16,12 +16,11 @@ export class UserWorkoutSet {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Column({ nullable: false })
   @ManyToOne(() => UserWorkout, (userWorkout) => userWorkout.id)
-  user_workout_id!: string;
+  user_workout!: string;
 
   @ManyToOne(() => Exercise, (exercise) => exercise.id)
-  exercise_id!: string;
+  exercise!: string;
 
   @Column({ nullable: false })
   set_number!: number;

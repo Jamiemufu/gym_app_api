@@ -6,6 +6,7 @@ import { Workout } from "../entities/Workout";
 import { UserWorkout } from "../entities/UserWorkout";
 import { UserWorkoutSet } from "../entities/UserWorkoutSet";
 import { MesocycleDay } from "../entities/MesocycleDay";
+import { UserWorkoutHistory } from "../entities/UserWorkoutHistory";
 
 export class InitMigration1728471166704 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -24,34 +25,80 @@ export class InitMigration1728471166704 implements MigrationInterface {
       this.createExercise(queryRunner, "Cable Flyes", "Chest", "Cables"),
       this.createExercise(queryRunner, "Low to High Flyes", "Chest", "Cables"),
       this.createExercise(queryRunner, "High Cable Crossover", "Chest", "Cables"),
+      this.createExercise(queryRunner, "Pullups", "Back", "Bodyweight"),
+      this.createExercise(queryRunner, "Smith Machine Row (Reverse Grip)", "Back", "Smith Machine"),
+      this.createExercise(queryRunner, "Lat Pulldown", "Back", "Cables"),
+      this.createExercise(queryRunner, "Seated Row", "Back", "Cables"),
+      this.createExercise(queryRunner, "Single Arm Cable Pulldown", "Back", "Cables"),
+      this.createExercise(queryRunner, "Shrugs", "Back", "Dumbells"),
+      this.createExercise(queryRunner, "Smith Machine Squat", "Legs", "Smith Machine"),
+      this.createExercise(queryRunner, "Smith Narrow Squat", "Legs", "Smith Machine"),
+      this.createExercise(queryRunner, "RDL", "Legs", "Smith Machine"),
+      this.createExercise(queryRunner, "Calf Raises", "Legs", "Smith Machine"),
+      this.createExercise(queryRunner, "Smith Shoulder Press", "Shoulders", "Smith Machine"),
+      this.createExercise(queryRunner, "Front Raises", "Shoulders", "Cables"),
+      this.createExercise(queryRunner, "DB Lateral Raises", "Shoulders", "Dumbellls"),
+      this.createExercise(queryRunner, "Cable Lateral Raises", "Shoulders", "Cables"),
+      this.createExercise(queryRunner, "Rear Delt Pulls", "Shoulders", "Cables"),
+      this.createExercise(queryRunner, "Face Pulls", "Shoulders", "Cables"),
+      this.createExercise(queryRunner, "Skull Crushers", "Triceps", "Smith Machine"),
+      this.createExercise(queryRunner, "Tricep Pushdowns", "Triceps", "Cables"),
+      this.createExercise(queryRunner, "Seated Overhead Extensions", "Triceps", "Cables"),
+      this.createExercise(queryRunner, "Single Arm Pushdowns", "Triceps", "Cables"),
+      this.createExercise(queryRunner, "Cable Curl", "Biceps", "Cables"),
+      this.createExercise(queryRunner, "Stretched Cable Curl (Facing Away)", "Biceps", "Cables"),
+      this.createExercise(queryRunner, "Reverse Grip Curl", "Biceps", "Cables"),
+      this.createExercise(queryRunner, "Hammer Curl", "Biceps", "Cables"),
     ]);
 
     // Create Workouts
     const workout1 = await this.createWorkout(queryRunner, "Full Body Workout", exercises, user1);
     const workout2 = await this.createWorkout(queryRunner, "Upper Body Workout", [exercises[0], exercises[2]], user2);
     const workout3 = await this.createWorkout(queryRunner, "Chest Day", [exercises[0], exercises[5], exercises[6], exercises[7], exercises[8]], user3);
+    const workout4 = await this.createWorkout(queryRunner, "Back Day", [exercises[10], exercises[11], exercises[12], exercises[13], exercises[14]], user3);
+    const workout5 = await this.createWorkout(queryRunner, "Leg Day", [exercises[1], exercises[16], exercises[17], exercises[18]], user3);
+    const workout6 = await this.createWorkout(queryRunner, "Shoulder Day", [exercises[20], exercises[21], exercises[22], exercises[23], exercises[24]], user3);
+    const workout7 = await this.createWorkout(queryRunner, "Tricep Day", [exercises[25], exercises[26], exercises[27], exercises[28]], user3);
+    const workout8 = await this.createWorkout(queryRunner, "Bicep Day", [exercises[29], exercises[30], exercises[31], exercises[32]], user3);
 
     // Create Mesocycles
     const mesocycle1 = await this.createMesocycle(queryRunner, "Beginner Mesocycle", 4, "cut", true, user1, [workout1, workout2], [user1]);
     const mesocycle2 = await this.createMesocycle(queryRunner, "Advanced Mesocycle", 6, "bulk", false, user2, [workout1], [user1, user2]);
-    const mesocycle3 = await this.createMesocycle(queryRunner, "Op Massive", 3, "bulk", false, user3, [workout3], [user3]);
+    const mesocycle3 = await this.createMesocycle(queryRunner, "Op Massive", 3, "bulk", false, user3, [workout3, workout4, workout5, workout6, workout7, workout8], [user3]);
 
     // Create Mesocycle Days with rest and workout days
-    await this.createMesocycleDays(queryRunner, mesocycle1, workout1, workout2);
-    await this.createMesocycleDays(queryRunner, mesocycle2, workout1, null);
+    // await this.createMesocycleDays(queryRunner, mesocycle1, workout1, workout2);
+    // await this.createMesocycleDays(queryRunner, mesocycle2, workout1, null);
 
     // Create UserWorkout Instances
-    const userWorkout1 = await this.createUserWorkout(queryRunner, user1, workout1);
-    const userWorkout2 = await this.createUserWorkout(queryRunner, user2, workout2);
     const userWorkout3 = await this.createUserWorkout(queryRunner, user3, workout3);
+    const userWorkout4 = await this.createUserWorkout(queryRunner, user3, workout4);
+    const userWorkout5 = await this.createUserWorkout(queryRunner, user3, workout5);
+    const userWorkout6 = await this.createUserWorkout(queryRunner, user3, workout6);
+    const userWorkout7 = await this.createUserWorkout(queryRunner, user3, workout7);
+    const userWorkout8 = await this.createUserWorkout(queryRunner, user3, workout8);
 
     // Create Sets for UserWorkouts
-    await this.createUserWorkoutSet(queryRunner, userWorkout1, exercises[0], 1, 10, 100);
-    await this.createUserWorkoutSet(queryRunner, userWorkout1, exercises[1], 2, 8, 150);
-    await this.createUserWorkoutSet(queryRunner, userWorkout2, exercises[2], 1, 12, 40);
-    await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[0], 1, 10, 70);
-    await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[0], 2, 8, 70);
-    await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[0], 3, 10, 60);
+    const userWorkoutSet2 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[0], 1, 10, 70);
+    const userWorkoutSet3 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[0], 2, 8, 70);
+    const userWorkoutSet4 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[0], 3, 10, 60);
+    const userWorkoutSet5 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[5], 1, 10, 80);
+    const userWorkoutSet6 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[5], 2, 7, 80);
+    const userWorkoutSet7 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[5], 3, 10, 70);
+    const userWorkoutSet8 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[5], 4, 8, 70);
+    const userWorkoutSet9 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[6], 1, 12, 10);
+    const userWorkoutSet10 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[6], 2, 12, 10);
+    const userWorkoutSet11 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[6], 3, 12, 10);
+    const userWorkoutSet12 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[7], 1, 12, 0);
+    const userWorkoutSet13 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[7], 2, 12, 0);
+    const userWorkoutSet14 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[7], 3, 12, 0);
+    const userWorkoutSet15 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[8], 1, 15, 10);
+    const userWorkoutSet16 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[8], 2, 15, 10);
+    const userWorkoutSet17 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[8], 3, 15, 10); 
+    
+    // create UserWorkoutHistory
+    const userWorkoutHistory = await this.createUserWorkoutHistory(queryRunner, user3, workout3, [userWorkoutSet2, userWorkoutSet3, userWorkoutSet4]);
+
   }
 
   // Helper Functions to create entities and populate relationships
@@ -103,30 +150,30 @@ export class InitMigration1728471166704 implements MigrationInterface {
   }
 
   // Create Mesocycle Days with rest/workout days
-  private async createMesocycleDays(queryRunner: QueryRunner, mesocycle: Mesocycle, workout1: Workout | null, workout2: Workout | null) {
-    const days = [
-      queryRunner.manager.create(MesocycleDay, { mesocycle, dayNumber: 1, workout: workout1 || undefined, restDay: false }),
-      queryRunner.manager.create(MesocycleDay, { mesocycle, dayNumber: 2, workout: undefined, restDay: true }),
-      queryRunner.manager.create(MesocycleDay, { mesocycle, dayNumber: 3, workout: workout2 || undefined, restDay: false }),
-    ];
-    return queryRunner.manager.save(days);
-  }
+  // private async createMesocycleDays(queryRunner: QueryRunner, mesocycle: Mesocycle, workout1: Workout | null, workout2: Workout | null) {
+  //   const days = [
+  //     queryRunner.manager.create(MesocycleDay, { mesocycle, dayNumber: 1, workout: workout1 || undefined, restDay: false }),
+  //     queryRunner.manager.create(MesocycleDay, { mesocycle, dayNumber: 2, workout: undefined, restDay: true }),
+  //     queryRunner.manager.create(MesocycleDay, { mesocycle, dayNumber: 3, workout: workout2 || undefined, restDay: false }),
+  //   ];
+  //   return queryRunner.manager.save(days);
+  // }
 
   // Create UserWorkout record
   private async createUserWorkout(queryRunner: QueryRunner, user: User, workout: Workout) {
     const userWorkout = queryRunner.manager.create(UserWorkout, {
-      user_id: user.id,
-      workout_id: workout.id,
+      user: user.id,
+      workout: workout.id,
       date: new Date(),
     });
     return queryRunner.manager.save(userWorkout);
   }
 
-  // Create UserWorkoutSet records
+ // Create UserWorkoutSet records
   private async createUserWorkoutSet(queryRunner: QueryRunner, userWorkout: UserWorkout, exercise: Exercise, setNumber: number, reps: number, weight: number) {
     const userWorkoutSet = queryRunner.manager.create(UserWorkoutSet, {
-      user_workout_id: userWorkout.id,
-      exercise_id: exercise.id,
+      user_workout: userWorkout.id,
+      exercise: exercise.id,
       set_number: setNumber,
       reps,
       weight,
@@ -134,7 +181,19 @@ export class InitMigration1728471166704 implements MigrationInterface {
     return queryRunner.manager.save(userWorkoutSet);
   }
 
+  // Create UserWorkoutHistory record
+  private async createUserWorkoutHistory(queryRunner: QueryRunner, user: User, workout: Workout, userWorkoutSet: UserWorkoutSet[]) {
+    const userWorkoutHistory = queryRunner.manager.create(UserWorkoutHistory, {
+      user: user.id,
+      workout: workout.id,
+      date: new Date(),
+      sets: userWorkoutSet,
+    });
+    return queryRunner.manager.save(userWorkoutHistory);
+  }
+
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.manager.delete(UserWorkoutHistory, {});
     await queryRunner.manager.delete(UserWorkoutSet, {});
     await queryRunner.manager.delete(UserWorkout, {});
     await queryRunner.manager.delete(MesocycleDay, {});
