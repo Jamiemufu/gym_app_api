@@ -23,6 +23,7 @@ router.patch("/update/:uuid/name", async (req: Request, res: Response, next: Nex
    * #swagger.path = '/workout/update/{uuid}/name'
    * #swagger.summary = "Update workout name by workout ID"
    * #swagger.responses[204] = { description: "Workout name updated." }
+   * #swagger.responses[304] = { description: "Nothing to Update." }
    * #swagger.responses[404] = { description: "Workout not found." }
    * #swagger.responses[500] = { description: "Internal server error." }
    */

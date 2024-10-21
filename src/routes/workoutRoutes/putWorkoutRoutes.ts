@@ -24,8 +24,9 @@ router.put("/update/:uuid", async (req: Request, res: Response, next: NextFuncti
    * #swagger.parameters['exercises'] = { description: "Array of exercise IDs seperated by , or &" }
    * #swagger.path = '/workout/update/{uuid}'
    * #swagger.summary = "Update workout by workout ID"
-   * #swagger.responses[200] = { description: "Workout updated." }
+   * #swagger.responses[204] = { description: "Workout updated." }
    * #swagger.responses[404] = { description: "Workout not found." }
+   * #swagger.responses[304] = { description: "Nothing to Update." }
    * #swagger.responses[500] = { description: "Internal server error." }
    */
   try {
@@ -34,7 +35,7 @@ router.put("/update/:uuid", async (req: Request, res: Response, next: NextFuncti
 
     const exercisesToUpdate = splitRequestParams(exerciseIds);  
 
-    const workout = await workoutRepository.updateWorkout(req.params.uuid, name, exercisesToUpdate);
+    const workout = await workoutRepository.updateWorkout(req.params.uuid, exercisesToUpdate, name);
     resourceValidator(workout, errorMessage, req, res);
   } catch (error) {
     next(error);

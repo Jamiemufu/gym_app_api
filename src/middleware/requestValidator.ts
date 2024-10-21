@@ -6,7 +6,7 @@
 export const splitRequestParams = (data: string) => {
 
   if (!data) {
-    throw new Error("Invalid request");
+    return [];
   }
   
   data = data.trim().replace(/\s/g, "");

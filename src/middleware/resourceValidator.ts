@@ -7,23 +7,28 @@ import { validate } from "class-validator";
  * @returns Error | Response
  */
 export const resourceValidator = (resource: any, message: string, req: Request, res: Response) => {
+
   if (!resource || resource === "" || resource.length === 0 || resource === null) {
-    throw new Error(message);
-  } else {
-    switch (req.method) {
-      case "GET":
-        return res.status(200).json(resource);
-      case "DELETE":
-        return res.status(204).json("resource deleted");
-      case "POST":
-        return res.status(201).json(resource);
-      case "PUT":
-        return res.status(204).json(resource);
-      case "PATCH":
-        return res.status(204).json(resource);
-      default:
-        return res.status(200).json(resource);
-    }
+    return res.status(404).json(message);
+  }
+
+  if (resource instanceof Error) {
+    throw new Error(resource.message);
+  }
+
+  switch (req.method) {
+    case "GET":
+      return res.status(200).json(resource);
+    case "DELETE":
+      return res.status(204).json("Resource deleted");
+    case "POST":
+      return res.status(201).json(resource);
+    case "PUT":
+      return res.status(204).json(resource);
+    case "PATCH":
+      return res.status(204).json(resource);
+    default:
+      return res.status(200).json(resource);
   }
 };
 

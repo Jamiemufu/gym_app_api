@@ -65,11 +65,11 @@ AppDataSource.initialize()
     app.use("/workout", patchWorkoutRoutes);
     // Swagger
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(require("./swagger/swagger-output.json")));
-    app.use(errorHandler);
 
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
       console.log("Database name:", AppDataSource.options.database);
     });
+    app.use(errorHandler);
   })
   .catch((error) => console.error("Error during Data Source initialization:", error));
