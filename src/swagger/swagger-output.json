@@ -1051,6 +1051,41 @@
         }
       }
     },
+    "/workout/update/{uuid}/name": {
+      "patch": {
+        "tags": [
+          "Workout"
+        ],
+        "summary": "Update workout name by workout ID",
+        "description": "Updates a workout name by its ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Workout ID"
+          },
+          {
+            "name": "name",
+            "description": "Workout name",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Workout name updated."
+          },
+          "404": {
+            "description": "Workout not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
     "/workout/create": {
       "post": {
         "tags": [
@@ -1107,7 +1142,7 @@
           },
           {
             "name": "exercises",
-            "description": "Workout exercises",
+            "description": "Array of exercise IDs seperated by , or &",
             "in": "query",
             "type": "string"
           }

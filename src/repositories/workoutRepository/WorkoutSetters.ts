@@ -1,4 +1,4 @@
-import { In } from "typeorm";
+import { In, ILike } from 'typeorm';
 import { AppDataSource } from "../../config/ormconfig";
 import { Workout } from "../../entities/Workout";
 import { validateRequest } from "../../middleware/resourceValidator";
@@ -72,12 +72,11 @@ export class WorkoutSetters extends WorkoutBaseRepository {
     // get exercises by id
     const exercises = await new ExerciseGetters(AppDataSource).find({ where: { id: In(exerciseIds) } });
     workout.exercises = exercises;
-    
+
     await validateRequest(workout);
     return await this.save(workout);
   }
 
-  // TODO: TEST Updates
   /**
    * Update Workout Name
    * @param workoutId
@@ -92,11 +91,18 @@ export class WorkoutSetters extends WorkoutBaseRepository {
       throw new Error("Workout not found");
     }
 
+    if (name !== "" && name.toLowerCase() === workout.name.toLowerCase()) {
+      throw new Error("Nothing to update");
+    }
+
     workout.name = name;
+  
     await validateRequest(workout);
+
     return await this.save(workout);
   }
 
+  // TODO: TEST THIS
   /**
    * Update Workout
    * @param workoutId
@@ -105,17 +111,20 @@ export class WorkoutSetters extends WorkoutBaseRepository {
    * @returns Workout | null
    * @throws Error
    */
-  async updateWorkout(workoutId: string, name: string, exerciseIds: any): Promise<Workout | null> {
-    const workout = await this.findOneBy({ id: workoutId });
+  async updateWorkout(workoutId: string, name: string, exerciseIds: string[]): Promise<Workout | null> {
+    const workout = await this.findOne({ where: { id: workoutId }, relations: ["exercises"] });
 
     if (!workout) {
       throw new Error("Workout not found");
     }
 
     workout.name = (name as string) ?? workout.name;
-    // we can add duplicate exercises to a workout as it determines the order of the exercises
-    const exercises = await new ExerciseGetters(AppDataSource).find(exerciseIds);
-    workout.exercises = exercises;
+
+    // we can add duplicate exercises to a workout as it determines the order of the exercises and number of workouts
+    // i.e Push, Pull, Legs, Push, Pull, Legs
+    const exercises = await new ExerciseGetters(AppDataSource).find({ where: { id: In(exerciseIds) } });
+    workout.exercises.push(...exercises);
+    
     await validateRequest(workout);
     return await this.save(workout);
   }
