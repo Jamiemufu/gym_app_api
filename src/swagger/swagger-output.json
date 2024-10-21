@@ -808,7 +808,7 @@
         "tags": [
           "Workout"
         ],
-        "summary": "Remove exercises from workout by workout ID and exercise ID",
+        "summary": "Remove exercises from workout by workout ID and exercise ID separe",
         "description": "Removes exercises from a workout by its ID.",
         "parameters": [
           {
@@ -1066,7 +1066,7 @@
           },
           {
             "name": "exerciseIds",
-            "description": "Array of exercise IDs",
+            "description": "Array of exercise IDs - seperated by &",
             "in": "query",
             "type": "string"
           }
