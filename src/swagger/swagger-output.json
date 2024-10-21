@@ -1051,6 +1051,39 @@
         }
       }
     },
+    "/workout/create": {
+      "post": {
+        "tags": [
+          "Workout"
+        ],
+        "description": "Create a new Workout",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Workout name",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "exerciseIds",
+            "description": "Array of exercise IDs",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Workout created successfully"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
     "/workout/update/{uuid}": {
       "put": {
         "tags": [

@@ -1,3 +1,4 @@
+import { In } from "typeorm";
 import { AppDataSource } from "../../config/ormconfig";
 import { Workout } from "../../entities/Workout";
 import { validateRequest } from "../../middleware/resourceValidator";
@@ -58,6 +59,23 @@ export class WorkoutSetters extends WorkoutBaseRepository {
   }
   
   /**
+   * Create Workout
+   * @param name
+   * @param exercises
+   * @returns Workout
+   * @throws Error
+   */
+  async createWorkout(name: string, exerciseIds: string[]): Promise<Workout> {
+    const workout = new Workout();
+    workout.name = name;
+    const exercises = await new ExerciseGetters(AppDataSource).findBy({ id: In(exerciseIds) });
+    workout.exercises = exercises;
+    await validateRequest(workout);
+    return await this.save(workout);
+  }
+  
+  // TODO: TEST Updates
+  /**
    * Update Workout Name
    * @param workoutId
    * @param name
@@ -92,6 +110,7 @@ export class WorkoutSetters extends WorkoutBaseRepository {
     }
 
     workout.name = (name as string) ?? workout.name;
+    // we can add duplicate exercises to a workout as it determines the order of the exercises
     const exercises = await new ExerciseGetters(AppDataSource).find(exerciseIds);
     workout.exercises = exercises;
     await validateRequest(workout);

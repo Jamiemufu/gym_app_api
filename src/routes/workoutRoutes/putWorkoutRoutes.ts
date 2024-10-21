@@ -7,6 +7,7 @@ const router = Router();
 const workoutRepository = new WorkoutSetters(AppDataSource);
 const errorMessage = "Workout not found";
 
+// TODO: TEST and update this
 /**
  * Update workout
  * PUT /workout/update/:uuid

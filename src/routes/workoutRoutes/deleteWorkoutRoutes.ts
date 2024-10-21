@@ -32,6 +32,7 @@ router.delete("/delete/:uuid", async (req: Request, res: Response, next: NextFun
   }
 });
 
+// TODO: TEST THIS
 /**
  * Delete Exercises from Workout
  * DELETE /workout/delete/:uuid/exercise
@@ -45,7 +46,7 @@ router.delete("/delete/:uuid/exercise", async (req: Request, res: Response, next
    * #swagger.description = "Removes exercises from a workout by its ID."
    * #swagger.parameters['uuid'] = { description: "Workout ID" }
    * #swagger.path = '/workout/delete/{uuid}/exercise'
-   * #swagger.summary = "Remove exercises from workout by workout ID and exercise ID"
+   * #swagger.summary = "Remove exercises from workout by workout ID and exercise ID separe"
    * #swagger.responses[204] = { description: "Exercises removed." }
    * #swagger.responses[404] = { description: "Workout not found." }
    * #swagger.responses[500] = { description: "Internal server error." }
