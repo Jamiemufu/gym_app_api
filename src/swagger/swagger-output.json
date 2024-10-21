@@ -1066,7 +1066,7 @@
           },
           {
             "name": "exerciseIds",
-            "description": "Array of exercise IDs - seperated by &",
+            "description": "Array of exercise IDs seperated by , or &",
             "in": "query",
             "type": "string"
           }

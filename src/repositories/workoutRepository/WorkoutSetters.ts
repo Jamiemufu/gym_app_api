@@ -57,7 +57,7 @@ export class WorkoutSetters extends WorkoutBaseRepository {
     workout.exercises = [];
     return await this.save(workout);
   }
-  
+
   /**
    * Create Workout
    * @param name
@@ -68,12 +68,15 @@ export class WorkoutSetters extends WorkoutBaseRepository {
   async createWorkout(name: string, exerciseIds: string[]): Promise<Workout> {
     const workout = new Workout();
     workout.name = name;
-    const exercises = await new ExerciseGetters(AppDataSource).findBy({ id: In(exerciseIds) });
+
+    // get exercises by id
+    const exercises = await new ExerciseGetters(AppDataSource).find({ where: { id: In(exerciseIds) } });
     workout.exercises = exercises;
+    
     await validateRequest(workout);
     return await this.save(workout);
   }
-  
+
   // TODO: TEST Updates
   /**
    * Update Workout Name

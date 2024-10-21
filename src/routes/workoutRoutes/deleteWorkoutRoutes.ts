@@ -32,7 +32,6 @@ router.delete("/delete/:uuid", async (req: Request, res: Response, next: NextFun
   }
 });
 
-// TODO: TEST THIS
 /**
  * Delete Exercises from Workout
  * DELETE /workout/delete/:uuid/exercise
