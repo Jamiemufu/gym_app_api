@@ -1,5 +1,5 @@
 import { User } from "../../entities/User";
-import { validateRequest } from "../../middleware/resourceValidator";
+import { validateRequest } from "../../middleware/requestValidator";
 import { UserBaseRepository } from "./UserBaseRepository";
 
 export class UserSetters extends UserBaseRepository {

@@ -1,6 +1,6 @@
 import { AppDataSource } from "../../config/ormconfig";
 import { Mesocycle } from "../../entities/Mesocycle";
-import { validateRequest } from "../../middleware/resourceValidator";
+import { validateRequest } from "../../middleware/requestValidator";
 import { UserGetters } from "../userRepository/UserGetters";
 import { MesocycleBaseRepository } from "./MesocycleBaseRepository";
 

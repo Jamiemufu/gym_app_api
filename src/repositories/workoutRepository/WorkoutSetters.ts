@@ -1,7 +1,7 @@
-import { In, ILike } from "typeorm";
+import { In } from "typeorm";
 import { AppDataSource } from "../../config/ormconfig";
 import { Workout } from "../../entities/Workout";
-import { validateRequest } from "../../middleware/resourceValidator";
+import { validateRequest } from "../../middleware/requestValidator";
 import { ExerciseGetters } from "../exerciseRepository/ExerciseGetters";
 import { WorkoutBaseRepository } from "./WorkoutBaseRepository";
 

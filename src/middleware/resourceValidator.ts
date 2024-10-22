@@ -8,7 +8,6 @@ import { responseHandler } from "./responseHandler";
  * @returns Error | Response
  */
 export const resourceValidator = (resource: any, message: string, req: Request, res: Response) => {
-
   if (!resource || resource === "" || resource.length === 0 || resource === null) {
     throw new Error(message);
   }
@@ -18,16 +17,4 @@ export const resourceValidator = (resource: any, message: string, req: Request, 
   }
 
   return responseHandler(resource, req, res);
-};
-
-/**
- * Validate the request data
- * @param data
- */
-export const validateRequest = async (data: any) => {
-  const errors = await validate(data);
-
-  if (errors.length > 0) {
-    throw new Error(errors.toString());
-  }
 };

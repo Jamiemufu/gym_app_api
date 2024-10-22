@@ -1,5 +1,5 @@
 import { Exercise } from "../../entities/Exercise";
-import { validateRequest } from "../../middleware/resourceValidator";
+import { validateRequest } from "../../middleware/requestValidator";
 import { ExerciseBaseRepository } from "./ExerciseBaseRepository";
 
 export class ExerciseSetters extends ExerciseBaseRepository {
