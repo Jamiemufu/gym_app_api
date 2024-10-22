@@ -27,6 +27,6 @@ export class Workout {
   @CreateDateColumn()
   created_at!: Date;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id, { cascade: true })
   created_by!: User;
 }
