@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { validate } from "class-validator";
+import { responseHandler } from "./responseHandler";
 
 /**
  * Throw an error if the resource is empty or not found
@@ -9,27 +10,14 @@ import { validate } from "class-validator";
 export const resourceValidator = (resource: any, message: string, req: Request, res: Response) => {
 
   if (!resource || resource === "" || resource.length === 0 || resource === null) {
-    return res.status(404).json(message);
+    throw new Error(message);
   }
 
   if (resource instanceof Error) {
     throw new Error(resource.message);
   }
 
-  switch (req.method) {
-    case "GET":
-      return res.status(200).json(resource);
-    case "DELETE":
-      return res.status(204).json("Resource deleted");
-    case "POST":
-      return res.status(201).json(resource);
-    case "PUT":
-      return res.status(204).json(resource);
-    case "PATCH":
-      return res.status(204).json(resource);
-    default:
-      return res.status(200).json(resource);
-  }
+  return responseHandler(resource, req, res);
 };
 
 /**

@@ -1,24 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 
 export const errorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
-  if (err) {
-    switch (err.message) {
-      case err.message.includes("not found"):
-        res.status(404).json({
-          message: err.message + "!",
-        });
-        break;
-      case err.message.includes("Nothing"):
-        res.status(304).json({
-          message: err.message + "!",
-        });
-        break;
-        default: 
-          res.status(500).json({
-            message: err.message,
-          });
-    
-    }
-    next();
+  if (err.message.includes("not found")) {
+    res.status(404).json({status: 404,message: err.message + "!",});
+  } else if (err.message.includes("nothing")) {
+    res.status(304).json({status: 304, message: err.message + "!",});
+  } else {
+    res.status(500).json({status: 500, message: err.message + "!",});
   }
+  next();
 };
