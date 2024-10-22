@@ -25,9 +25,10 @@ export class UserWorkoutGetters extends UserWorkoutBaseRepository {
    * @throws Error
    */
   async getAllUserWorkoutsWithRelations(): Promise<UserWorkout[]> {
-    return await this.find({ relations: ["user", "workout"] });
+    return await this.find({ relations: ['user', 'workout'] });
   }
 
+  //TODO: Test below functions
   /**
    * 
    * @param userId
@@ -39,12 +40,12 @@ export class UserWorkoutGetters extends UserWorkoutBaseRepository {
   }
 
   /**
-   * Gind UserWorkout by User ID
+   * Get UserWorkout by User ID
    * @param userId
    * @returns Error
    */
   async getUserWorkoutByUserId(userId: string): Promise<UserWorkout | null> {
-    return await this.findOne({ where: { user: userId } });
+    return await this.findOne({ where: { user: { id: userId } } });
   }
 
   /**
@@ -54,6 +55,6 @@ export class UserWorkoutGetters extends UserWorkoutBaseRepository {
    * @throws Error
    */
   async getUserWorkoutByWorkoutId(workoutId: string): Promise<UserWorkout | null> {
-    return await this.findOne({ where: { workout: workoutId } });
+    return await this.findOne({ where: { workout: { id: workoutId } } });
   }
 }

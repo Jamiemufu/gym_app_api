@@ -13,12 +13,11 @@ const errorMessage = "User workout not found";
  * @param res Response
  * @returns Promise<void>
  */
-router.use("/all", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/all", async (req: Request, res: Response, next: NextFunction) => {
   /**
    * #swagger.tags = ["User Workout"]
    * #swagger.description = "Retrieves all user workouts."
    * #swagger.path = '/userworkout/all'
-   * #swagger.summary = "Get all user workouts"
    * #swagger.responses[200] = { description: "User workouts found." }
    * #swagger.responses[404] = { description: "User workouts not found." }
    * #swagger.responses[500] = { description: "Internal server error." }
@@ -26,6 +25,54 @@ router.use("/all", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const workouts = await userWorkoutRepository.getAllUserWorkouts();
     resourceValidator(workouts, errorMessage, req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * Get all user workouts with relations
+ * GET /userworkout/all/relations
+ * @param res Response
+ * @returns Promise<void>
+ */
+router.get("/all/relations", async (req: Request, res: Response, next: NextFunction) => {
+  /**
+   * #swagger.tags = ["User Workout"]
+   * #swagger.description = "Retrieves all user workouts with relations."
+   * #swagger.path = '/userworkout/all/relations'
+   * #swagger.responses[200] = { description: "User workouts found." }
+   * #swagger.responses[404] = { description: "User workouts not found." }
+   * #swagger.responses[500] = { description: "Internal server error." }
+   */
+  try {
+    const workouts = await userWorkoutRepository.getAllUserWorkoutsWithRelations();
+    resourceValidator(workouts, errorMessage, req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * Get user workout by ID
+ * GET /userworkout/:uuid
+ * @param req Request
+ * @param res Response
+ * @returns Promise<void>
+ */
+router.get("/:uuid", async (req: Request, res: Response, next: NextFunction) => {
+  /**
+   * #swagger.tags = ["User Workout"]
+   * #swagger.description = "Retrieves a user workout by their ID."
+   * #swagger.parameters['uuid'] = { description: "User workout ID" }
+   * #swagger.path = '/userworkout/{uuid}'
+   * #swagger.responses[200] = { description: "User workout found." }
+   * #swagger.responses[404] = { description: "User workout not found." }
+   * #swagger.responses[500] = { description: "Internal server error." }
+   */
+  try {
+    const workout = await userWorkoutRepository.getUserWorkoutById(req.params.uuid);
+    resourceValidator(workout, errorMessage, req, res);
   } catch (error) {
     next(error);
   }

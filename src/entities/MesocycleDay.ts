@@ -9,6 +9,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { Mesocycle } from "./Mesocycle";
 import { Workout } from "./Workout";
+import { IsBoolean, IsNumber } from "class-validator";
 
 @Entity("mesocycle_days")
 export class MesocycleDay {
@@ -18,12 +19,14 @@ export class MesocycleDay {
   @ManyToOne(() => Mesocycle, (mesocycle) => mesocycle.id)
   mesocycle!: Mesocycle;
 
+  @IsNumber()
   @Column()
   dayNumber!: number;
 
   @ManyToOne(() => Workout, (workout) => workout.id)
   workout!: Workout;
 
+  @IsBoolean()
   @Column({ default: false })
   restDay!: boolean;
 }

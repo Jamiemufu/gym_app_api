@@ -10,24 +10,28 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { UserWorkout } from "./UserWorkout";
 import { Exercise } from "./Exercise";
+import { IsNumber } from 'class-validator';
 
 @Entity()
 export class UserWorkoutSet {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @ManyToOne(() => UserWorkout, (userWorkout) => userWorkout.id)
-  user_workout!: string;
+  @ManyToOne(() => UserWorkout, (userWorkout) => userWorkout.id, { cascade: true })
+  user_workout!: UserWorkout;
 
   @ManyToOne(() => Exercise, (exercise) => exercise.id)
-  exercise!: string;
+  exercise!: Exercise;
 
+  @IsNumber()
   @Column({ nullable: false })
   set_number!: number;
 
+  @IsNumber()
   @Column({ nullable: false })
   reps!: number;
 
+  @IsNumber()
   @Column({ nullable: false })
   weight!: number;
 }

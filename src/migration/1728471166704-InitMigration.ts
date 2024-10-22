@@ -6,7 +6,6 @@ import { Workout } from "../entities/Workout";
 import { UserWorkout } from "../entities/UserWorkout";
 import { UserWorkoutSet } from "../entities/UserWorkoutSet";
 import { MesocycleDay } from "../entities/MesocycleDay";
-import { UserWorkoutHistory } from "../entities/UserWorkoutHistory";
 
 export class InitMigration1728471166704 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -97,7 +96,7 @@ export class InitMigration1728471166704 implements MigrationInterface {
     const userWorkoutSet17 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[8], 3, 15, 10);
 
     // create UserWorkoutHistory
-    const userWorkoutHistory = await this.createUserWorkoutHistory(queryRunner, user3, workout3, [userWorkoutSet2, userWorkoutSet3, userWorkoutSet4]);
+  //   const userWorkoutHistory = await this.createUserWorkoutHistory(queryRunner, user3, workout3, [userWorkoutSet2, userWorkoutSet3, userWorkoutSet4]);
   }
 
   // Helper Functions to create entities and populate relationships
@@ -161,8 +160,8 @@ export class InitMigration1728471166704 implements MigrationInterface {
   // Create UserWorkout record
   private async createUserWorkout(queryRunner: QueryRunner, user: User, workout: Workout) {
     const userWorkout = queryRunner.manager.create(UserWorkout, {
-      user: user.id,
-      workout: workout.id,
+      user: user,
+      workout: workout,
       date: new Date(),
     });
     return queryRunner.manager.save(userWorkout);
@@ -171,28 +170,16 @@ export class InitMigration1728471166704 implements MigrationInterface {
   // Create UserWorkoutSet records
   private async createUserWorkoutSet(queryRunner: QueryRunner, userWorkout: UserWorkout, exercise: Exercise, setNumber: number, reps: number, weight: number) {
     const userWorkoutSet = queryRunner.manager.create(UserWorkoutSet, {
-      user_workout: userWorkout.id,
-      exercise: exercise.id,
       set_number: setNumber,
       reps,
       weight,
+      user_workout: userWorkout,
+      exercise: exercise,
     });
     return queryRunner.manager.save(userWorkoutSet);
   }
 
-  // Create UserWorkoutHistory record
-  private async createUserWorkoutHistory(queryRunner: QueryRunner, user: User, workout: Workout, userWorkoutSet: UserWorkoutSet[]) {
-    const userWorkoutHistory = queryRunner.manager.create(UserWorkoutHistory, {
-      user: user.id,
-      workout: workout.id,
-      date: new Date(),
-      sets: userWorkoutSet,
-    });
-    return queryRunner.manager.save(userWorkoutHistory);
-  }
-
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.manager.delete(UserWorkoutHistory, {});
     await queryRunner.manager.delete(UserWorkoutSet, {});
     await queryRunner.manager.delete(UserWorkout, {});
     await queryRunner.manager.delete(MesocycleDay, {});

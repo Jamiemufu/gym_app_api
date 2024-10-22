@@ -15,10 +15,10 @@ export class UserWorkout {
   id!: string;
 
   @ManyToOne(() => User, (user) => user.id)
-  user!: string;
+  user!: User;
 
   @ManyToOne(() => Workout, (workout) => workout.id)
-  workout!: string;
+  workout!: Workout;
 
   @CreateDateColumn()
   date!: Date;
