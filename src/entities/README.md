@@ -255,6 +255,9 @@ Table user_workout_sets {
   
   This would be captured in the **User Workout History Table** and **User Workout Sets Table**.
 
+  Create and save the UserWorkout
+  Then create and save the User Log associated to the UserWorkout
+
 ---
 
 ### Step 6: Track Historical Data

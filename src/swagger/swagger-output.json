@@ -601,6 +601,81 @@
         }
       }
     },
+    "/userlog/all": {
+      "get": {
+        "tags": [
+          "User Log"
+        ],
+        "description": "Retrieves all user logs.",
+        "responses": {
+          "200": {
+            "description": "User logs found."
+          },
+          "404": {
+            "description": "User logs not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/userlog/user/{uuid}": {
+      "get": {
+        "tags": [
+          "User Log"
+        ],
+        "description": "Retrieves user logs by User ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User logs found."
+          },
+          "404": {
+            "description": "User logs not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/userlog/exercise/{uuid}": {
+      "get": {
+        "tags": [
+          "User Log"
+        ],
+        "description": "Retrieves user logs by Exercise ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Exercise ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User logs found."
+          },
+          "404": {
+            "description": "User logs not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
     "/users/delete/{uuid}": {
       "delete": {
         "tags": [

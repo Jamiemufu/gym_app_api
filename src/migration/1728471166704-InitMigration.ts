@@ -4,8 +4,8 @@ import { Mesocycle } from "../entities/Mesocycle";
 import { Exercise } from "../entities/Exercise";
 import { Workout } from "../entities/Workout";
 import { UserWorkout } from "../entities/UserWorkout";
-import { UserWorkoutSet } from "../entities/UserWorkoutSet";
 import { MesocycleDay } from "../entities/MesocycleDay";
+import { UserLog } from "../entities/UserLog";
 
 export class InitMigration1728471166704 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -78,22 +78,22 @@ export class InitMigration1728471166704 implements MigrationInterface {
     const userWorkout8 = await this.createUserWorkout(queryRunner, user3, workout8);
 
     // Create Sets for UserWorkouts
-    const userWorkoutSet2 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[0], 1, 10, 70);
-    const userWorkoutSet3 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[0], 2, 8, 70);
-    const userWorkoutSet4 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[0], 3, 10, 60);
-    const userWorkoutSet5 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[5], 1, 10, 80);
-    const userWorkoutSet6 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[5], 2, 7, 80);
-    const userWorkoutSet7 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[5], 3, 10, 70);
-    const userWorkoutSet8 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[5], 4, 8, 70);
-    const userWorkoutSet9 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[6], 1, 12, 10);
-    const userWorkoutSet10 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[6], 2, 12, 10);
-    const userWorkoutSet11 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[6], 3, 12, 10);
-    const userWorkoutSet12 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[7], 1, 12, 0);
-    const userWorkoutSet13 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[7], 2, 12, 0);
-    const userWorkoutSet14 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[7], 3, 12, 0);
-    const userWorkoutSet15 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[8], 1, 15, 10);
-    const userWorkoutSet16 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[8], 2, 15, 10);
-    const userWorkoutSet17 = await this.createUserWorkoutSet(queryRunner, userWorkout3, exercises[8], 3, 15, 10);
+    const userWorkoutSet2 = await this.createUserLog(queryRunner, userWorkout3, exercises[0], 1, 10, 70);
+    const userWorkoutSet3 = await this.createUserLog(queryRunner, userWorkout3, exercises[0], 2, 8, 70);
+    const userWorkoutSet4 = await this.createUserLog(queryRunner, userWorkout3, exercises[0], 3, 10, 60);
+    const userWorkoutSet5 = await this.createUserLog(queryRunner, userWorkout3, exercises[5], 1, 10, 80);
+    const userWorkoutSet6 = await this.createUserLog(queryRunner, userWorkout3, exercises[5], 2, 7, 80);
+    const userWorkoutSet7 = await this.createUserLog(queryRunner, userWorkout3, exercises[5], 3, 10, 70);
+    const userWorkoutSet8 = await this.createUserLog(queryRunner, userWorkout3, exercises[5], 4, 8, 70);
+    const userWorkoutSet9 = await this.createUserLog(queryRunner, userWorkout3, exercises[6], 1, 12, 10);
+    const userWorkoutSet10 = await this.createUserLog(queryRunner, userWorkout3, exercises[6], 2, 12, 10);
+    const userWorkoutSet11 = await this.createUserLog(queryRunner, userWorkout3, exercises[6], 3, 12, 10);
+    const userWorkoutSet12 = await this.createUserLog(queryRunner, userWorkout3, exercises[7], 1, 12, 0);
+    const userWorkoutSet13 = await this.createUserLog(queryRunner, userWorkout3, exercises[7], 2, 12, 0);
+    const userWorkoutSet14 = await this.createUserLog(queryRunner, userWorkout3, exercises[7], 3, 12, 0);
+    const userWorkoutSet15 = await this.createUserLog(queryRunner, userWorkout3, exercises[8], 1, 15, 10);
+    const userWorkoutSet16 = await this.createUserLog(queryRunner, userWorkout3, exercises[8], 2, 15, 10);
+    const userWorkoutSet17 = await this.createUserLog(queryRunner, userWorkout3, exercises[8], 3, 15, 10);
 
     // create UserWorkoutHistory
   //   const userWorkoutHistory = await this.createUserWorkoutHistory(queryRunner, user3, workout3, [userWorkoutSet2, userWorkoutSet3, userWorkoutSet4]);
@@ -168,8 +168,8 @@ export class InitMigration1728471166704 implements MigrationInterface {
   }
 
   // Create UserWorkoutSet records
-  private async createUserWorkoutSet(queryRunner: QueryRunner, userWorkout: UserWorkout, exercise: Exercise, setNumber: number, reps: number, weight: number) {
-    const userWorkoutSet = queryRunner.manager.create(UserWorkoutSet, {
+  private async createUserLog(queryRunner: QueryRunner, userWorkout: UserWorkout, exercise: Exercise, setNumber: number, reps: number, weight: number) {
+    const userWorkoutSet = queryRunner.manager.create(UserLog, {
       set_number: setNumber,
       reps,
       weight,
@@ -180,7 +180,7 @@ export class InitMigration1728471166704 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.manager.delete(UserWorkoutSet, {});
+    await queryRunner.manager.delete(UserLog, {});
     await queryRunner.manager.delete(UserWorkout, {});
     await queryRunner.manager.delete(MesocycleDay, {});
     await queryRunner.manager.delete(Mesocycle, {});

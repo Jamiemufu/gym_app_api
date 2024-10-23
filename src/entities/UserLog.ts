@@ -13,14 +13,14 @@ import { Exercise } from "./Exercise";
 import { IsNumber } from 'class-validator';
 
 @Entity()
-export class UserWorkoutSet {
+export class UserLog {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @ManyToOne(() => UserWorkout, (userWorkout) => userWorkout.id, { cascade: true, eager: true })
+  @ManyToOne(() => UserWorkout, (userWorkout) => userWorkout.id, { cascade: true})
   user_workout!: UserWorkout;
 
-  @ManyToOne(() => Exercise, (exercise) => exercise.id, { cascade: true, eager: true }) 
+  @ManyToOne(() => Exercise, (exercise) => exercise.id, { cascade: true}) 
   exercise!: Exercise;
 
   @IsNumber()

@@ -21,6 +21,7 @@ import postWorkoutRoutes from "./routes/workoutRoutes/postWorkoutRoutes";
 import putWorkoutRoutes from "./routes/workoutRoutes/putWorkoutRoutes";
 import deleteWorkoutRoutes from "./routes/workoutRoutes/deleteWorkoutRoutes";
 import patchWorkoutRoutes from "./routes/workoutRoutes/patchWorkoutRoutes";
+import getUserLogRoutes from "./routes/userLogRoutes/getUserLogRoutes";
 import { errorHandler } from "./middleware/errorHandler";
 import getUserWorkoutRoutes from "./routes/userWorkoutRoutes/getUserWorkoutRoutes";
 import postUserWorkoutRoutes from "./routes/userWorkoutRoutes/postUserWorkoutRoutes";
@@ -70,6 +71,8 @@ AppDataSource.initialize()
     app.use("/userworkout", getUserWorkoutRoutes);
     app.use("/userworkout", postUserWorkoutRoutes);
     app.use("/userworkout", deleteUserWorkoutRoutes);
+    // User Log routes
+    app.use("/userlog", getUserLogRoutes);
     // Swagger
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(require("./swagger/swagger-output.json")));
     // Error handling
