@@ -1,7 +1,10 @@
 import { User } from "../../entities/User";
 import { UserWorkout } from "../../entities/UserWorkout";
 import { Workout } from "../../entities/Workout";
+import { UserGetters } from "../userRepository/UserGetters";
+import { WorkoutGetters } from "../workoutRepository/WorkoutGetters";
 import { UserWorkoutBaseRepository } from "./UserWorkoutBaseRepository";
+
 
 export class UserWorkoutSetters extends UserWorkoutBaseRepository {
   /**
@@ -11,9 +14,9 @@ export class UserWorkoutSetters extends UserWorkoutBaseRepository {
    * @returns UserWorkout
    * @throws Error
    */
-  async addUserWorkout(userId: string, workoutId: string): Promise<UserWorkout> {
-    const user = await this.manager.findOneBy(User, { id: userId });
-    const workout = await this.manager.findOneBy(Workout, { id: workoutId });
+  async createUserWorkout(userId: string, workoutId: string): Promise<UserWorkout> {
+    const user = await new UserGetters(this.manager.connection).getUserById(userId);
+    const workout = await new WorkoutGetters(this.manager.connection).getWorkoutById(workoutId);
 
     if (!user) {
       throw new Error("User not found");

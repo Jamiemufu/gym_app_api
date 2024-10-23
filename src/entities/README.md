@@ -274,9 +274,9 @@ SELECT
 FROM 
     users u
 JOIN 
-    user_workout_history uwh ON u.id = uwh.user_id
+    user_workouts uwh ON u.id = uwh.user_id
 JOIN 
-    user_workout_sets uws ON uwh.id = uws.user_workout_id
+    user_log_sets uws ON uwh.id = uws.user_workout_id
 JOIN 
     exercises e ON uws.exercise_id = e.id
 JOIN 

@@ -27,7 +27,7 @@ router.post("/create", async (req: Request, res: Response, next: NextFunction) =
    * #swagger.responses[500] = { description: "Internal server error." }
    */
   try {
-    const userWorkout = await userWorkoutRepository.addUserWorkout(req.params.userId, req.params.workoutId);
+    const userWorkout = await userWorkoutRepository.createUserWorkout(req.params.userId, req.params.workoutId);
     resourceValidator(userWorkout, errorMessage, req, res);
   }
   catch (error) {

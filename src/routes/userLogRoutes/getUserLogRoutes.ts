@@ -57,23 +57,26 @@ router.get("/user/:uuid", async (req: Request, res: Response, next: NextFunction
 
 /**
  * Get userlogs by ExerciseID
- * GET /userlog/exercise/:uuid
+ * GET /userlog/exercise/
  * @param req Request
  * @param res Response
  * @returns Promise<void>
  */
-router.get("/exercise/:uuid", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/exercise", async (req: Request, res: Response, next: NextFunction) => {
   /**
    * #swagger.tags = ["User Log"]
    * #swagger.description = "Retrieves user logs by Exercise ID."
-   * #swagger.path = '/userlog/exercise/{uuid}'
+   * #swagger.path = '/userlog/exercise}'
    * #swagger.parameters['uuid'] = { description: "Exercise ID" }
+   * #swagger.parameters['userId'] = { description: "User ID" }
    * #swagger.responses[200] = { description: "User logs found." }
    * #swagger.responses[404] = { description: "User logs not found." }
    * #swagger.responses[500] = { description: "Internal server error." }
    */
   try {
-    const userLog = await UserLogRepository.getUserLogsByExerciseId(req.params.uuid);
+    const userId = req.query.userId as string;
+    const exerciseId = req.query.exerciseId as string;
+    const userLog = await UserLogRepository.getUserLogsByExerciseId(userId, exerciseId);
     resourceValidator(userLog, errorMessage, req, res);
   } catch (error) {
     next(error);

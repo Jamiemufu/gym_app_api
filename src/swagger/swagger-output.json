@@ -648,7 +648,7 @@
         }
       }
     },
-    "/userlog/exercise/{uuid}": {
+    "/userlog/exercise}": {
       "get": {
         "tags": [
           "User Log"
@@ -656,11 +656,21 @@
         "description": "Retrieves user logs by Exercise ID.",
         "parameters": [
           {
+            "name": "exerciseId",
+            "in": "query",
+            "type": "string"
+          },
+          {
             "name": "uuid",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Exercise ID"
+            "description": "Exercise ID",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "description": "User ID",
+            "in": "query",
+            "type": "string"
           }
         ],
         "responses": {

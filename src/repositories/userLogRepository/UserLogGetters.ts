@@ -13,7 +13,7 @@ export class UserLogGetters extends UserLogBaseRepository {
    */
   async getAllUserLogs(): Promise<UserLog[]> {
     return await this.find({
-      relations: ["exercise", "user_workout"],
+      relations: ["exercise", "user_workout", "user_workout.user"],
     });
   }
 
@@ -41,21 +41,34 @@ export class UserLogGetters extends UserLogBaseRepository {
    */
   async getUserLogsByUserWorkoutId(userWorkoutId: string): Promise<UserLog[]> {
     return await this.find({
-      where: { user_workout: Equal(userWorkoutId) },
+      where: {
+        user_workout: {
+          id: userWorkoutId,
+        },
+      },
       relations: ["exercise", "user_workout"],
     });
   }
 
   /**
-   * Get user logs by exercise
+   * Get user logs by exercise and userId
    * @param exerciseId
    * @returns UserLog[]
    * @throws Error
    */
-  async getUserLogsByExerciseId(exerciseId: string): Promise<UserLog[]> {
+  async getUserLogsByExerciseId(userId: string, exerciseId: string): Promise<UserLog[]> {
     return await this.find({
-      where: { exercise: Equal(exerciseId) },
-      relations: ["exercise"],
+      where: {
+        exercise: {
+          id: exerciseId,
+        },
+        user_workout: {
+          user: {
+            id: userId,
+          },
+        },
+      },
+      relations: ["exercise, user_workout, user_workout.user"],
     });
   }
 }

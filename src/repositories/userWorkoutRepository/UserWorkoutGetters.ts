@@ -1,7 +1,6 @@
-import { UserWorkout } from '../../entities/UserWorkout';
-import { UserWorkoutBaseRepository } from './UserWorkoutBaseRepository';
+import { UserWorkout } from "../../entities/UserWorkout";
+import { UserWorkoutBaseRepository } from "./UserWorkoutBaseRepository";
 export class UserWorkoutGetters extends UserWorkoutBaseRepository {
-
   /**
    * Find UserWorkout by ID
    * @param userWorkoutId
@@ -11,7 +10,7 @@ export class UserWorkoutGetters extends UserWorkoutBaseRepository {
     return await this.findOneBy({ id: userWorkoutId });
   }
 
-  /** 
+  /**
    * get all UserWorkouts
    * @returns UserWorkout[]
    */
@@ -25,18 +24,23 @@ export class UserWorkoutGetters extends UserWorkoutBaseRepository {
    * @throws Error
    */
   async getAllUserWorkoutsWithRelations(): Promise<UserWorkout[]> {
-    return await this.find({ relations: ['user', 'workout', 'workout.exercises'] });
+    return await this.find({ relations: ["user", "workout", "workout.exercises"] });
   }
 
   //TODO: Test below functions
   /**
-   * 
+   *
    * @param userId
    * @returns UserWorkout[]
    * @throws Error
    */
   async getUserWorkoutByIdWithRelations(workoutId: string): Promise<UserWorkout | null> {
-    return await this.findOne({ where: { id: workoutId }, relations: ["user", "workout", "workout.exercises"] });
+    return await this.findOne({
+      where: {
+        id: workoutId,
+      },
+      relations: ["user", "workout", "workout.exercises"],
+    });
   }
 
   /**
@@ -45,7 +49,13 @@ export class UserWorkoutGetters extends UserWorkoutBaseRepository {
    * @returns Error
    */
   async getUserWorkoutByUserId(userId: string): Promise<UserWorkout | null> {
-    return await this.findOne({ where: { user: { id: userId } } });
+    return await this.findOne({
+      where: {
+        user: {
+          id: userId,
+        },
+      },
+    });
   }
 
   /**
@@ -55,6 +65,12 @@ export class UserWorkoutGetters extends UserWorkoutBaseRepository {
    * @throws Error
    */
   async getUserWorkoutByWorkoutId(workoutId: string): Promise<UserWorkout | null> {
-    return await this.findOne({ where: { workout: { id: workoutId } } });
+    return await this.findOne({
+      where: {
+        workout: {
+          id: workoutId,
+        },
+      },
+    });
   }
 }
