@@ -17,6 +17,7 @@ router.get("/all", async (req: Request, res: Response, next: NextFunction) => {
   /**
    * #swagger.tags = ["User Log"]
    * #swagger.description = "Retrieves all user logs."
+   * #swagger.summary = "Get all user logs."
    * #swagger.path = '/userlog/all'
    * #swagger.responses[200] = { description: "User logs found." }
    * #swagger.responses[404] = { description: "User logs not found." }
@@ -41,6 +42,7 @@ router.get("/user/:uuid", async (req: Request, res: Response, next: NextFunction
   /**
    * #swagger.tags = ["User Log"]
    * #swagger.description = "Retrieves user logs by User ID."
+   * #swagger.summary = "Get user logs by User ID."
    * #swagger.path = '/userlog/user/{uuid}'
    * #swagger.parameters['uuid'] = { description: "User ID" }
    * #swagger.responses[200] = { description: "User logs found." }
@@ -66,8 +68,9 @@ router.get("/exercise", async (req: Request, res: Response, next: NextFunction) 
   /**
    * #swagger.tags = ["User Log"]
    * #swagger.description = "Retrieves user logs by Exercise ID."
-   * #swagger.path = '/userlog/exercise}'
-   * #swagger.parameters['uuid'] = { description: "Exercise ID" }
+   * #swagger.path = '/userlog/exercise'
+   * #swagger.summary = "Get user logs by Exercise ID and User ID."
+   * #swagger.parameters['exerciseId'] = { description: "Exercise ID" }
    * #swagger.parameters['userId'] = { description: "User ID" }
    * #swagger.responses[200] = { description: "User logs found." }
    * #swagger.responses[404] = { description: "User logs not found." }

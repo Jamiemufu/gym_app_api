@@ -68,7 +68,7 @@ export class UserLogGetters extends UserLogBaseRepository {
           },
         },
       },
-      relations: ["exercise, user_workout, user_workout.user"],
+      relations: ["user_workout", "exercise"],
     });
   }
 }

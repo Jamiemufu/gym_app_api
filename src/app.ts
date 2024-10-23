@@ -26,6 +26,7 @@ import { errorHandler } from "./middleware/errorHandler";
 import getUserWorkoutRoutes from "./routes/userWorkoutRoutes/getUserWorkoutRoutes";
 import postUserWorkoutRoutes from "./routes/userWorkoutRoutes/postUserWorkoutRoutes";
 import deleteUserWorkoutRoutes from "./routes/userWorkoutRoutes/deleteUserWorkoutRoutes";
+import postUserLogRoutes from "./routes/userLogRoutes/postUserLogRoutes";
 
 const swaggerUi = require("swagger-ui-express");
 const app = express();
@@ -73,10 +74,11 @@ AppDataSource.initialize()
     app.use("/userworkout", deleteUserWorkoutRoutes);
     // User Log routes
     app.use("/userlog", getUserLogRoutes);
+    app.use("/userlog", postUserLogRoutes);
     // Swagger
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(require("./swagger/swagger-output.json")));
     // Error handling
-    app.all('*', () => {
+    app.all("*", () => {
       throw new Error("Route not found");
     });
     // Error handling middleware
@@ -85,6 +87,5 @@ AppDataSource.initialize()
       console.log(`Server is running on http://localhost:${PORT}`);
       console.log("Database name:", AppDataSource.options.database);
     });
-  
   })
   .catch((error) => console.error("Error during Data Source initialization:", error));

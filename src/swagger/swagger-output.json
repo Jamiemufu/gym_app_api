@@ -606,6 +606,7 @@
         "tags": [
           "User Log"
         ],
+        "summary": "Get all user logs.",
         "description": "Retrieves all user logs.",
         "responses": {
           "200": {
@@ -625,6 +626,7 @@
         "tags": [
           "User Log"
         ],
+        "summary": "Get user logs by User ID.",
         "description": "Retrieves user logs by User ID.",
         "parameters": [
           {
@@ -648,20 +650,16 @@
         }
       }
     },
-    "/userlog/exercise}": {
+    "/userlog/exercise": {
       "get": {
         "tags": [
           "User Log"
         ],
+        "summary": "Get user logs by Exercise ID and User ID.",
         "description": "Retrieves user logs by Exercise ID.",
         "parameters": [
           {
             "name": "exerciseId",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "uuid",
             "description": "Exercise ID",
             "in": "query",
             "type": "string"
@@ -679,6 +677,64 @@
           },
           "404": {
             "description": "User logs not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/userlog/create": {
+      "post": {
+        "tags": [
+          "User Log"
+        ],
+        "summary": "Create a new user log.",
+        "description": "Create a new user log.",
+        "parameters": [
+          {
+            "name": "userId",
+            "description": "User ID.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "workoutId",
+            "description": "workout ID.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "exerciseId",
+            "description": "Exercise ID.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "reps",
+            "description": "Reps.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "sets",
+            "description": "Sets.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "weight",
+            "description": "Weight.",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User log created."
+          },
+          "400": {
+            "description": "Invalid request body."
           },
           "500": {
             "description": "Internal server error."
