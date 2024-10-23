@@ -25,7 +25,7 @@ export class UserWorkoutGetters extends UserWorkoutBaseRepository {
    * @throws Error
    */
   async getAllUserWorkoutsWithRelations(): Promise<UserWorkout[]> {
-    return await this.find({ relations: ['user', 'workout'] });
+    return await this.find({ relations: ['user', 'workout', 'workout.exercises'] });
   }
 
   //TODO: Test below functions
@@ -36,7 +36,7 @@ export class UserWorkoutGetters extends UserWorkoutBaseRepository {
    * @throws Error
    */
   async getUserWorkoutByIdWithRelations(workoutId: string): Promise<UserWorkout | null> {
-    return await this.findOne({ where: { id: workoutId }, relations: ["user", "workout"] });
+    return await this.findOne({ where: { id: workoutId }, relations: ["user", "workout", "workout.exercises"] });
   }
 
   /**

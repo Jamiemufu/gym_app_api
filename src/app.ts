@@ -23,6 +23,8 @@ import deleteWorkoutRoutes from "./routes/workoutRoutes/deleteWorkoutRoutes";
 import patchWorkoutRoutes from "./routes/workoutRoutes/patchWorkoutRoutes";
 import { errorHandler } from "./middleware/errorHandler";
 import getUserWorkoutRoutes from "./routes/userWorkoutRoutes/getUserWorkoutRoutes";
+import postUserWorkoutRoutes from "./routes/userWorkoutRoutes/postUserWorkoutRoutes";
+import deleteUserWorkoutRoutes from "./routes/userWorkoutRoutes/deleteUserWorkoutRoutes";
 
 const swaggerUi = require("swagger-ui-express");
 const app = express();
@@ -66,6 +68,8 @@ AppDataSource.initialize()
     app.use("/workout", patchWorkoutRoutes);
     // user workout routes
     app.use("/userworkout", getUserWorkoutRoutes);
+    app.use("/userworkout", postUserWorkoutRoutes);
+    app.use("/userworkout", deleteUserWorkoutRoutes);
     // Swagger
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(require("./swagger/swagger-output.json")));
     // Error handling

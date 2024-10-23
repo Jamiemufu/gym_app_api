@@ -14,10 +14,10 @@ export class UserWorkout {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id, { cascade: true })
   user!: User;
 
-  @ManyToOne(() => Workout, (workout) => workout.id)
+  @ManyToOne(() => Workout, (workout) => workout.id, { cascade: true })
   workout!: Workout;
 
   @CreateDateColumn()

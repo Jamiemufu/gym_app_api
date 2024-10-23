@@ -78,4 +78,29 @@ router.get("/:uuid", async (req: Request, res: Response, next: NextFunction) => 
   }
 });
 
+/**
+ * Get user workout by ID with relations
+ * GET /userworkout/:uuid/all
+ * @param req Request
+ * @param res Response
+ * @returns Promise<void>
+ */
+router.get("/:uuid/all", async (req: Request, res: Response, next: NextFunction) => {
+  /**
+   * #swagger.tags = ["User Workout"]
+   * #swagger.description = "Retrieves a user workout by their ID with relations."
+   * #swagger.parameters['uuid'] = { description: "User workout ID" }
+   * #swagger.path = '/userworkout/{uuid}/all'
+   * #swagger.responses[200] = { description: "User workout found." }
+   * #swagger.responses[404] = { description: "User workout not found." }
+   * #swagger.responses[500] = { description: "Internal server error." }
+   */
+  try {
+    const workout = await userWorkoutRepository.getUserWorkoutByIdWithRelations(req.params.uuid);
+    resourceValidator(workout, errorMessage, req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;

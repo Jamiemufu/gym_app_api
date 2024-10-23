@@ -17,10 +17,10 @@ export class UserWorkoutSet {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @ManyToOne(() => UserWorkout, (userWorkout) => userWorkout.id, { cascade: true })
+  @ManyToOne(() => UserWorkout, (userWorkout) => userWorkout.id, { cascade: true, eager: true })
   user_workout!: UserWorkout;
 
-  @ManyToOne(() => Exercise, (exercise) => exercise.id)
+  @ManyToOne(() => Exercise, (exercise) => exercise.id, { cascade: true, eager: true }) 
   exercise!: Exercise;
 
   @IsNumber()
