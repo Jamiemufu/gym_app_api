@@ -28,14 +28,15 @@ router.post("/create", async (req: Request, res: Response, next: NextFunction) =
    * #swagger.responses[500] = { description: "Internal server error." }
    */
   try {
-    const username = req.query.username as string;
-    const email = req.query.email as string;
-    const password = req.query.password as string;
+    const username = req.body.username as string;
+    const email = req.body.email as string;
+    const password = req.body.password as string;
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    // TODO: Removing for now, will add back in later when doing auth
+    // const salt = await bcrypt.genSalt(10);
+    // const hashedPassword = await bcrypt.hash(password, salt);
 
-    const user = await userRepository.createUser(username, hashedPassword, email);
+    const user = await userRepository.createUser(username, password, email);
     resourceValidator(user, errorMessage, req, res);
   } catch (error) {
     next(error);

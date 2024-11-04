@@ -27,6 +27,6 @@ export class Workout {
   @CreateDateColumn()
   created_at!: Date;
 
-  @ManyToOne(() => User, (user) => user.id, { cascade: true })
+  @ManyToOne(() => User, (user) => user.id, { onDelete: "CASCADE" })
   created_by!: User;
 }

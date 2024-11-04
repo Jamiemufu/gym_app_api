@@ -37,11 +37,11 @@ export class Mesocycle {
   @JoinTable()
   workouts!: Workout[];
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id, { onDelete: "CASCADE" })
   created_by!: User;
 
   // mesocycle owns join table with users
-  @ManyToMany(() => User, (user) => user.id)
+  @ManyToMany(() => User, (user) => user.id, { onDelete: "CASCADE" })
   @JoinTable()
   users!: User[];
 }
