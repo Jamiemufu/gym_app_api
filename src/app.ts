@@ -44,48 +44,61 @@ app.use(
 );
 
 // Initialize TypeORM and start the server
-AppDataSource.initialize()
-  .then(() => {
-    console.log("Data Source has been initialized!");
-    // user routes
-    app.use("/users", getUserRoutes);
-    app.use("/users", postUserRoutes);
-    app.use("/users", deleteUserRoutes);
-    // mesocycle routes
-    app.use("/mesocycle", getMesocycleRoutes);
-    app.use("/mesocycle", postMesocycleRoutes);
-    app.use("/mesocycle", deleteMesocycleRoutes);
-    app.use("/mesocycle", putMesocycleRoutes);
-    app.use("/mesocycle", patchMesocycleRoutes);
-    // exercise routes
-    app.use("/exercise", getExerciseRoutes);
-    app.use("/exercise", postExerciseRoutes);
-    app.use("/exercise", putExerciseRoutes);
-    app.use("/exercise", deleteExerciseRoutes);
-    // workout routes
-    app.use("/workout", getWorkoutRoutes);
-    app.use("/workout", postWorkoutRoutes);
-    app.use("/workout", putWorkoutRoutes);
-    app.use("/workout", deleteWorkoutRoutes);
-    app.use("/workout", patchWorkoutRoutes);
-    // user workout routes
-    app.use("/userworkout", getUserWorkoutRoutes);
-    app.use("/userworkout", postUserWorkoutRoutes);
-    app.use("/userworkout", deleteUserWorkoutRoutes);
-    // User Log routes
-    app.use("/userlog", getUserLogRoutes);
-    app.use("/userlog", postUserLogRoutes);
-    // Swagger
-    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(require("./swagger/swagger-output.json")));
-    // Error handling
-    app.all("*", () => {
-      throw new Error("Route not found");
-    });
-    // Error handling middleware
-    app.use(errorHandler);
-    app.listen(PORT, () => {
-      console.log(`Server is running on http://localhost:${PORT}`);
-      console.log("Database name:", AppDataSource.options.database);
-    });
-  })
-  .catch((error) => console.error("Error during Data Source initialization:", error));
+
+// user routes
+app.use("/users", getUserRoutes);
+app.use("/users", postUserRoutes);
+app.use("/users", deleteUserRoutes);
+// mesocycle routes
+app.use("/mesocycle", getMesocycleRoutes);
+app.use("/mesocycle", postMesocycleRoutes);
+app.use("/mesocycle", deleteMesocycleRoutes);
+app.use("/mesocycle", putMesocycleRoutes);
+app.use("/mesocycle", patchMesocycleRoutes);
+// exercise routes
+app.use("/exercise", getExerciseRoutes);
+app.use("/exercise", postExerciseRoutes);
+app.use("/exercise", putExerciseRoutes);
+app.use("/exercise", deleteExerciseRoutes);
+// workout routes
+app.use("/workout", getWorkoutRoutes);
+app.use("/workout", postWorkoutRoutes);
+app.use("/workout", putWorkoutRoutes);
+app.use("/workout", deleteWorkoutRoutes);
+app.use("/workout", patchWorkoutRoutes);
+// user workout routes
+app.use("/userworkout", getUserWorkoutRoutes);
+app.use("/userworkout", postUserWorkoutRoutes);
+app.use("/userworkout", deleteUserWorkoutRoutes);
+// User Log routes
+app.use("/userlog", getUserLogRoutes);
+app.use("/userlog", postUserLogRoutes);
+// Swagger
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(require("./swagger/swagger-output.json")));
+// Error handling
+app.all("*", () => {
+  throw new Error("Route not found");
+});
+app.use(errorHandler);
+
+// Initialize TypeORM and start the server
+export const initializeApp = async () => {
+  await AppDataSource.initialize();
+  console.log("Data Source has been initialized!");
+
+  // Start the server
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log("Database name:", AppDataSource.options.database);
+  });
+
+  return app;
+};
+
+// Call the initialization function
+initializeApp().catch((error) => {
+  console.error("Error during Data Source initialization:", error);
+});
+
+export { app };
+
