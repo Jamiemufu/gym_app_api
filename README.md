@@ -44,12 +44,17 @@ Welcome to the Gym App API! This API allows users to manage their gym activities
 
 ### Project Structure
 
-src/app.ts: Main entry point initializing Express, middleware, and routing.
-src/routes/: Route definitions for various features.
-src/models/: TypeORM models representing database tables (e.g., User, Workout, Exercise).
-src/repositories/: Custom repository files for advanced database operations.
-src/middleware/: Custom middleware for request validation, error handling, and response formatting.
-src/swagger/: Configuration for generating and serving Swagger API documentation.
+```src/app.ts```: Main entry point initializing Express, middleware, and routing.
+
+```src/routes/```: Route definitions for various features.
+
+```src/models/```: TypeORM models representing database tables (e.g., User, Workout, Exercise).
+
+```src/repositories/```: Custom repository files for advanced database operations.
+
+```src/middleware/```: Custom middleware for request validation, error handling, and response formatting.
+
+```src/swagger/```: Configuration for generating and serving Swagger API documentation.
 
 ### API Docs
 
@@ -64,6 +69,13 @@ Swagger Docs are generated via comments inside the route i.e
 
 ```
  /**
+ * Get all user logs
+ * GET /userlog/all
+ * @param res Response
+ * @returns Promise<void>
+ */
+router.get("/all", async (req: Request, res: Response, next: NextFunction) => {
+  /**
    * #swagger.tags = ["User Log"]
    * #swagger.description = "Retrieves all user logs."
    * #swagger.summary = "Get all user logs."
@@ -72,6 +84,13 @@ Swagger Docs are generated via comments inside the route i.e
    * #swagger.responses[404] = { description: "User logs not found." }
    * #swagger.responses[500] = { description: "Internal server error." }
    */
+  try {
+    const userLog = await UserLogRepository.getAllUserLogs();
+    resourceValidator(userLog, errorMessage, req, res);
+  } catch (error) {
+    next(error);
+  }
+});
   ```
 
 This needs to be inside the method after initialising the route.
