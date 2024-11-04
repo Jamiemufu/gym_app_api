@@ -22,13 +22,21 @@ describe("User Routes", () => {
     const response = await request(app).get("/users/all");
     expect(response.status).toBe(200);
     expect(response.body.data).toBeInstanceOf(Array);
+    //udpate user to first user in array to get ID
     user = response.body.data[0];
   });
 
   it("should return a user by ID", async () => {
     const response = await request(app).get("/users/" + user.id);
+
     expect(response.status).toBe(200);
-    expect(response.body.data).toBeInstanceOf(Object);
+    expect(response.body.data).toMatchObject({
+      id: expect.any(String),
+      username: expect.any(String),
+      email: expect.any(String),
+      password_hash: expect.any(String),
+      created_at: expect.any(String),
+    });
   });
 
   it("should return 404 for a user that does not exist", async () => {
@@ -45,7 +53,13 @@ describe("User Routes", () => {
   it("should return a user by username", async () => {
     const response = await request(app).get("/users/username/" + user.username);
     expect(response.status).toBe(200);
-    expect(response.body.data).toBeInstanceOf(Object);
+    expect(response.body.data).toMatchObject({
+      id: expect.any(String),
+      username: expect.any(String),
+      email: expect.any(String),
+      password_hash: expect.any(String),
+      created_at: expect.any(String),
+    });
   });
 
   it("should return 404 for a username that does not exist", async () => {
@@ -56,7 +70,13 @@ describe("User Routes", () => {
   it("should return a user by email", async () => {
     const response = await request(app).get("/users/email/" + user.email);
     expect(response.status).toBe(200);
-    expect(response.body.data).toBeInstanceOf(Object);
+    expect(response.body.data).toMatchObject({
+      id: expect.any(String),
+      username: expect.any(String),
+      email: expect.any(String),
+      password_hash: expect.any(String),
+      created_at: expect.any(String),
+    });
   });
 
   it("should return 404 for an email that does not exist", async () => {
@@ -80,7 +100,13 @@ describe("User Routes", () => {
     };
 
     expect(response.status).toBe(201);
-    expect(response.body.data).toBeInstanceOf(Object);
+    expect(response.body.data).toMatchObject({
+      id: expect.any(String),
+      username: expect.any(String),
+      email: expect.any(String),
+      password_hash: expect.any(String),
+      created_at: expect.any(String),
+    });
   });
 
   it("should 500 when creating a user with an invalid email", async () => {
