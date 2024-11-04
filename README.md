@@ -42,22 +42,21 @@ Welcome to the Gym App API! This API allows users to manage their gym activities
     npx ts-node src/app.ts
     ```
 
-### Usage
+### Project Structure
 
-### API Endpoints
+src/app.ts: Main entry point initializing Express, middleware, and routing.
+src/routes/: Route definitions for various features.
+src/models/: TypeORM models representing database tables (e.g., User, Workout, Exercise).
+src/repositories/: Custom repository files for advanced database operations.
+src/middleware/: Custom middleware for request validation, error handling, and response formatting.
+src/swagger/: Configuration for generating and serving Swagger API documentation.
 
+### API Docs
 
-### Contributing
+API documentation is available via Swagger. To access it, start the server and open:
 
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature-branch`)
-3. Commit your changes (`git commit -am 'Add new feature'`)
-4. Push to the branch (`git push origin feature-branch`)
-5. Create a new Pull Request
-
-### License
-
-This project is licensed under the MIT License.
+```http://localhost:<PORT>/api-docs```
+This endpoint provides a user-friendly interface for exploring available API routes and testing requests.
 
 ### Database Setup
 
