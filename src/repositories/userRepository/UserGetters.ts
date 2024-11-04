@@ -9,6 +9,12 @@ export class UserGetters extends UserBaseRepository {
    * @returns User | null
    */
   async getUserById(userId: string): Promise<User | null> {
+
+    // We should throw an error if the user ID is not provided because its not returning null if null is not passed
+    if(!userId) {
+      throw new Error("User ID is required");
+    }
+
     return await this.findOneBy({ id: userId });
   }
 
@@ -26,7 +32,9 @@ export class UserGetters extends UserBaseRepository {
    * @returns User | null
    */
   async getUserByEmail(email: string): Promise<User | null> {
-    return await this.findOneBy({ email: ILike(email) });
+    return await this.findOne({
+      where: { email: ILike(email) },
+    });
   }
 
   /**

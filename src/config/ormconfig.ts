@@ -15,6 +15,3 @@ export const AppDataSource = new DataSource({
   migrationsTableName: "migrations",
   subscribers: [],
 });
-
-// npx typeorm-ts-node-commonjs migration:run -- -d ./src/config/ormconfig.ts
-// npx typeorm migration:create ./src/migration/InitMigration

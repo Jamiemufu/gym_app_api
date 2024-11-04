@@ -85,24 +85,24 @@ router.get("/name/:name", async (req: Request, res: Response, next: NextFunction
 
 /**
  * Get exercise by muscle group
- * GET /exercise/muscle_group/:muscle_group
+ * GET /exercise/muscle-group/:muscleGroup
  * @param req Request
  * @param res Response
  * @returns Promise<Exercise[]>
  */
-router.get("/muscle_group/:muscle_group", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/muscle-group/:muscleGroup", async (req: Request, res: Response, next: NextFunction) => {
   /**
    * #swagger.tags = ["Exercise"]
    * #swagger.description = "Retrieves exercises by its muscle group."
    * #swagger.parameters['muscle_group'] = { description: "Muscle group" }
-   * #swagger.path = '/exercise/muscle_group/{muscle_group}'
+   * #swagger.path = '/exercise/muscle-group/{muscleGroup}'
    * #swagger.summary = "Get exercises by muscle group"
    * #swagger.responses[200] = { description: "Exercise found." }
    * #swagger.responses[404] = { description: "Exercise not found." }
    * #swagger.responses[500] = { description: "Internal server error." }
    */
   try {
-    const exercise = await exerciseRepository.getExerciseByType(req.params.muscle_group);
+    const exercise = await exerciseRepository.getExerciseByType(req.params.muscleGroup);
     resourceValidator(exercise, errorMessage, req, res);
   } catch (error) {
     next(error);

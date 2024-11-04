@@ -16,11 +16,12 @@ export class UserWorkoutSetters extends UserWorkoutBaseRepository {
    */
   async createUserWorkout(userId: string, workoutId: string): Promise<UserWorkout> {
     const user = await new UserGetters(this.manager.connection).getUserById(userId);
-    const workout = await new WorkoutGetters(this.manager.connection).getWorkoutById(workoutId);
 
     if (!user) {
       throw new Error("User not found");
     }
+
+    const workout = await new WorkoutGetters(this.manager.connection).getWorkoutById(workoutId);
 
     if (!workout) {
       throw new Error("Workout not found");

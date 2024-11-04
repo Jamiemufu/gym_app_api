@@ -26,6 +26,10 @@ export class WorkoutGetters extends WorkoutBaseRepository {
    * @returns Workout | null
    */
   async getWorkoutById(workoutId: string): Promise<Workout | null> {
+    if (!workoutId) {
+      throw new Error("Workout ID is required");
+    }
+    
     return await this.findOneBy({ id: workoutId });
   }
 

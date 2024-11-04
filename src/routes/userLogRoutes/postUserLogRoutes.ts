@@ -31,6 +31,9 @@ router.post("/create", async (req: Request, res: Response, next: NextFunction) =
    * #swagger.responses[500] = { description: "Internal server error." }
    */
   try {
+    if(!req.query) {
+      throw new Error("Invalid request body");
+    }
     const userId = req.query.userId as string;
     const workoutId = req.query.workoutId as string;
     const exerciseId = req.query.exerciseId as string;

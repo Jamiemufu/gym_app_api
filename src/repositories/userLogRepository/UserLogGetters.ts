@@ -1,9 +1,5 @@
 import { UserLog } from "../../entities/UserLog";
 import { UserLogBaseRepository } from "./UserLogBaseRepository";
-import { UserWorkoutGetters } from "../userWorkoutRepository/UserWorkoutGetters";
-import { AppDataSource } from "../../config/ormconfig";
-import { UserWorkout } from "../../entities/UserWorkout";
-import { Equal } from "typeorm";
 
 export class UserLogGetters extends UserLogBaseRepository {
   /**
@@ -13,7 +9,7 @@ export class UserLogGetters extends UserLogBaseRepository {
    */
   async getAllUserLogs(): Promise<UserLog[]> {
     return await this.find({
-      relations: ["exercise", "user_workout", "user_workout.user"],
+      relations: ["exercise", "user_workout", "user_workout.user", "user_workout.workout.exercises"],
     });
   }
 
