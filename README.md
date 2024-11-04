@@ -58,6 +58,32 @@ API documentation is available via Swagger. To access it, start the server and o
 ```http://localhost:<PORT>/api-docs```
 This endpoint provides a user-friendly interface for exploring available API routes and testing requests.
 
+### Swagger Docs
+
+Swagger Docs are generated via comments inside the route i.e
+
+```
+ /**
+   * #swagger.tags = ["User Log"]
+   * #swagger.description = "Retrieves all user logs."
+   * #swagger.summary = "Get all user logs."
+   * #swagger.path = '/userlog/all'
+   * #swagger.responses[200] = { description: "User logs found." }
+   * #swagger.responses[404] = { description: "User logs not found." }
+   * #swagger.responses[500] = { description: "Internal server error." }
+   */
+  ```
+
+This needs to be inside the method after initialising the route.
+
+Once these have been added, removed or updated run the swagger doc generator.
+
+Run 
+
+```npm run swagger```
+
+To generate new swagger documentation and commit.
+
 ### Database Setup
 
 1. Install PostgreSQL:
