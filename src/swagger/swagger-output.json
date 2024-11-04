@@ -124,7 +124,7 @@
         }
       }
     },
-    "/exercise/muscle_group/{muscle_group}": {
+    "/exercise/muscle-group/{muscleGroup}": {
       "get": {
         "tags": [
           "Exercise"
@@ -133,11 +133,16 @@
         "description": "Retrieves exercises by its muscle group.",
         "parameters": [
           {
-            "name": "muscle_group",
+            "name": "muscleGroup",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "Muscle group"
+            "type": "string"
+          },
+          {
+            "name": "muscle_group",
+            "description": "Muscle group",
+            "in": "query",
+            "type": "string"
           }
         ],
         "responses": {
