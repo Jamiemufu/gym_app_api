@@ -42,8 +42,6 @@ app.use(
   })
 );
 
-// Initialize TypeORM and start the server
-
 // user routes
 app.use("/users", getUserRoutes);
 app.use("/users", postUserRoutes);
@@ -83,7 +81,6 @@ app.use(errorHandler);
 // Initialize TypeORM and start the server
 export const initializeApp = async () => {
   await AppDataSource.initialize();
-  console.log("Data Source has been initialized!");
   return app;
 };
 

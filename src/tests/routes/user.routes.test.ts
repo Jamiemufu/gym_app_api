@@ -1,7 +1,6 @@
 import request from "supertest";
 import { app } from "../../app";
-import { AppDataSource } from "../../config/ormconfig";
-import { randomUUID } from "crypto";
+import { randomUUID } from "node:crypto";
 
 describe("User Routes", () => {
   let user: {
@@ -33,7 +32,6 @@ describe("User Routes", () => {
   });
 
   it("should return 404 for a user that does not exist", async () => {
-    // random uuid
     const response = await request(app).get("/users/" + randomUUID());
     expect(response.status).toBe(404);
   });
@@ -41,6 +39,7 @@ describe("User Routes", () => {
   it("should return 500 for a user ID that is not a UUID", async () => {
     const response = await request(app).get("/users/1234");
     expect(response.status).toBe(500);
+    expect(response.body.error).toBeDefined();
   });
 
   it("should return a user by username", async () => {
@@ -58,6 +57,7 @@ describe("User Routes", () => {
   it("should return 404 for a username that does not exist", async () => {
     const response = await request(app).get("/users/username/user100");
     expect(response.status).toBe(404);
+    expect(response.body.message).toBe("User not found");
   });
 
   it("should return a user by email", async () => {
