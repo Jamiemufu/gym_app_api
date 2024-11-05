@@ -104,6 +104,28 @@ describe("Get Exercise Routes", () => {
       });
     });
 
+    describe("Endpoint should return the correct values for the exercise", () => {
+      it("should return the correct name", async () => {
+        const response = await request(app).get("/exercise/" + exercise.id);
+        expect(response.body.data.name).toBe(exercise.name);
+      });
+
+      it("should return the correct muscle group", async () => {
+        const response = await request(app).get("/exercise/" + exercise.id);
+        expect(response.body.data.muscle_group).toBe(exercise.muscle_group);
+      });
+
+      it("should return the correct equipment", async () => {
+        const response = await request(app).get("/exercise/" + exercise.id);
+        expect(response.body.data.equipment).toBe(exercise.equipment);
+      });
+
+      it('should return the correct id', async () => {
+        const response = await request(app).get("/exercise/" + exercise.id);
+        expect(response.body.data.id).toBe(exercise.id);
+      });
+    });
+
     describe("Endpoint should return 404 for an exercise that does not exist", () => {
       it("should return 404", async () => {
         const response = await request(app).get("/exercise/" + randomUUID());
@@ -164,6 +186,23 @@ describe("Get Exercise Routes", () => {
       });
     });
 
+    describe("Endpoint should return the correct values for the exercise", () => {
+      it("should return the correct name", async () => {
+        const response = await request(app).get("/exercise/name/" + exercise.name);
+        expect(response.body.data[0].name).toBe(exercise.name);
+      });
+
+      it("should return the correct muscle group", async () => {
+        const response = await request(app).get("/exercise/name/" + exercise.name);
+        expect(response.body.data[0].muscle_group).toBe(exercise.muscle_group);
+      });
+
+      it("should return the correct equipment", async () => {
+        const response = await request(app).get("/exercise/name/" + exercise.name);
+        expect(response.body.data[0].equipment).toBe(exercise.equipment);
+      });
+    });
+
     describe("Endpoint should return 404 for an exercise that does not exist", () => {
       it("should return 404", async () => {
         const response = await request(app).get("/exercise/name/exercise100");
@@ -217,6 +256,23 @@ describe("Get Exercise Routes", () => {
       });
     });
 
+    describe("Endpoint should return the correct values for the exercise", () => {
+      it("should return the correct name", async () => {
+        const response = await request(app).get("/exercise/muscle-group/" + exercise.muscle_group);
+        expect(response.body.data[0].name).toBe(exercise.name);
+      });
+
+      it("should return the correct muscle group", async () => {
+        const response = await request(app).get("/exercise/muscle-group/" + exercise.muscle_group);
+        expect(response.body.data[0].muscle_group).toBe(exercise.muscle_group);
+      });
+
+      it("should return the correct equipment", async () => {
+        const response = await request(app).get("/exercise/muscle-group/" + exercise.muscle_group);
+        expect(response.body.data[0].equipment).toBe(exercise.equipment);
+      });
+    });
+    
     describe("Endpoint should return 404 for a muscle group that does not exist", () => {
       it("should return 404", async () => {
         const response = await request(app).get("/exercise/muscle-group/leg");
@@ -271,6 +327,23 @@ describe("Get Exercise Routes", () => {
       });
     });
 
+    describe("Endpoint should return the correct values for the exercise", () => {
+      it("should return the correct name", async () => {
+        const response = await request(app).get("/exercise/equipment/" + exercise.equipment);
+        expect(response.body.data[0].name).toBe(exercise.name);
+      });
+
+      it("should return the correct muscle group", async () => {
+        const response = await request(app).get("/exercise/equipment/" + exercise.equipment);
+        expect(response.body.data[0].muscle_group).toBe(exercise.muscle_group);
+      });
+
+      it("should return the correct equipment", async () => {
+        const response = await request(app).get("/exercise/equipment/" + exercise.equipment);
+        expect(response.body.data[0].equipment).toBe(exercise.equipment);
+      });
+    });
+    
     describe("Endpoint should return 404 for an equipment that does not exist", () => {
       it("should return 404", async () => {
         const response = await request(app).get("/exercise/equipment/equipment100");
