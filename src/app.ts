@@ -30,7 +30,6 @@ import postUserLogRoutes from "./routes/userLogRoutes/postUserLogRoutes";
 
 const swaggerUi = require("swagger-ui-express");
 const app = express();
-const PORT = process.env.APP_PORT || 3000;
 
 // Middleware
 app.use(express.json());
@@ -85,13 +84,6 @@ app.use(errorHandler);
 export const initializeApp = async () => {
   await AppDataSource.initialize();
   console.log("Data Source has been initialized!");
-
-  // Start the server
-  app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-    console.log("Database name:", AppDataSource.options.database);
-  });
-
   return app;
 };
 
@@ -101,4 +93,3 @@ initializeApp().catch((error) => {
 });
 
 export { app };
-

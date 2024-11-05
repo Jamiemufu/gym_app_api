@@ -7,7 +7,7 @@
     "migration:generate": "typeorm migration:generate",
     "migration:run": "typeorm migration:run",
     "swagger": "ts-node ./src/swagger/swagger.ts",
-    "test": "jest --forceExit",
+    "test": "jest --runInBand --forceExit",
     "test:watch": "jest --watch"
   },
   "keywords": [],
@@ -59,6 +59,8 @@
     ],
     "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest"
-    }
+    },
+    "setupFilesAfterEnv": ["<rootDir>/jest.setup.ts"],
+    "verbose": true
   }
 }

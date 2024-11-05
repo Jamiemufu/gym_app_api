@@ -4,13 +4,6 @@ import { AppDataSource } from "../../config/ormconfig";
 import { randomUUID } from "crypto";
 
 describe("User Routes", () => {
-  beforeAll(async () => {
-    await AppDataSource.initialize();
-    // run migrations on test db
-    await AppDataSource.synchronize();
-    await AppDataSource.runMigrations();
-  });
-
   let user: {
     id: string;
     username: string;
@@ -100,6 +93,7 @@ describe("User Routes", () => {
     };
 
     expect(response.status).toBe(201);
+    expect(response.body.data).toBeInstanceOf(Object);
     expect(response.body.data).toMatchObject({
       id: expect.any(String),
       username: expect.any(String),
@@ -167,11 +161,5 @@ describe("User Routes", () => {
   it("should return 404 for a user that does not exist", async () => {
     const response = await request(app).delete("/users/delete/" + randomUUID());
     expect(response.status).toBe(404);
-  });
-
-  afterAll(async () => {
-    // undo migrations on test db
-    await AppDataSource.undoLastMigration();
-    await AppDataSource.destroy();
   });
 });
