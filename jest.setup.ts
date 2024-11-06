@@ -3,6 +3,7 @@ import { AppDataSource } from "./src/config/ormconfig";
 import { app } from "./src/app";
 
 let server: ReturnType<typeof app.listen> | undefined;
+const PORT = process.env.NODE_ENV === "test" ? 3001 : 3000;
 
 beforeAll(async () => {
   const db = await AppDataSource.initialize();
@@ -10,7 +11,7 @@ beforeAll(async () => {
   console.log("Connected to: " + db.options.database);
   await AppDataSource.synchronize(true);
   await AppDataSource.runMigrations();
-  server = app.listen(process.env.APP_PORT || "3000");
+  server = app.listen(PORT || "3000");
 });
 
 afterAll(async () => {

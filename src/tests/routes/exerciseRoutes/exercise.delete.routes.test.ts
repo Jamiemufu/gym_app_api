@@ -42,7 +42,6 @@ describe("Exercise Delete Route", () => {
 
     it("should return 204 when route exists", async () => {
       const response = await request(app).delete(`/exercise/delete/${unlinkedExercise.id}`);
-      console.log(response.body);
       expect(response.status).toBe(204);
     });
   });
