@@ -7,7 +7,7 @@
     "migration:generate": "typeorm migration:generate",
     "migration:run": "typeorm migration:run",
     "swagger": "ts-node ./src/swagger/swagger.ts",
-    "test": "jest --runInBand --forceExit",
+    "test": "NODE_ENV=test jest --runInBand --forceExit",
     "test:watch": "jest --watch"
   },
   "keywords": [],

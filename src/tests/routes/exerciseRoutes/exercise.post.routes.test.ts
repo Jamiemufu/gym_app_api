@@ -12,7 +12,8 @@ describe("Post Exercise Routes", () => {
    * Create Exercise Endpoint
    * @route POST /exercise/create
    * @returns {Promise<Exercise>} 201 - Exercise created
-   * @throws {Error} 500 - Internal server error
+   * @returns {Error} 404 - Internal server error
+   * @returns {Error} 500 - Internal server error
    */
   describe("Create exercise route", () => {
     describe("Endpoint should exist", () => {

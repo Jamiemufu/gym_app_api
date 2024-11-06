@@ -5,7 +5,9 @@ import { app } from "./src/app";
 let server: ReturnType<typeof app.listen> | undefined;
 
 beforeAll(async () => {
-  await AppDataSource.initialize();
+  const db = await AppDataSource.initialize();
+  // console log the name of the db connected
+  console.log("Connected to: " + db.options.database);
   await AppDataSource.synchronize(true);
   await AppDataSource.runMigrations();
   server = app.listen(process.env.APP_PORT || "3000");
