@@ -5,7 +5,7 @@ export const errorHandler = (err: any, req: Request, res: Response, next: NextFu
   if (err.message.includes("not found")) {
     res.status(404).json({ status: 404, message: err.message, error: err });
     // nothing to update 304
-  } else if (err.message.includes("nothing")) {
+  } else if (err.message.toLowerCase().includes("nothing")) {
     res.status(304).json({ status: 304, message: err.message });
   } else {
     // everything else for now

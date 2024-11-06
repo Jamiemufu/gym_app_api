@@ -32,9 +32,9 @@ router.put("/update/:uuid", async (req: Request, res: Response, next: NextFuncti
   try {
     const exercise = await exerciseRepository.updateExercise(
       req.params.uuid,
-      req.query.name as string,
-      req.query.muscle_group as string,
-      req.query.equipment as string
+      req.body.name as string,
+      req.body.muscle_group as string,
+      req.body.equipment as string
     );
     resourceValidator(exercise, errorMessage, req, res);
   } catch (error) {

@@ -11,10 +11,19 @@ export class ExerciseSetters extends ExerciseBaseRepository {
    * @throws Error
    */
   async updateExercise(exerciseId: string, name?: string, muscle_group?: string, equipment?: string): Promise<Exercise> {
+    
+    if (!name && !muscle_group && !equipment) {
+      throw new Error("Nothing to update");
+    }
+
     const exerciseToUpdate = await this.findOneBy({ id: exerciseId });
 
     if (!exerciseToUpdate) {
       throw new Error("Exercise not found");
+    }
+
+    if (exerciseToUpdate?.name === name && exerciseToUpdate?.muscle_group === muscle_group && exerciseToUpdate?.equipment === equipment) {
+      throw new Error("Nothing to update");
     }
 
     exerciseToUpdate.name = name ?? exerciseToUpdate.name;

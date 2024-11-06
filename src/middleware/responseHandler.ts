@@ -16,9 +16,9 @@ export const responseHandler = (resource: any, req: Request, res: Response) => {
     case "POST":
       return res.status(201).json({ statusCode: 201, data: resource });
     case "PUT":
-      return res.status(204).json({ statusCode: 204, message: "Resource updated successfully", data: resource });
+      return res.status(200).json({ statusCode: 200, message: "Resource updated successfully", data: resource });
     case "PATCH":
-      return res.status(204).json({ statusCode: 204, message: "Resource updated successfully", data: resource });
+      return res.status(200).json({ statusCode: 200, message: "Resource updated successfully", data: resource });
     default:
       return res.status(200).json({ statusCode: 200, data: resource });
   }
