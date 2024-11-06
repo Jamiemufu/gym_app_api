@@ -1,7 +1,6 @@
 import request from "supertest";
 import { app } from "../../../app";
 import { randomUUID } from "node:crypto";
-import { Length } from "class-validator";
 
 let exercise: {
   id: string;
@@ -343,7 +342,7 @@ describe("Get Exercise Routes", () => {
         expect(response.body.data[0].equipment).toBe(exercise.equipment);
       });
     });
-    
+
     describe("Endpoint should return 404 for an equipment that does not exist", () => {
       it("should return 404", async () => {
         const response = await request(app).get("/exercise/equipment/equipment100");
