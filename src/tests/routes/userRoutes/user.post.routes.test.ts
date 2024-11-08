@@ -82,86 +82,89 @@ describe("POST User Route", () => {
           password_hash: expect.any(String),
           created_at: expect.any(String),
         });
-
       });
     });
     describe("Endpoint should not create a user", () => {
-      it("should return 500 when username is missing", async () => {
-        const response = await request(app).post("/users/create").send({
-          email: failedUser.email,
-          password: failedUser.password_hash,
+      describe("When data is missing", () => {
+        it("should return 500 when username is missing", async () => {
+          const response = await request(app).post("/users/create").send({
+            email: failedUser.email,
+            password: failedUser.password_hash,
+          });
+          expect(response.status).toBe(500);
         });
-        expect(response.status).toBe(500);
+
+        it("should return 500 when email is missing", async () => {
+          const response = await request(app).post("/users/create").send({
+            username: failedUser.username,
+            password: failedUser.password_hash,
+          });
+          expect(response.status).toBe(500);
+        });
+
+        it("should return 500 when password is missing", async () => {
+          const response = await request(app).post("/users/create").send({
+            username: failedUser.username,
+            email: failedUser.email,
+          });
+          expect(response.status).toBe(500);
+        });
+
+        it("should return 500 when username is empty", async () => {
+          const response = await request(app).post("/users/create").send({
+            username: "",
+            email: failedUser.email,
+            password: failedUser.password_hash,
+          });
+          expect(response.status).toBe(500);
+        });
+
+        it("should return 500 when email is empty", async () => {
+          const response = await request(app).post("/users/create").send({
+            username: failedUser.username,
+            email: "",
+            password: failedUser.password_hash,
+          });
+          expect(response.status).toBe(500);
+        });
+
+        it("should return 500 when password is empty", async () => {
+          const response = await request(app).post("/users/create").send({
+            username: failedUser.username,
+            email: failedUser.email,
+            password: "",
+          });
+          expect(response.status).toBe(500);
+        });
       });
 
-      it("should return 500 when email is missing", async () => {
-        const response = await request(app).post("/users/create").send({
-          username: failedUser.username,
-          password: failedUser.password_hash,
+      describe("When data is invalid", () => {
+        it("should return 500 when username is too short", async () => {
+          const response = await request(app).post("/users/create").send({
+            username: "1",
+            email: failedUser.email,
+            password: failedUser.password_hash,
+          });
+          expect(response.status).toBe(500);
         });
-        expect(response.status).toBe(500);
-      });
 
-      it("should return 500 when password is missing", async () => {
-        const response = await request(app).post("/users/create").send({
-          username: failedUser.username,
-          email: failedUser.email,
+        it("should return 500 when email is not an email", async () => {
+          const response = await request(app).post("/users/create").send({
+            username: failedUser.username,
+            email: "something",
+            password: failedUser.password_hash,
+          });
+          expect(response.status).toBe(500);
         });
-        expect(response.status).toBe(500);
-      });
 
-      it("should return 500 when username is empty", async () => {
-        const response = await request(app).post("/users/create").send({
-          username: "",
-          email: failedUser.email,
-          password: failedUser.password_hash,
+        it("should return 500 when password is too short", async () => {
+          const response = await request(app).post("/users/create").send({
+            username: failedUser.username,
+            email: failedUser.email,
+            password: "1",
+          });
+          expect(response.status).toBe(500);
         });
-        expect(response.status).toBe(500);
-      });
-
-      it("should return 500 when email is empty", async () => {
-        const response = await request(app).post("/users/create").send({
-          username: failedUser.username,
-          email: "",
-          password: failedUser.password_hash,
-        });
-        expect(response.status).toBe(500);
-      });
-
-      it("should return 500 when password is empty", async () => {
-        const response = await request(app).post("/users/create").send({
-          username: failedUser.username,
-          email: failedUser.email,
-          password: "",
-        });
-        expect(response.status).toBe(500);
-      });
-
-      it("should return 500 when username is too short", async () => {
-        const response = await request(app).post("/users/create").send({
-          username: '1',
-          email: failedUser.email,
-          password: failedUser.password_hash,
-        });
-        expect(response.status).toBe(500);
-      });
-
-      it("should return 500 when email is not an email", async () => {
-        const response = await request(app).post("/users/create").send({
-          username: failedUser.username,
-          email: 'something',
-          password: failedUser.password_hash,
-        });
-        expect(response.status).toBe(500);
-      });
-
-      it("should return 500 when password is too short", async () => {
-        const response = await request(app).post("/users/create").send({
-          username: failedUser.username,
-          email: failedUser.email,
-          password: '1',
-        });
-        expect(response.status).toBe(500);
       });
     });
   });
