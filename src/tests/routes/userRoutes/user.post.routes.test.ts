@@ -1,13 +1,5 @@
 import request from "supertest";
 import { app } from "../../../app";
-import { randomUUID } from "node:crypto";
-
-let user = {
-  id: null,
-  username: null,
-  email: null,
-  password_hash: null,
-};
 
 let failedUser = {
   id: null,
@@ -96,8 +88,8 @@ describe("POST User Route", () => {
     describe("Endpoint should not create a user", () => {
       it("should return 500 when username is missing", async () => {
         const response = await request(app).post("/users/create").send({
-          email: "fail@email.com",
-          password: "password",
+          email: failedUser.email,
+          password: failedUser.password_hash,
         });
         expect(response.status).toBe(500);
       });
@@ -131,7 +123,7 @@ describe("POST User Route", () => {
         const response = await request(app).post("/users/create").send({
           username: failedUser.username,
           email: "",
-          password: "password",
+          password: failedUser.password_hash,
         });
         expect(response.status).toBe(500);
       });
