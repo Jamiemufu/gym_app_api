@@ -1,6 +1,13 @@
 import request from "supertest";
 import { app } from "../../../app";
 
+let user = {
+  id: null,
+  username: "testuser",
+  email: "test@example.com",
+  password_hash: "123456",
+};
+
 let failedUser = {
   id: null,
   username: "failuser",
@@ -36,9 +43,9 @@ describe("POST User Route", () => {
 
       it("should return 201 when route exists", async () => {
         const response = await request(app).post("/users/create").send({
-          username: "testuser",
-          email: "test@example.com",
-          password: "somelongpassword",
+          username: user.username,
+          email: user.email,
+          password: user.password_hash,
         });
         expect(response.status).toBe(201);
       });
@@ -83,7 +90,17 @@ describe("POST User Route", () => {
           created_at: expect.any(String),
         });
       });
+
+      it("should return an instance of Object", async () => {
+        const response = await request(app).post("/users/create").send({
+          username: "testuser5",
+          email: "testuser5@email.com",
+          password: "password",
+        });
+        expect(response.body.data).toBeInstanceOf(Object);
+      });
     });
+
     describe("Endpoint should not create a user", () => {
       describe("When data is missing", () => {
         it("should return 500 when username is missing", async () => {
@@ -165,6 +182,17 @@ describe("POST User Route", () => {
           });
           expect(response.status).toBe(500);
         });
+      });
+      describe("When username or email already exists", () => {
+        it("should return 500 when username already exists", async () => {
+          const response = await request(app).post("/users/create").send({
+            username: user.username,
+            email: user.email,
+            password: user.password_hash,
+          });
+          expect(response.status).toBe(500);
+        });
+
       });
     });
   });
