@@ -29,6 +29,7 @@ beforeEach(async () => {
  * @group delete
  * @group routes
  * @route DELETE /exercise/delete/:uuid
+ * @param {string} uuiid.path.required - Exercise ID
  * @returns {Promise<Exercise>} 204 - Exercise deleted
  * @returns {Error} 404 - Exercise not found
  * @returns {Error} 500 - Internal server error

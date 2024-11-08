@@ -22,7 +22,7 @@ export class User {
   @Column({ nullable: false, unique: true })
   email!: string;
 
-  @Length(5, 100, { message: "Password must be between 8 and 100 characters" })
+  @Length(5, 100, { message: "Password must be between 5 and 100 characters" })
   @Column({ nullable: false })
   password_hash!: string;
 
