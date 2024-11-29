@@ -3,8 +3,11 @@ import { Mesocycle } from "../../entities/Mesocycle";
 import { validateRequest } from "../../middleware/requestValidator";
 import { UserGetters } from "../userRepository/UserGetters";
 import { MesocycleBaseRepository } from "./MesocycleBaseRepository";
+import { MesocycleGetters } from './MesocycleGetters';
 
 export class MesocycleSetters extends MesocycleBaseRepository {
+
+  mesocycleGetters = new MesocycleGetters(AppDataSource);
   /**
    * Update Mesocycle Name
    * @param mesocycleId
@@ -34,7 +37,7 @@ export class MesocycleSetters extends MesocycleBaseRepository {
    * @throws Error
    */
   async updateMesocycle(mesocycleId: string, name: string, length: number, phase: string, periodization: string): Promise<Mesocycle> {
-    const mesocycle = await this.findOneBy({ id: mesocycleId });
+    const mesocycle = await this.mesocycleGetters.getMesocycleById(mesocycleId);
 
     if (!mesocycle) {
       throw new Error("Mesocycle not found");

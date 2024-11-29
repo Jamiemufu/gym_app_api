@@ -152,4 +152,162 @@ describe("Get Mesocycle Routes", () => {
       });
     });
   });
+  /**
+   * Get mesocycle by name
+   * @route GET /mesocycle/name/:name
+   * @param {string} name.path.required - Mesocycle name
+   * @returns Promise<Mesocycle>
+   * @returns {Error} 404 - Mesocycle not found
+   * @returns {Error} 500 - Internal server error
+   */
+  describe("Get mesocycle by name", () => {
+    describe("Endpoint should exist", () => {
+      it("should return 200 when route exists", async () => {
+        const response = await request(app).get(`/mesocycle/name/${mesocycle.name}`);
+        expect(response.status).toBe(200);
+      });
+    });
+
+    describe("Endpoint should return a mesocycle by name", () => {
+      it("should return a mesocycle object without users and workout relations", async () => {
+        const response = await request(app).get(`/mesocycle/name/${mesocycle.name}`);
+        expect(response.body.data).toMatchObject({
+          id: expect.any(String),
+          name: expect.any(String),
+          length: expect.any(Number),
+          phase: expect.any(String),
+          periodization: expect.any(Boolean),
+        });
+      });
+      it("should return 200 status", async () => {
+        const response = await request(app).get(`/mesocycle/name/${mesocycle.name}`);
+        expect(response.status).toBe(200);
+      });
+    });
+    describe("Endpoint should return 404", () => {
+      it("should return 404 when mesocycle not found", async () => {
+        const response = await request(app).get("/mesocycle/name/" + "randomName");
+        expect(response.status).toBe(404);
+      });
+    });
+    describe("Endpoint should return 500", () => {
+      it("should return 500 when name is not a string", async () => {
+        const response = await request(app).get("/mesocycle/name/");
+        expect(response.status).toBe(500);
+      });
+    });
+  });
+
+  /**
+   * Get workouts by mesocycle id
+   * @route GET /mesocycle/:id/workout
+   * @param {string} id.path.required - Mesocycle ID
+   * @returns Promise<void>
+   * @returns {Error} 404 - Mesocycle not found
+   * @returns {Error} 500 - Internal server error
+   */
+  describe("Get workouts by mesocycle id", () => {
+    describe("Endpoint should exist", () => {
+      it("should return 200 when route exists", async () => {
+        const response = await request(app).get(`/mesocycle/${mesocycle.id}/workout`);
+        expect(response.status).toBe(200);
+      });
+    });
+    describe("Endpoint should return workouts by mesocycle id", () => {
+      it("should return a Mesocycle object containing workouts", async () => {
+        const response = await request(app).get(`/mesocycle/${mesocycle.id}/workout`);
+        console.log(response.body.data);
+        expect(response.body.data).toMatchObject({
+          id: expect.any(String),
+          name: expect.any(String),
+          length: expect.any(Number),
+          phase: expect.any(String),
+          periodization: expect.any(Boolean),
+          workouts: expect.any(Array),
+        });
+      });
+      it("should contain a workout in the mesocycle", async () => {
+        const response = await request(app).get(`/mesocycle/${mesocycle.id}/workout`);
+        expect(response.body.data.workouts[0]).toMatchObject({
+          id: expect.any(String),
+          name: expect.any(String),
+          created_at: expect.any(String),
+        });
+      });
+      it('should contain an array of workouts', async () => {
+        const response = await request(app).get(`/mesocycle/${mesocycle.id}/workout`);
+        expect(response.body.data.workouts).toBeInstanceOf(Array);
+      });
+      it("should return 200 status", async () => {
+        const response = await request(app).get(`/mesocycle/${mesocycle.id}/workout`);
+        expect(response.status).toBe(200);
+      });
+      it("should return a single object", async () => {
+        const response = await request(app).get(`/mesocycle/${mesocycle.id}/workout`);
+        // a single object wil have a key length of 6
+        let length = Object.keys(response.body.data).length;
+        expect(length).toBeLessThanOrEqual(6);
+      });
+    });
+    describe("Endpoint should return 404", () => {
+      it("should return 404 when mesocycle not found", async () => {
+        const response = await request(app).get("/mesocycle/" + randomUUID() + "/workout");
+        expect(response.status).toBe(404);
+      });
+    });
+    describe("Endpoint should return 500", () => {
+      it("should return 500 when ID is not a UUID", async () => {
+        const response = await request(app).get("/mesocycle/12323/workout");
+        expect(response.status).toBe(500);
+      });
+    });
+  });
+  /**
+   * Get users by mesocycle ID
+   * @route GET /mesocycle/:uuid/users
+   * @param {string} uuid.path.required - Mesocycle ID
+   * @returns Promise<void>
+   * @returns {Error} 404 - Mesocycle not found
+   * @returns {Error} 500 - Internal server error
+   */
+  describe("Get users by mesocycle ID", () => {
+    describe("Endpoint should exist", () => {
+      it("should return 200 when route exists", async () => {
+        const response = await request(app).get(`/mesocycle/${mesocycle.id}/users`);
+        expect(response.status).toBe(200);
+      });
+    });
+    describe("Endpoint should return all users of a mesocycle", () => {
+      it("should return an instance of Array", async () => {
+        const response = await request(app).get(`/mesocycle/${mesocycle.id}/users`);
+        expect(response.body.data).toBeInstanceOf(Array);
+      });
+      it("should return a user object", async () => {
+        const response = await request(app).get(`/mesocycle/${mesocycle.id}/users`);
+        expect(response.body.data[0]).toMatchObject({
+          id: expect.any(String),
+          name: expect.any(String),
+          email: expect.any(String),
+          created_at: expect.any(String),
+        });
+      });
+      it("should return 200 status", async () => {
+        const response = await request(app).get(`/mesocycle/${mesocycle.id}/users`);
+        expect(response.status).toBe(200);
+      });
+    });
+    describe("Endpoint should return 404", () => {
+      it("should return 404 when mesocycle not found", async () => {
+        const response = await request(app).get("/mesocycle/" + randomUUID() + "/users");
+        expect(response.status).toBe(404);
+      });
+    });
+
+    describe("Endpoint should return 500", () => {
+      it("should return 500 when ID is not a UUID", async () => {
+        const response = await request(app).get("/mesocycle/12323/users");
+        expect(response.status).toBe(500);
+      });
+    });
+  });
 });
