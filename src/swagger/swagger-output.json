@@ -568,6 +568,41 @@
         }
       }
     },
+    "/mesocycle/update/{uuid}/user": {
+      "patch": {
+        "tags": [
+          "Mesocycle"
+        ],
+        "summary": "Add a user to a mesocycle by ID",
+        "description": "Adds a user to a mesocycle.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Mesocycle ID"
+          },
+          {
+            "name": "userId",
+            "description": "User ID",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User added to mesocycle."
+          },
+          "404": {
+            "description": "Mesocycle not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
     "/mesocycle/create/{uuid}": {
       "post": {
         "tags": [

@@ -40,4 +40,36 @@ router.patch("/update/:uuid/name", async (req: Request, res: Response, next: Nex
   }
 });
 
+/**
+ * Update mesocycle
+ * PATCH /mesocycle/update/:uuid/user/
+ * @param req Request
+ * @param res Response
+ * @returns Promise<void>
+ */
+router.patch("/update/:uuid/user/", async (req: Request, res: Response, next: NextFunction) => {
+  /**
+   * #swagger.tags = ["Mesocycle"]
+   * #swagger.description = "Adds a user to a mesocycle."
+   * #swagger.parameters['uuid'] = { description: "Mesocycle ID" }
+   * #swagger.parameters['userId'] = { description: "User ID" }
+   * #swagger.path = '/mesocycle/update/{uuid}/user'
+   * #swagger.summary = "Add a user to a mesocycle by ID"
+   * #swagger.responses[200] = { description: "User added to mesocycle." }
+   * #swagger.responses[404] = { description: "Mesocycle not found." }
+   * #swagger.responses[500] = { description: "Internal server error." }
+   */
+  try {
+    const userId = req.query.userId as string;
+
+    if (!userId) {
+      throw new Error("User ID and Mesocycle ID are required");
+    }
+
+    const mesocycle = await mesoRepo.addUserToMesocycle(req.params.uuid, userId);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;
