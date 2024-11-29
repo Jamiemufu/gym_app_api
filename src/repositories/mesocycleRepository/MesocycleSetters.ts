@@ -77,6 +77,34 @@ export class MesocycleSetters extends MesocycleBaseRepository {
   }
 
   /**
+   * Add User to Mesocycle
+   * @param mesocycleId
+   * @param userId
+   * @returns
+   * @throws Error
+   * @returns Mesocycle
+   * @throws Error
+   * @returns Mesocycle
+   */
+  async addUserToMesocycle(mesocycleId: string, userId: string): Promise<Mesocycle> {
+    const mesocycle = await this.findOne({ where: { id: mesocycleId }, relations: ["users"] });
+
+    if (!mesocycle) {
+      throw new Error("Mesocycle not found");
+    }
+
+    const user = await new UserGetters(AppDataSource).getUserById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    mesocycle.users.push(user);
+    await validateRequest(mesocycle);
+    return await this.save(mesocycle);
+  }
+
+  /**
    * Delete Mesocycle by ID
    * @param mesocycleId
    * @returns

@@ -30,7 +30,7 @@ router.patch("/update/:uuid/name", async (req: Request, res: Response, next: Nex
     const name = req.query.name as string;
 
     if (!name) {
-     throw new Error("Name is required");
+      throw new Error("Name is required");
     }
 
     const mesocycle = await mesoRepo.updateMesocycleName(req.params.uuid, name);

@@ -215,6 +215,24 @@
             "required": true,
             "in": "query",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "muscle_group": {
+                  "example": "any"
+                },
+                "equipment": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -259,6 +277,24 @@
             "description": "Equipment",
             "in": "query",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "muscle_group": {
+                  "example": "any"
+                },
+                "equipment": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -359,6 +395,35 @@
         ],
         "summary": "Get a mesocycle by ID",
         "description": "Retrieves a mesocycle by its ID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Mesocycle ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mesocycle found."
+          },
+          "404": {
+            "description": "Mesocycle not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/mesocycle/{uuid}/all": {
+      "get": {
+        "tags": [
+          "Mesocycle"
+        ],
+        "summary": "Get a mesocycle by ID with relations",
+        "description": "Retrieves a mesocycle by its ID with relations.",
         "parameters": [
           {
             "name": "uuid",
@@ -908,6 +973,24 @@
             "description": "User password",
             "in": "query",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {

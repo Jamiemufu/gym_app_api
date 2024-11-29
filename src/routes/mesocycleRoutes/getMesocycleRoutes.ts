@@ -85,6 +85,32 @@ router.get("/:uuid", async (req: Request, res: Response, next: NextFunction) => 
 });
 
 /**
+ * Get mesocycle by id with relations
+ * GET /mesocycle/:uuid/all
+ * @param req Request
+ * @param res Response
+ * @returns Promise<void>
+ */
+router.get("/:uuid/all", async (req: Request, res: Response, next: NextFunction) => {
+  /**
+   * #swagger.tags = ["Mesocycle"]
+   * #swagger.description = "Retrieves a mesocycle by its ID with relations."
+   * #swagger.parameters['uuid'] = { description: "Mesocycle ID" }
+   * #swagger.path = '/mesocycle/{uuid}/all'
+   * #swagger.summary = "Get a mesocycle by ID with relations"
+   * #swagger.responses[200] = { description: "Mesocycle found." }
+   * #swagger.responses[404] = { description: "Mesocycle not found." }
+   * #swagger.responses[500] = { description: "Internal server error." }
+   */
+  try {
+    const mesocycle = await mesoRepo.getMesocycleByIdWithRelations(req.params.uuid);
+    resourceValidator(mesocycle, errorMessage, req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
  * Get mesocycle by name
  * GET /mesocycle/name/:name
  * @param req Request

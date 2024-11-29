@@ -21,6 +21,15 @@ export class MesocycleGetters extends MesocycleBaseRepository {
   }
 
   /**
+   * Get MesoCycle by ID with relations
+   * @param mesocycleId 
+   * @returns MesoCycle | null
+   */
+  async getMesocycleByIdWithRelations(mesocycleId: string): Promise<Mesocycle | null> {
+    return await this.findOne({ where: { id: mesocycleId }, relations: ["workouts", "users"] });
+  }
+
+  /**
    * get all Mesocycles with users
    * @returns Mesocycle[]
    *
