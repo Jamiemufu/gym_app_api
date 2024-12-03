@@ -30,10 +30,10 @@ router.post("/create/:uuid", async (req: Request, res: Response, next: NextFunct
    */
   try {
     const userId = req.params.uuid;
-    const name = req.query.name as string;
-    const length = parseInt(req.query.length as string);
-    const phase = req.query.phase as string;
-    const periodization = req.query.periodization as string;
+    const name = req.body.name as string;
+    const length = Number(req.body.length);
+    const phase = req.body.phase as string;
+    const periodization = req.body.periodization as string;
     const mesocycle = await mesoRepo.createMesocycle(userId, name, length, phase, periodization);
     resourceValidator(mesocycle, errorMessage, req, res);
   } catch (error) {

@@ -8,6 +8,7 @@ import { MesocycleGetters } from './MesocycleGetters';
 export class MesocycleSetters extends MesocycleBaseRepository {
 
   mesocycleGetters = new MesocycleGetters(AppDataSource);
+  users = new UserGetters(AppDataSource);
   /**
    * Update Mesocycle Name
    * @param mesocycleId
@@ -15,7 +16,7 @@ export class MesocycleSetters extends MesocycleBaseRepository {
    * @returns
    */
   async updateMesocycleName(mesocycleId: string, name: string): Promise<Mesocycle | null> {
-    const mesocycle = await this.findOneBy({ id: mesocycleId });
+    const mesocycle = await this.mesocycleGetters.getMesocycleById(mesocycleId);
 
     if (!mesocycle) {
       throw new Error("Mesocycle not found");
@@ -67,13 +68,14 @@ export class MesocycleSetters extends MesocycleBaseRepository {
     mesocycle.phase = phase;
     mesocycle.periodization = periodization.toLowerCase() === "true" ? true : false;
 
-    const user = await new UserGetters(AppDataSource).getUserById(userId);
+    const user = await this.users.getUserById(userId);
 
     if (!user) {
       throw new Error("User not found");
     }
 
     mesocycle.users = [user];
+    
     await validateRequest(mesocycle);
     await this.save(mesocycle);
     return mesocycle;
@@ -90,7 +92,7 @@ export class MesocycleSetters extends MesocycleBaseRepository {
    * @returns Mesocycle
    */
   async addUserToMesocycle(mesocycleId: string, userId: string): Promise<Mesocycle> {
-    const mesocycle = await this.findOne({ where: { id: mesocycleId }, relations: ["users"] });
+    const mesocycle = await this.mesocycleGetters.getMesocycleByIdWithRelations(mesocycleId);
 
     if (!mesocycle) {
       throw new Error("Mesocycle not found");
@@ -113,7 +115,7 @@ export class MesocycleSetters extends MesocycleBaseRepository {
    * @returns
    */
   async deleteMesocycle(mesocycleId: string): Promise<Mesocycle | null> {
-    const mesocycle = await this.findOneBy({ id: mesocycleId });
+    const mesocycle = await this.mesocycleGetters.getMesocycleById(mesocycleId);
 
     if (!mesocycle) {
       throw new Error("Mesocycle not found");

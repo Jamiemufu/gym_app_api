@@ -1,8 +1,12 @@
+import { AppDataSource } from "../../config/ormconfig";
 import { User } from "../../entities/User";
 import { validateRequest } from "../../middleware/requestValidator";
 import { UserBaseRepository } from "./UserBaseRepository";
+import { UserGetters } from './UserGetters';
 
 export class UserSetters extends UserBaseRepository {
+
+  userGetters = new UserGetters(AppDataSource);
   /**
    * Create user
    * @param user
@@ -25,7 +29,7 @@ export class UserSetters extends UserBaseRepository {
    * @throws Error
    */
   async deleteUser(userId: string): Promise<User | null> {
-    const user = await this.findOneBy({ id: userId });
+    const user = await this.userGetters.getUserById(userId);
 
     if (!user) {
       throw new Error("User not found");

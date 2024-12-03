@@ -1,8 +1,13 @@
+import { AppDataSource } from "../../config/ormconfig";
 import { Exercise } from "../../entities/Exercise";
 import { validateRequest } from "../../middleware/requestValidator";
 import { ExerciseBaseRepository } from "./ExerciseBaseRepository";
+import { ExerciseGetters } from "./ExerciseGetters";
 
 export class ExerciseSetters extends ExerciseBaseRepository {
+
+  exerciseGetters = new ExerciseGetters(AppDataSource);
+
   /**
    * Update Exercise by ID
    * @param exerciseId
@@ -16,7 +21,7 @@ export class ExerciseSetters extends ExerciseBaseRepository {
       throw new Error("Nothing to update");
     }
 
-    const exerciseToUpdate = await this.findOneBy({ id: exerciseId });
+    const exerciseToUpdate = await this.exerciseGetters.getExerciseById(exerciseId);
 
     if (!exerciseToUpdate) {
       throw new Error("Exercise not found");
@@ -60,7 +65,7 @@ export class ExerciseSetters extends ExerciseBaseRepository {
    * @throws Error
    */
   async deleteExercise(exerciseId: string): Promise<Exercise> {
-    const exercise = await this.findOneBy({ id: exerciseId });
+    const exercise = await this.exerciseGetters.getExerciseById(exerciseId);
 
     if (!exercise) {
       throw new Error("Exercise not found");
