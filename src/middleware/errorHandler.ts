@@ -9,7 +9,7 @@ export const errorHandler = (err: any, req: Request, res: Response, next: NextFu
     res.status(304).json({ status: 304, message: err.message });
   } else {
     // everything else for now
-    res.status(500).json({ status: 500, message: 'Internal Server Error', error: err.message });
+    res.status(500).json({ status: 500, message: err.message, error: err.body });
   }
   next();
 };

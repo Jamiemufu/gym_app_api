@@ -7,7 +7,7 @@
 // | created_by    | UUID         | References: users.id          |
 
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { IsString, IsNumber, IsBoolean } from "class-validator";
+import { IsString, IsNumber, IsBoolean, Length } from 'class-validator';
 import { Workout } from "./Workout";
 import { User } from "./User";
 
@@ -17,6 +17,7 @@ export class Mesocycle {
   id!: string;
 
   @IsString()
+  @Length(5, 55, { message: "Name must be between 5 and 55 characters" })
   @Column({ nullable: false })
   name!: string;
 
@@ -26,7 +27,8 @@ export class Mesocycle {
 
   @IsString()
   @Column({ nullable: true })
-  phase!: string;
+  @Length(0, 10, { message: "Phase must be between 0 and 10 characters" })
+  phase!: string
 
   @IsBoolean()
   @Column({ default: false })

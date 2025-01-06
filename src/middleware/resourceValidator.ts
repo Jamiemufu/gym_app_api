@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { validate } from "class-validator";
 import { responseHandler } from "./responseHandler";
 
 /**
